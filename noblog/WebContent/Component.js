@@ -57,7 +57,7 @@ sap.ui.define([
 						controlAggregation: "detailPages"
 					},
 					blogView : {
-						viewName: "welcome",
+						viewName: "Welcome",
 						viewLevel: 2,
 						controlAggregation: "detailPages"
 					},
