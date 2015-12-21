@@ -3,10 +3,10 @@ jQuery.sap.require("util.Formatter");
 sap.ui.controller("view.PostList", {
 
 	onInit : function () {
-		this._router = sap.ui.core.UIComponent.getRouterFor(this);
-		this._router.getRoute("category").attachMatched(this._loadCategory, this);
+		//this._router = sap.ui.core.UIComponent.getRouterFor(this);
+		//this._router.getRoute("category").attachMatched(this._loadCategory, this);
 	},
-
+	/*
 	_loadCategory : function(oEvent) {
 		var oProductList = this.getView().byId("productList");
 		this._changeNoDataTextToIndicateLoading(oProductList);
@@ -65,4 +65,5 @@ sap.ui.controller("view.PostList", {
 	handleCartButtonPress :  function (oEvent) {
 		this._router.navTo("cart");
 	}
+	*/
 });

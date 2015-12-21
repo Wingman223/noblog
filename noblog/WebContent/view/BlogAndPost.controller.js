@@ -1,9 +1,11 @@
-sap.ui.controller("view.Welcome", {
+sap.ui.controller("view.BlogAndPost", {
 
 	onInit : function () {
 		this._router = sap.ui.core.UIComponent.getRouterFor(this);
+		this._router.getRoute("home").attachMatched(this._loadLatestGlobalBlogPosts, this);
 		this._router.getRoute("blog").attachMatched(this._loadLatestBlogPosts, this);
-		this._router.getRoute("overview").attachMatched(this._loadLatestGlobalBlogPosts, this);
+		
+		this.getView().bindElement("/");
 	},	
 	
 	_loadLatestGlobalBlogPosts : function (oEvent) {
@@ -11,10 +13,6 @@ sap.ui.controller("view.Welcome", {
 		var sPath	= model.Config.getView("getLatestBlogEntries");
 		
 		oModel.loadData(sPath);
-		
-		this.getView().setModel(oModel);
-		this.getView().bindElement("/");
-		
 	},
 	
 	_loadLatestBlogPosts : function (oEvent) {
@@ -24,8 +22,7 @@ sap.ui.controller("view.Welcome", {
 		
 		oModel.loadData(sPath);
 		
-		this.getView().setModel(oModel);
-		this.getView().bindElement("/rows/0");		
+		this.getView().setModel(oModel);	
 	},
 	
 	/*

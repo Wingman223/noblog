@@ -30,14 +30,9 @@ sap.ui.define([
 						target: ["blogListView", "blogView"]
 					},
 					{
-						pattern: "",
-						name: "overview",
-						target: ["postListView", "postView"]
-					},
-					{
 						pattern: "blog/{id}",
 						name: "blog",
-						target: "blogView"
+						target: ["postListView", "postView"]
 					},
 					{
 						pattern: "post/{id}",
@@ -62,7 +57,7 @@ sap.ui.define([
 						controlAggregation: "detailPages"
 					},
 					blogView : {
-						viewName: "Welcome",
+						viewName: "Blog",
 						viewLevel: 2,
 						controlAggregation: "detailPages"
 					},

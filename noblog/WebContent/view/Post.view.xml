@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="view.Welcome"
+	controllerName="view.BlogAndPost"
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc" >
@@ -12,16 +12,16 @@
 			</Toolbar>
 		</footer>
 		<content>
-			<Panel headerText="{value/title}">
+			<Panel headerText="{title}">
 				<content>
 					<Image
-						src="{value/pictureUrl}"
-						visible="{=${value/pictureUrl} ? true : false}"
+						src="{pictureUrl}"
+						visible="{=${pictureUrl} ? true : false}"
 						width="250px"
 					>
 					</Image>
 					<Text
-						text="{value/content}">
+						text="{content}">
 					</Text>
 				</content>
 			</Panel>
