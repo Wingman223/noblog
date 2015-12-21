@@ -153,7 +153,7 @@ sap.ui.define([
 
 			//navigate to initial page for !phone
 			if (!sap.ui.Device.system.phone) {
-				this._router.getTargets().display("welcome");
+				this._router.getTargets().display("blogView");
 			}
 
 			// initialize the router
@@ -233,7 +233,6 @@ sap.ui.define([
 			});
 			oDeviceModel.setDefaultBindingMode("OneWay");
 			oView.setModel(oDeviceModel, "device");
-
 
 			// done
 			return oView;
