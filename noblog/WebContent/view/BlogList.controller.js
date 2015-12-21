@@ -1,7 +1,7 @@
 jQuery.sap.require("util.Formatter");
 jQuery.sap.require("model.Config");
 
-sap.ui.controller("view.Home", {
+sap.ui.controller("view.BlogList", {
 
 	onInit : function () {
 		
@@ -32,7 +32,7 @@ sap.ui.controller("view.Home", {
 		var oContext		= oSource.getBindingContext("blogs");
 		var sBlogId			= oContext.getProperty("id");
 		
-		this._router.navTo("blog", { id : sBlogId });
+		this._router.navTo("postList", { id : sBlogId });
 	},
 	
 	_search : function(oEvent) {

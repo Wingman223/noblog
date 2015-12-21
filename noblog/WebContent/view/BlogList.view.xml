@@ -1,4 +1,4 @@
-<mvc:View controllerName="view.Home"
+<mvc:View controllerName="view.BlogList"
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"

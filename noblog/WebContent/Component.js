@@ -20,19 +20,19 @@ sap.ui.define([
 					controlId: "splitApp",
 					transition: "slide",
 					bypassed: {
-						target: ["home" , "notFound"]
+						target: ["blogList" , "notFound"]
 					}
 				},
 				routes: [
 					{
 						pattern: "",
 						name: "home",
-						target: "home"
+						target: ["blogListView", "blogView"]
 					},
 					{
 						pattern: "",
 						name: "overview",
-						target: "blogView"
+						target: ["postListView", "postView"]
 					},
 					{
 						pattern: "blog/{id}",
@@ -46,8 +46,13 @@ sap.ui.define([
 					}
 				],
 				targets : {
-					home: {
-						viewName: "Home",
+					blogListView: {
+						viewName: "BlogList",
+						viewLevel: 1,
+						controlAggregation: "masterPages"
+					},
+					postListView: {
+						viewName: "PostList",
 						viewLevel: 1,
 						controlAggregation: "masterPages"
 					},
@@ -167,7 +172,7 @@ sap.ui.define([
 			if (oPrevHash !== undefined) {
 				window.history.go(-1);
 			} else {
-				this._router.navTo("home", {}, true);
+				this._router.navTo("blogList", {}, true);
 			}
 		},
 
