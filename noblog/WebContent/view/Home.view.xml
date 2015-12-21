@@ -8,15 +8,6 @@
 		id="page"
 		title="{i18n>HOME_TITLE}"
 		showFooter="{device>/isNoPhone}" >
-		<headerContent>
-			<!--
-			<Button
-				icon="sap-icon://cart"
-				tooltip="{i18n>TO_CART_BUTTON_TOOLTIP}"
-				press="handleCartButtonPress">
-			</Button>
-			-->
-		</headerContent>
 		<subHeader>
 			<Toolbar id="searchBar">
 				<SearchField
@@ -87,10 +78,9 @@
 			-->
 			<!-- This list shows the product categories -->
 			<List
-				id="categoryList"
-				headerText="{i18n>HOME_CATEGORY_LIST_HEADER}"
-				mode="None"
-				items="{
+				id		= "categoryList"
+				mode	= "None"
+				items	= "{
 					model: 'blogs',
 					path : '/rows',
 					sorter : {
