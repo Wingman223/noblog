@@ -7,21 +7,41 @@ sap.ui.controller("view.Home", {
 		
 		this._router = sap.ui.core.UIComponent.getRouterFor(this);
 		
+		// load blogs from service
+		this._loadBlogs();
+		
+		// trigger first search to set visibilities right
+		this._search();
+	},
+	
+	_loadBlogs : function() {
 		var oModel 	= new sap.ui.model.json.JSONModel();
 		var sPath	= model.Config.getBlogsServiceUrl();
 		
 		oModel.loadData(sPath);
 		
-		this.getView().setModel(oModel);
-		
-		// trigger first search to set visibilities right
-		//this._search();
+		this.getView().setModel(oModel, "blogs");
 	},
 
 	handleSearch : function (oEvent) {
-		//this._search();
+		this._search();
 	},
-
+	
+	handleCategoryListItemPress : function (oEvent) {
+		var oSource			= oEvent.getSource();
+		var oContext		= oSource.getBindingContext("blogs");
+		var sBlogId			= oContext.getProperty("id");
+		
+		console.log(sBlogId);
+		
+		//this._router.navTo("category", {id: sCategoryId});
+	},
+	
+	_search : function(oEvent) {
+		
+	},
+	
+	/*
 	handleRefresh : function (oEvent) {
 		var that = this;
 		if (model.Config.isMock) {
@@ -102,4 +122,5 @@ sap.ui.controller("view.Home", {
 	handleCartButtonPress :  function (oEvent) {
 		this._router.navTo("cart");
 	}
+	*/
 });

@@ -7,7 +7,7 @@ sap.ui.controller("view.Welcome", {
 	DELAY : 3000,
 
 	onInit : function () {
-		this._animate(1, true);
+		//this._animate(1, true);
 	},
 
 	_animate : function (iLevel, bForward) {
