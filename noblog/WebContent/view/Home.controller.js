@@ -4,13 +4,22 @@ jQuery.sap.require("model.Config");
 sap.ui.controller("view.Home", {
 
 	onInit : function () {
+		
 		this._router = sap.ui.core.UIComponent.getRouterFor(this);
+		
+		var oModel 	= new sap.ui.model.json.JSONModel();
+		var sPath	= model.Config.getBlogsServiceUrl();
+		
+		oModel.loadData(sPath);
+		
+		this.getView().setModel(oModel);
+		
 		// trigger first search to set visibilities right
-		this._search();
+		//this._search();
 	},
 
 	handleSearch : function (oEvent) {
-		this._search();
+		//this._search();
 	},
 
 	handleRefresh : function (oEvent) {
@@ -32,7 +41,7 @@ sap.ui.controller("view.Home", {
 			that._search();
 		}
 	},
-
+	
 	_search : function () {
 		var oView = this.getView();
 		var oProductList = oView.byId("productList");

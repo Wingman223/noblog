@@ -9,11 +9,13 @@
 		title="{i18n>HOME_TITLE}"
 		showFooter="{device>/isNoPhone}" >
 		<headerContent>
+			<!--
 			<Button
 				icon="sap-icon://cart"
 				tooltip="{i18n>TO_CART_BUTTON_TOOLTIP}"
 				press="handleCartButtonPress">
 			</Button>
+			-->
 		</headerContent>
 		<subHeader>
 			<Toolbar id="searchBar">
@@ -37,13 +39,14 @@
 				visible="{device>/isTouch}" 
 				refresh="handleRefresh" />
 			<!-- This list shows the search results -->
+			<!--
 			<List
 				id="productList"
 				mode="{device>/listMode}"
 				select="handleProductListSelect"
 				noDataText="{i18n>HOME_NO_DATA}"
 				items="{
-					path : '/Products',
+					path : '/rows',
 					sorter : {
 						path : 'Name',
 						descending : false
@@ -81,28 +84,29 @@
 					</ObjectListItem>
 				</items>
 			</List>
+			-->
 			<!-- This list shows the product categories -->
 			<List
 				id="categoryList"
 				headerText="{i18n>HOME_CATEGORY_LIST_HEADER}"
 				mode="None"
 				items="{
-					path : '/ProductCategories',
+					path : '/rows',
 					sorter : {
-						path : 'CategoryName',
-						descending: false
+						path 		: 'id',
+						descending	: false
 					}
 				}">
 				<items>
 					<StandardListItem
-						title="{CategoryName}"
+						title="{value/name}"
 						type="Active"
 						counter="{NumberOfProducts}"
 						press="handleCategoryListItemPress" >
 						<customData>
 							<core:CustomData
 								key="id"
-								value="{Category}" />
+								value="{key}" />
 						</customData>
 					</StandardListItem>
 				</items>

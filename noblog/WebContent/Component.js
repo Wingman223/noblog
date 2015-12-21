@@ -164,11 +164,11 @@ sap.ui.define([
 				viewName: "view.App",
 				type: "XML"
 			});
-
 			oView.setModel(oI18nModel, "i18n");
-
+			
 			jQuery.sap.require("model.Config");
 			// set data model
+			/*
 			var sUrl = model.Config.getServiceUrl();
 
 			// start mock server
@@ -184,7 +184,9 @@ sap.ui.define([
 					duration: 2000
 				});
 			}
-
+			*/
+			
+			/*
 			var oModel = new ODataModel(sUrl, true, model.Config.getUser(), model.Config.getPwd());
 			//if we do not set this property to false, this would lead to a synchronized request which blocks the ui
 			oModel.setCountSupported(false);
@@ -198,7 +200,7 @@ sap.ui.define([
 				showEditAndProceedButton: false
 			});
 			oView.setModel(oCartModel, "cartProducts");
-
+			*/
 
 			// set device model
 			var oDeviceModel = new JSONModel({
