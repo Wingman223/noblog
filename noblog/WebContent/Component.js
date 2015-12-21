@@ -28,6 +28,21 @@ sap.ui.define([
 						pattern: "",
 						name: "home",
 						target: "home"
+					},
+					{
+						pattern: "",
+						name: "overview",
+						target: "blogView"
+					},
+					{
+						pattern: "blog/{id}",
+						name: "blog",
+						target: "blogView"
+					},
+					{
+						pattern: "post/{id}",
+						name: "post",
+						target: "postView"
 					}
 				],
 				targets : {
@@ -41,9 +56,14 @@ sap.ui.define([
 						viewLevel: 3,
 						controlAggregation: "detailPages"
 					},
-					welcome: {
-						viewName: "Welcome",
-						viewLevel: 0,
+					blogView : {
+						viewName: "welcome",
+						viewLevel: 2,
+						controlAggregation: "detailPages"
+					},
+					postView : {
+						viewName: "Post",
+						viewLevel: 2,
 						controlAggregation: "detailPages"
 					}
 				}

@@ -91,23 +91,19 @@
 				headerText="{i18n>HOME_CATEGORY_LIST_HEADER}"
 				mode="None"
 				items="{
+					model: 'blogs',
 					path : '/rows',
 					sorter : {
+						model		: 'blogs',
 						path 		: 'id',
 						descending	: false
 					}
 				}">
 				<items>
 					<StandardListItem
-						title="{value/name}"
+						title="{blogs>value/name}"
 						type="Active"
-						counter="{NumberOfProducts}"
 						press="handleCategoryListItemPress" >
-						<customData>
-							<core:CustomData
-								key="id"
-								value="{key}" />
-						</customData>
 					</StandardListItem>
 				</items>
 			</List>
