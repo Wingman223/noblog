@@ -20,7 +20,7 @@ sap.ui.define([
 					controlId: "splitApp",
 					transition: "slide",
 					bypassed: {
-						target: ["blogList" , "notFound"]
+						target: ["blogListView" , "notFound"]
 					}
 				},
 				routes: [

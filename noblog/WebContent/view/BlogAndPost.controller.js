@@ -13,6 +13,8 @@ sap.ui.controller("view.BlogAndPost", {
 		var sPath	= model.Config.getView("getLatestBlogEntries");
 		
 		oModel.loadData(sPath);
+		
+		this.getView().setModel(oModel);
 	},
 	
 	_loadLatestBlogPosts : function (oEvent) {
