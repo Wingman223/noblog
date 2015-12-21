@@ -32,9 +32,7 @@ sap.ui.controller("view.Home", {
 		var oContext		= oSource.getBindingContext("blogs");
 		var sBlogId			= oContext.getProperty("id");
 		
-		console.log(sBlogId);
-		
-		//this._router.navTo("category", {id: sCategoryId});
+		this._router.navTo("blog", { id : sBlogId });
 	},
 	
 	_search : function(oEvent) {
