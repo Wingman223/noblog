@@ -5,16 +5,26 @@
 	xmlns:mvc="sap.ui.core.mvc" >
 	<Page
 		title="{i18n>WELCOME_TITLE}"
-		enableScrolling="false">
+		enableScrolling="true"
+		content="{/rows}">
 		<footer>
 			<Toolbar>
 			</Toolbar>
 		</footer>
 		<content>
-			<Text
-				text="{i18n>WELCOME_TEXT}"
-				class="welcomeText" >
-			</Text>
+			<Panel headerText="{value/title}">
+				<content>
+					<Image
+						src="{value/pictureUrl}"
+						visible="{=${value/pictureUrl} ? true : false}"
+						width="250px"
+					>
+					</Image>
+					<Text
+						text="{value/content}">
+					</Text>
+				</content>
+			</Panel>
 		</content>
 	</Page>
 </mvc:View>

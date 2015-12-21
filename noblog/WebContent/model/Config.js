@@ -10,6 +10,13 @@ model.Config.getBlogsServiceUrl = function() {
 };
 
 /**
+ * Service url for getBlogsLatest view
+ */
+model.Config.getLatestBlogPostsServiceUrl = function() {
+	return model.Config.getHost() + "/getLatestBlogEntries";
+};
+
+/**
  * Basic path to query view
  */
 model.Config.getHost = function() {

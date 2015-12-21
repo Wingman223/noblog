@@ -1,4 +1,21 @@
 sap.ui.controller("view.Welcome", {
+	
+	onInit : function () {
+		
+		this._router = sap.ui.core.UIComponent.getRouterFor(this);
+		
+		var oModel 	= new sap.ui.model.json.JSONModel();
+		var sPath	= model.Config.getLatestBlogPostsServiceUrl();
+		
+		oModel.loadData(sPath);
+		
+		this.getView().setModel(oModel);
+		
+		// trigger first search to set visibilities right
+		//this._search();
+	},
+	
+	/*
 
 	ICON_NUMBER : 9,
 
@@ -34,5 +51,5 @@ sap.ui.controller("view.Welcome", {
 				this._animate(iLevel + 1, !bForward);
 			}, this), iDelay);
 		}
-	}
+	}*/
 });
