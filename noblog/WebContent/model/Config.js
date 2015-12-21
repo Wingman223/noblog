@@ -6,7 +6,25 @@ model.Config = {};
  * Service url for getBlogsLatest view
  */
 model.Config.getBlogsServiceUrl = function() {
-	return model.Config.getHost() + "/getBlogsLatest";
+	return model.Config.getView("getBlogsLatest");
+};
+
+/**
+ * Service url for getBlogsLatest view
+ */
+model.Config.getLatestBlogPostsServiceUrl = function() {
+	return model.Config.getView("getLatestBlogEntries");
+};
+
+model.Config.getDocument = function(id) {
+	return model.Config.getHost() + "/" + id;
+};
+
+/**
+ * Path to view queries
+ */
+model.Config.getView = function(name) {
+	return model.Config.getHost() + "/_design/query/_view/" + name;
 };
 
 /**
@@ -19,7 +37,7 @@ model.Config.getHost = function() {
 		iPort = 8081;
 	}
 	
-	return "http://localhost:" + iPort + "/noblog/_design/query/_view";
+	return "http://localhost:" + iPort + "/noblog";
 };
 
 /*

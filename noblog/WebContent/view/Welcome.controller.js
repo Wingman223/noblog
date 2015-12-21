@@ -1,5 +1,35 @@
 sap.ui.controller("view.Welcome", {
 
+	onInit : function () {
+		this._router = sap.ui.core.UIComponent.getRouterFor(this);
+		this._router.getRoute("blog").attachMatched(this._loadLatestBlogPosts, this);
+		this._router.getRoute("overview").attachMatched(this._loadLatestGlobalBlogPosts, this);
+	},	
+	
+	_loadLatestGlobalBlogPosts : function (oEvent) {
+		var oModel 	= new sap.ui.model.json.JSONModel();
+		var sPath	= model.Config.getView("getLatestBlogEntries");
+		
+		oModel.loadData(sPath);
+		
+		this.getView().setModel(oModel);
+		this.getView().bindElement("/");
+		
+	},
+	
+	_loadLatestBlogPosts : function (oEvent) {
+		var blogID = oEvent.getParameter("arguments").id;
+		var oModel 	= new sap.ui.model.json.JSONModel();
+		var sPath	= model.Config.getDocument(blogID);
+		
+		oModel.loadData(sPath);
+		
+		this.getView().setModel(oModel);
+		this.getView().bindElement("/rows/0");		
+	},
+	
+	/*
+
 	ICON_NUMBER : 9,
 
 	INITIAL_DELAY : 4000,
@@ -34,5 +64,5 @@ sap.ui.controller("view.Welcome", {
 				this._animate(iLevel + 1, !bForward);
 			}, this), iDelay);
 		}
-	}
+	}*/
 });
