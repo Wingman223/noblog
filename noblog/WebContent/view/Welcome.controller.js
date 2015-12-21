@@ -1,18 +1,31 @@
 sap.ui.controller("view.Welcome", {
-	
+
 	onInit : function () {
-		
 		this._router = sap.ui.core.UIComponent.getRouterFor(this);
-		
+		this._router.getRoute("blog").attachMatched(this._loadLatestBlogPosts, this);
+		this._router.getRoute("overview").attachMatched(this._loadLatestGlobalBlogPosts, this);
+	},	
+	
+	_loadLatestGlobalBlogPosts : function (oEvent) {
 		var oModel 	= new sap.ui.model.json.JSONModel();
-		var sPath	= model.Config.getLatestBlogPostsServiceUrl();
+		var sPath	= model.Config.getView("getLatestBlogEntries");
 		
 		oModel.loadData(sPath);
 		
 		this.getView().setModel(oModel);
+		this.getView().bindElement("/");
 		
-		// trigger first search to set visibilities right
-		//this._search();
+	},
+	
+	_loadLatestBlogPosts : function (oEvent) {
+		var blogID = oEvent.getParameter("arguments").id;
+		var oModel 	= new sap.ui.model.json.JSONModel();
+		var sPath	= model.Config.getDocument(blogID);
+		
+		oModel.loadData(sPath);
+		
+		this.getView().setModel(oModel);
+		this.getView().bindElement("/rows/0");		
 	},
 	
 	/*

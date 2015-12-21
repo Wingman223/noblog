@@ -24,7 +24,7 @@ model.Config.getDocument = function(id) {
  * Path to view queries
  */
 model.Config.getView = function(name) {
-	return model.Config.getHost() + "/_design/query/view/" + name;
+	return model.Config.getHost() + "/_design/query/_view/" + name;
 };
 
 /**
