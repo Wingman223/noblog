@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="view.BlogAndPost"
+	controllerName="view.detail.BlogAndPost"
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc" >

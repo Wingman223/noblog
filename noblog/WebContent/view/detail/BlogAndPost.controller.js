@@ -1,4 +1,4 @@
-sap.ui.controller("view.BlogAndPost", {
+sap.ui.controller("view.detail.BlogAndPost", {
 
 	onInit : function () {
 		this._router = sap.ui.core.UIComponent.getRouterFor(this);

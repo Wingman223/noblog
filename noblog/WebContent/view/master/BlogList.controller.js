@@ -1,7 +1,7 @@
 jQuery.sap.require("util.Formatter");
 jQuery.sap.require("model.Config");
 
-sap.ui.controller("view.BlogList", {
+sap.ui.controller("view.master.BlogList", {
 
 	onInit : function () {
 		this._oController 	= this.getOwnerComponent();
@@ -28,12 +28,33 @@ sap.ui.controller("view.BlogList", {
 		this._oController.navTo("blog", { id : sBlogId })
 	},
 
-	handleSearch : function (oEvent) {
+	handleSearch : function(oEvent) {
 		this._search();
 	},
 	
-	_search : function(oEvent) {
+	handleRefresh: function(oEvent) {
 		
+		var oSearch = this._oView.byId("id_view_bloglist_list_blogs");
+		
+		this._loadBlogs();
+		this._search();
+	},
+	
+	_search : function(sSearchTerm) {
+		
+		var oBlogList 	= this._oView.byId("id_view_bloglist_list_blogs");
+		var oBinding 	= oBlogList.getBinding("items");
+		
+		if( oBinding ) {
+			// if user is actually searching for something
+			if( sSearchTerm && sSearchTerm != "" ) {
+				var oFilter = new sap.ui.model.Filter("value/name", sap.ui.model.FilterOperator.Contains, sSearchTerm);
+				oBinding.filter([oFilter]);
+			} else {
+			// otherwise reset to default
+				oBinding.filter([]);
+			}
+		}
 	},
 	
 	/*

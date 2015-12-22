@@ -14,55 +14,55 @@ sap.ui.define([
 		metadata: {
 			routing: {
 				config: {
-					routerClass: Router,
-					viewType: "XML",
-					viewPath: "view",
-					controlId: "splitApp",
-					transition: "slide",
-					bypassed : {
-						target: ["blogListView", "blogView", "notFound"]
+					routerClass	: Router,
+					viewType	: "XML",
+					viewPath	: "view",
+					controlId	: "splitApp",
+					transition	: "display",
+					bypassed 	: {
+						target: ["blogListView", "recentBlogPostsView", "notFound"]
 					}
 				},
 				routes: [
 					{
-						pattern: "",
-						name: "home",
-						target: ["blogListView", "blogView"]
+						pattern	: "",
+						name	: "home",
+						target	: ["blogListView", "recentBlogPostsView"]
 					},
 					{
-						pattern: "blog/{id}",
-						name: "blog",
-						target: ["postListView", "postView"]
+						pattern	: "blog/{id}",
+						name	: "blog",
+						target	: ["postListView", "blogPostsView"]
 					},
 					{
-						pattern: "post/{id}",
-						name: "post",
-						target: "postView"
+						pattern	: "post/{id}",
+						name	: "post",
+						target	: "postView"
 					}
 				],
 				targets : {
 					blogListView: {
-						viewName: "BlogList",
+						viewName: "master.BlogList",
 						viewLevel: 1,
 						controlAggregation: "masterPages"
 					},
 					postListView: {
-						viewName: "PostList",
+						viewName: "master.PostList",
 						viewLevel: 1,
 						controlAggregation: "masterPages"
 					},
 					notFound: {
-						viewName: "NotFound",
+						viewName: "detail.NotFound",
 						viewLevel: 3,
 						controlAggregation: "detailPages"
 					},
-					blogView : {
-						viewName: "Blog",
+					recentBlogPostsView : {
+						viewName: "detail.RecentBlogPosts",
 						viewLevel: 2,
 						controlAggregation: "detailPages"
 					},
-					postView : {
-						viewName: "Post",
+					blogPostsView : {
+						viewName: "detail.BlogPosts",
 						viewLevel: 2,
 						controlAggregation: "detailPages"
 					}
@@ -152,7 +152,7 @@ sap.ui.define([
 			
 			// get router and set initial page
 			var oRouter = this.getRouter();
-			oRouter.getTargets().display("blogView");
+			oRouter.getTargets().display("recentBlogPostsView");
 
 			// now initialize hime
 			oRouter.initialize();
@@ -254,7 +254,7 @@ sap.ui.define([
 			if (oPrevHash !== undefined) {
 				window.history.go(-1);
 			} else {
-				this._oRouter.navTo("blogList", {}, true);
+				this._oRouter.navTo("home", {}, true);
 			}
 		}
 	});

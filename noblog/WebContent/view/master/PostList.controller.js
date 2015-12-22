@@ -1,6 +1,6 @@
 jQuery.sap.require("util.Formatter");
 
-sap.ui.controller("view.PostList", {
+sap.ui.controller("view.master.PostList", {
 
 	onInit : function () {
 		this._oComponent 	= this.getOwnerComponent();
