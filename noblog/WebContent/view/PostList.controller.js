@@ -3,9 +3,29 @@ jQuery.sap.require("util.Formatter");
 sap.ui.controller("view.PostList", {
 
 	onInit : function () {
-		//this._router = sap.ui.core.UIComponent.getRouterFor(this);
-		//this._router.getRoute("category").attachMatched(this._loadCategory, this);
+		this._oComponent 	= this.getOwnerComponent();
+		this._oView			= this.getView();
+		
+		this._oComponent.attachRouteMatched("blog", this._loadBlog, this);
 	},
+	
+	_loadBlog : function(oEvent) {
+		var sId = oEvent.getParameter("arguments").id;
+		
+		var oModel 	= new sap.ui.model.json.JSONModel();
+		var sPath	= model.Config.getDocument(sId);
+		oModel.loadData(sPath);
+		
+		this._oComponent.setModel(oModel, "postModel");
+	},
+	
+	handlePostListViewListItemPostsPressed : function(oEvent) {
+		console.log(oEvent);
+	},
+	
+	handleNavButtonBackPress: function(oEvent) {
+		this._oComponent.navBack();
+	}
 	/*
 	_loadCategory : function(oEvent) {
 		var oProductList = this.getView().byId("productList");

@@ -10,7 +10,7 @@ sap.ui.define([
 			ODataModel,
 			JSONModel) {
 
-	return UIComponent.extend("sap.ui.demo.cart.Component", {
+	return UIComponent.extend("com.team6.noblog.Component", {
 		metadata: {
 			routing: {
 				config: {
@@ -19,8 +19,8 @@ sap.ui.define([
 					viewPath: "view",
 					controlId: "splitApp",
 					transition: "slide",
-					bypassed: {
-						target: ["blogListView" , "notFound"]
+					bypassed : {
+						target: ["blogListView", "blogView", "notFound"]
 					}
 				},
 				routes: [
@@ -143,34 +143,21 @@ sap.ui.define([
 			}
 		},
 		*/
+		
+		// ##########################################################################
+		// ### INITIALIZATION
 
 		init: function () {
-			// call overwritten init (calls createContent)
 			UIComponent.prototype.init.apply(this, arguments);
+			
+			// get router and set initial page
+			var oRouter = this.getRouter();
+			oRouter.getTargets().display("blogView");
 
-			//extend the router
-			this._router = this.getRouter();
-
-			//navigate to initial page for !phone
-			if (!sap.ui.Device.system.phone) {
-				this._router.getTargets().display("blogView");
-			}
-
-			// initialize the router
-			this._router.initialize();
-
+			// now initialize hime
+			oRouter.initialize();
 		},
-
-		myNavBack : function () {
-			var oHistory = sap.ui.core.routing.History.getInstance();
-			var oPrevHash = oHistory.getPreviousHash();
-			if (oPrevHash !== undefined) {
-				window.history.go(-1);
-			} else {
-				this._router.navTo("blogList", {}, true);
-			}
-		},
-
+		
 		createContent: function () {
 
 			// set i18n model
@@ -180,11 +167,11 @@ sap.ui.define([
 			sap.ui.getCore().setModel(oI18nModel, "i18n");
 
 			// create root view
-			var oView = sap.ui.view({
+			this._oView = sap.ui.view({
 				viewName: "view.App",
-				type: "XML"
+				type	: "XML"
 			});
-			oView.setModel(oI18nModel, "i18n");
+			this._oView.setModel(oI18nModel, "i18n");
 			
 			jQuery.sap.require("model.Config");
 			// set data model
@@ -232,10 +219,43 @@ sap.ui.define([
 				listItemType: (sap.ui.Device.system.phone) ? "Active" : "Inactive"
 			});
 			oDeviceModel.setDefaultBindingMode("OneWay");
-			oView.setModel(oDeviceModel, "device");
+			this._oView.setModel(oDeviceModel, "device");
 
 			// done
-			return oView;
+			return this._oView;
+		},
+		
+		// ##########################################################################
+		// ### METHODS
+		
+		getView: function() {
+			return this._oView;
+		},
+		
+		getRouter: function() {
+			return this._oRouter;
+		},
+		
+		setModel: function(oModel, sName) {
+			this._oView.setModel(oModel, sName);
+		},
+		
+		attachRouteMatched: function(sRoute, fnCallback, oInstance) {
+			this._oRouter.getRoute(sRoute).attachMatched(fnCallback, oInstance);
+		},
+		
+		navTo: function(sId, oData) {
+			this._oRouter.navTo(sId, oData);
+		},
+		
+		navBack: function() {
+			var oHistory 	= sap.ui.core.routing.History.getInstance();
+			var oPrevHash 	= oHistory.getPreviousHash();
+			if (oPrevHash !== undefined) {
+				window.history.go(-1);
+			} else {
+				this._oRouter.navTo("blogList", {}, true);
+			}
 		}
 	});
 

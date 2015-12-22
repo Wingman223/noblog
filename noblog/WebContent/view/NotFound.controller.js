@@ -1,6 +1,13 @@
 sap.ui.controller("view.NotFound", {
-
+	
+	onInit : function() {
+		
+	},
+	
 	onInit : function () {
+		this._oComponent 	= this.this.getOwnerComponent();
+		this._oRouter		= this._oComponent.getRouter();
+		
 		this._router = sap.ui.core.UIComponent.getRouterFor(this);
 		this._router.getTargets().getTarget("notFound").attachDisplay(this._handleDisplay, this);
 	},

@@ -2,7 +2,7 @@ jQuery.sap.declare("util.Formatter");
 jQuery.sap.require("model.Config");
 
 util.Formatter = {
-		
+	/*
 	price :  function (value) {
 		jQuery.sap.require("sap.ui.core.format.NumberFormat");
 		var numberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
@@ -43,4 +43,5 @@ util.Formatter = {
 	pictureUrl: function (pictureUrl) {
 		return (!model.Config.isMock && pictureUrl) ? model.Config.getHost() + pictureUrl : pictureUrl;
 	}
+	*/
 };

@@ -4,35 +4,32 @@ jQuery.sap.require("model.Config");
 sap.ui.controller("view.BlogList", {
 
 	onInit : function () {
-		
-		this._router = sap.ui.core.UIComponent.getRouterFor(this);
+		this._oController 	= this.getOwnerComponent();
+		this._oView			= this.getView();
 		
 		// load blogs from service
 		this._loadBlogs();
-		
-		// trigger first search to set visibilities right
 		this._search();
 	},
 	
 	_loadBlogs : function() {
 		var oModel 	= new sap.ui.model.json.JSONModel();
 		var sPath	= model.Config.getBlogsServiceUrl();
-		
 		oModel.loadData(sPath);
 		
-		this.getView().setModel(oModel, "blogs");
+		this._oView.setModel(oModel, "blogs");
+	},
+	
+	handleBlogListItemPress : function (oEvent) {
+		var oSource		= oEvent.getSource();
+		var oContext	= oSource.getBindingContext("blogs");
+		var sBlogId		= oContext.getProperty("id");
+		
+		this._oController.navTo("blog", { id : sBlogId })
 	},
 
 	handleSearch : function (oEvent) {
 		this._search();
-	},
-	
-	handleCategoryListItemPress : function (oEvent) {
-		var oSource			= oEvent.getSource();
-		var oContext		= oSource.getBindingContext("blogs");
-		var sBlogId			= oContext.getProperty("id");
-		
-		this._router.navTo("blog", { id : sBlogId });
 	},
 	
 	_search : function(oEvent) {
