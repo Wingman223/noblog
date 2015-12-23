@@ -1,14 +1,19 @@
 sap.ui.controller("view.detail.RecentBlogPosts", {
-
+	
 	onInit : function () {
-		this._router = sap.ui.core.UIComponent.getRouterFor(this);
-		this._router.getRoute("home").attachMatched(this._loadLatestGlobalBlogPosts, this);
-		//this._router.getRoute("blog").attachMatched(this._loadLatestBlogPosts, this);
+		this._oComponent 	= this.getOwnerComponent();
+		this._oView			= this.getView();
 		
-		this.getView().bindElement({
-			model 	: "posts",
+		this._oComponent.attachRouteMatched("home", this._loadLatestGlobalBlogPosts, this);
+		
+		this._oView.bindElement({
 			path	: "/"
 		});
+	},
+	
+	handleButtonLogInPress: function(oEvent) {
+		var oSource = oEvent.getSource();
+		this._oComponent.showLoginPopup(oSource);
 	},
 	
 	_loadLatestGlobalBlogPosts : function (oEvent) {
@@ -18,15 +23,5 @@ sap.ui.controller("view.detail.RecentBlogPosts", {
 		oModel.loadData(sPath);
 		
 		this.getView().setModel(oModel);
-	}/*,
-	
-	_loadLatestBlogPosts : function (oEvent) {
-		var blogID = oEvent.getParameter("arguments").id;
-		var oModel 	= new sap.ui.model.json.JSONModel();
-		var sPath	= model.Config.getDocument(blogID);
-		
-		oModel.loadData(sPath);
-		
-		this.getView().setModel(oModel);	
-	}*/
+	}
 });

@@ -13,7 +13,6 @@
 				tooltip	= "Log In / Register"
 				press	= "handleButtonLogInPress" >
 			</Button>
-			
 		</headerContent>
 		<footer>
 			<Toolbar>

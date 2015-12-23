@@ -7,6 +7,13 @@
 		title="{i18n>WELCOME_TITLE}"
 		enableScrolling="true"
 		content="{global_blog_model>/posts}">
+		<headerContent>
+			<Button
+				icon	= "sap-icon://key"
+				tooltip	= "Log In / Register"
+				press	= "handleButtonLogInPress" >
+			</Button>
+		</headerContent>
 		<footer>
 			<Toolbar>
 				<ToolbarSpacer/>

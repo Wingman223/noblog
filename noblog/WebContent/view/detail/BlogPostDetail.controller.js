@@ -9,9 +9,6 @@ sap.ui.controller("view.detail.BlogPostDetail", {
 	},
 	
 	handleRoutePostMatched: function(oEvent) {
-		
-		console.log(oEvent.getParameters());
-		
 		var oArguments 	= oEvent.getParameter("arguments");
 		var sBlogId		= oArguments.id;
 		var iIndex		= oArguments.index;

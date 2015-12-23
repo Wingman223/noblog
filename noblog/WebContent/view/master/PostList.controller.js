@@ -12,9 +12,6 @@ sap.ui.controller("view.master.PostList", {
 	
 	// PUBLIC
 	handleRouteBlogMatched: function(oEvent) {
-		
-		console.log(oEvent.getParameters());
-		
 		// save id in global variable
 		this._sBlogId = oEvent.getParameter("arguments").id;
 		

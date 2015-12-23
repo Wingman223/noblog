@@ -13,9 +13,6 @@ sap.ui.controller("view.master.BlogList", {
 	
 	// PUBLIC
 	handleRouteHomeMatched: function(oEvent) {
-		
-		console.log(oEvent.getParameters());
-		
 		this._loadBlogs();
 		this._resetSearch();
 	},
