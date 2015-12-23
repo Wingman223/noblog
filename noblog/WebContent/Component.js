@@ -4,7 +4,7 @@ sap.ui.define([
 	'sap/ui/model/resource/ResourceModel',
 	'sap/ui/model/odata/ODataModel',
 	'sap/ui/model/json/JSONModel',
-	'view/LoginController'
+	'model/Config'
 ], function (UIComponent,
 			Router,
 			ResourceModel,
@@ -80,72 +80,69 @@ sap.ui.define([
 			}
 		},
 		
+		_oAppView 		: null,
+		_oAppController : null,
+		
 		// ##########################################################################
 		// ### INITIALIZATION
 
 		init: function () {
 			UIComponent.prototype.init.apply(this, arguments);
 			
-			// get router and set initial page
-			var oRouter = this.getRouter();
-			oRouter.getTargets().display("recentBlogPostsView");
-
-			// now initialize hime
-			oRouter.initialize();
-		},
-		
-		createContent: function () {
-
-			// set i18n model
+			// Initialize models
+			
+			// get config
+			// jQuery.sap.require("model.Config");
+			
+			// I18N MODEL
 			var oI18nModel = new ResourceModel({
 				bundleUrl: "i18n/appTexts.properties"
 			});
-			sap.ui.getCore().setModel(oI18nModel, "i18n");
+			this.setModel(oI18nModel, "i18n");
 
-			// create root view
-			this._oView = sap.ui.view({
-				viewName: "view.App",
-				type	: "XML"
-			});
-			this._oView.setModel(oI18nModel, "i18n");
-			
-			// get config
-			jQuery.sap.require("model.Config");
-
-			// set device model
+			// DEVICE ODEL
 			var oDeviceModel = new JSONModel({
-				isTouch: sap.ui.Device.support.touch,
-				isNoTouch: !sap.ui.Device.support.touch,
-				isPhone: sap.ui.Device.system.phone,
-				isNoPhone: !sap.ui.Device.system.phone,
-				listMode: (sap.ui.Device.system.phone) ? "None" : "SingleSelectMaster",
+				isTouch		: sap.ui.Device.support.touch,
+				isNoTouch	: !sap.ui.Device.support.touch,
+				isPhone		: sap.ui.Device.system.phone,
+				isNoPhone	: !sap.ui.Device.system.phone,
+				listMode	: (sap.ui.Device.system.phone) ? "None" : "SingleSelectMaster",
 				listItemType: (sap.ui.Device.system.phone) ? "Active" : "Inactive"
 			});
 			oDeviceModel.setDefaultBindingMode("OneWay");
-			this._oView.setModel(oDeviceModel, "device");
-
-			// done
-			return this._oView;
+			this.setModel(oDeviceModel, "device");
+			
+			// get router and set initial page
+			
+			//oRouter.getTargets().display("recentBlogPostsView");
+			
+			// initialize router
+			this.getRouter().initialize()
+			// var oRouter = this.getRouter();
+			// oRouter.initialize();
+		},
+		
+		createContent: function () {
+			// create root view. Save view and controller instance for later use
+			this._oAppView = sap.ui.view({
+				viewName: "view.App",
+				type	: "XML"
+			});
+			this._oAppController = this._oAppView.getController();
+			
+			// return view for display
+			return this._oAppView;
 		},
 		
 		// ##########################################################################
 		// ### METHODS
 		
 		showLoginPopup: function(oTarget) {
-			var oLogin = new LoginController();
-			oLogin.show(oTarget);
-		},
-		
-		getView: function() {
-			return this._oView;
+			this._oAppController.showLoginPopover(oTarget);
 		},
 		
 		getRouter: function() {
 			return this._oRouter;
-		},
-		
-		setModel: function(oModel, sName) {
-			this._oView.setModel(oModel, sName);
 		},
 		
 		attachRouteMatched: function(sRoute, fnCallback, oInstance) {
@@ -166,5 +163,4 @@ sap.ui.define([
 			}
 		}
 	});
-
 });
