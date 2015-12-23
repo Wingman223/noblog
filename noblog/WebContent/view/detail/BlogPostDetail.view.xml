@@ -1,13 +1,9 @@
-<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
-		controllerName="view.detail.BlogPostDetail" xmlns:html="http://www.w3.org/1999/xhtml">
-	<Page
-		title			= "{global_blog_model>title}"
-		enableScrolling	= "true">
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" controllerName="view.detail.BlogPostDetail" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{global_blog_model>title}" enableScrolling="true">
 		<headerContent>
-			<Button
-				icon	= "sap-icon://key"
-				tooltip	= "Log In / Register"
-				press	= "handleButtonLogInPress" >
+			<Button icon="sap-icon://key" tooltip="Log In / Register"
+				press="handleButtonLogInPress">
 			</Button>
 		</headerContent>
 		<footer>
@@ -15,7 +11,16 @@
 			</Toolbar>
 		</footer>
 		<content>
-			
+			<Text text="{global_blog_model>content}"></Text>
+			<Text text="quark"></Text>
+
+			<FeedInput post="onCommentAdded" class="sapUiSmallMarginTopBottom" />
+
+			<List showSeparators="Inner" items="{global_blog_model>comments}">
+				<FeedListItem sender="{userId}" senderPress="onSenderPress"
+					iconPress="onIconPress" iconDensityAware="false" info="Kommentar"
+					timestamp="{creationDate}" text="{content}" />
+			</List>
 		</content>
 	</Page>
 </core:View>
