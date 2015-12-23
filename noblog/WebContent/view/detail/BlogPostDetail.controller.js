@@ -20,6 +20,43 @@ sap.ui.controller("view.detail.BlogPostDetail", {
 		});
 	},
 	
+	onCommentAdded: function (oEvent) {
+		
+		var blogCtx = this.getView().getBindingContext("global_blog_model");
+		var blogModel = blogCtx.getModel();
+		var blogPost = blogModel.getProperty(blogCtx.getPath());
+		
+		var data = blogModel.getData();
+		
+		var newComment = {
+				userId : data.userId,
+				content : oEvent.getParameter("value"),
+				creationDate : new Date().getTime(),
+		};
+		
+		var comments = blogPost.comments;
+		comments.unshift(newComment);
+		blogModel.setData(data);
+		
+		this._updateDocument(data._id, data, blogModel);
+	},
+	 
+	_updateDocument: function (docId, data) {
+		//Call jQuery ajax
+		$.ajax({
+		    type: "PUT",
+		    contentType: "application/json; charset=utf-8",
+		    url: model.Config.getDocument(docId),
+		    data: JSON.stringify(data),
+		    dataType: "json",
+		    success: function (msg) {
+		        alert('Success');
+		    },
+		    error: function (err){
+		        alert('Error');
+		    }
+		})
+	},
 	handleButtonLogInPress: function(oEvent) {
 		var oSource = oEvent.getSource();
 		this._oComponent.showLoginPopup(oSource);

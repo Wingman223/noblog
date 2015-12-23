@@ -17,7 +17,16 @@
 			</Toolbar>
 		</footer>
 		<content>
-			
+			<Text text="{global_blog_model>content}"></Text>
+			<Text text="quark"></Text>
+
+			<FeedInput post="onCommentAdded" class="sapUiSmallMarginTopBottom" />
+
+			<List showSeparators="Inner" items="{global_blog_model>comments}">
+				<FeedListItem sender="{userId}" senderPress="onSenderPress"
+					iconPress="onIconPress" iconDensityAware="false" info="Kommentar"
+					timestamp="{creationDate}" text="{content}" />
+			</List>
 		</content>
 	</Page>
 </core:View>
