@@ -1,12 +1,11 @@
 <mvc:View
 	controllerName="view.detail.RecentBlogPosts"
 	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc" >
-	<Page
-		title="{i18n>WELCOME_TITLE}"
-		enableScrolling="true"
-		content="{rows}">
+	<Page	title			= "{i18n>WELCOME_TITLE}"
+			enableScrolling	= "true">
 		<headerContent>
 			<Button
 				icon	= "sap-icon://key"
@@ -25,19 +24,39 @@
 			</Toolbar>
 		</footer>
 		<content>
-			<Panel headerText="{value/title}">
-				<content>
-					<Image
-						src="{value/pictureUrl}"
-						visible="{=${value/pictureUrl} ? true : false}"
-						width="250px"
-					>
-					</Image>
-					<Text
-						text="{value/content}">
-					</Text>
-				</content>
-			</Panel>
+			<FlexBox direction="Column" alignItems="Stretch" class="sapUiSmallMargin">
+				<Panel class="sapUiSmallMarginBottom">
+					<Title level="H1" text="Welcome Guest!"/>
+				</Panel>
+				<Toolbar>
+					<Title text="Latest posts" />
+				</Toolbar>
+				<FlexBox direction="Column" alignItems="Stretch" items="{rows}">
+					<Panel class="sapUiSmallMarginTop">
+						<content>
+							<FlexBox direction="Column" alignItems="Stretch">
+								<Toolbar class="sapUiSmallMarginBottom">
+									<Title text="{value/title}"/>
+									<ToolbarSpacer/>
+									<Button icon="sap-icon://edit"/>
+								</Toolbar>
+								<Image
+									src="{value/pictureUrl}"
+									visible="{=${value/pictureUrl} ? true : false}"
+									width="250px"
+								>
+								</Image>
+								<Text
+									text="{value/content}">
+								</Text>
+								<FlexBox alignItems="End" justifyContent="End" class="noblogFlexBoxBorderTop">
+									<Text text="Created at: {value/creationDate} from: ?"/>
+								</FlexBox>
+							</FlexBox>
+						</content>
+					</Panel>
+				</FlexBox>
+			</FlexBox>
 		</content>
 	</Page>
 </mvc:View>

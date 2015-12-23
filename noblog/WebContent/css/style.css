@@ -1,3 +1,7 @@
+.noblogFlexBoxBorderTop.sapMFlexItem {
+	border-top : 1px solid #cdcdcd;
+}
+
 /*
 .invisible {
 	display: none;
