@@ -12,6 +12,9 @@ sap.ui.controller("view.master.PostList", {
 	
 	// PUBLIC
 	handleRouteBlogMatched: function(oEvent) {
+		
+		console.log(oEvent.getParameters());
+		
 		// save id in global variable
 		this._sBlogId = oEvent.getParameter("arguments").id;
 		
@@ -34,7 +37,7 @@ sap.ui.controller("view.master.PostList", {
 		var sBlogId		= this._sBlogId;
 		
 		// and navigate
-		this._oComponent.navTo("post", { id : sBlogId, index : iIndex })
+		this._oComponent.navTo("post", { id : sBlogId, index : iIndex }, true)
 	},
 
 	handleSearch : function(oEvent) {

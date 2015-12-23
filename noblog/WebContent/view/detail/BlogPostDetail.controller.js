@@ -6,20 +6,12 @@ sap.ui.controller("view.detail.BlogPostDetail", {
 		
 		// attach route matched
 		this._oComponent.attachRouteMatched("post", this.handleRoutePostMatched, this);
-		
-		
-		/*this._router = sap.ui.core.UIComponent.getRouterFor(this);
-		//this._router.getRoute("home").attachMatched(this._loadLatestGlobalBlogPosts, this);
-		this._router.getRoute("blog").attachMatched(this._loadLatestBlogPosts, this);
-		
-		this.getView().bindElement({
-			model 	: "global_blog_model",
-			path	: "/"
-		});
-		*/
 	},
 	
 	handleRoutePostMatched: function(oEvent) {
+		
+		console.log(oEvent.getParameters());
+		
 		var oArguments 	= oEvent.getParameter("arguments");
 		var sBlogId		= oArguments.id;
 		var iIndex		= oArguments.index;

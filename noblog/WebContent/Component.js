@@ -249,8 +249,8 @@ sap.ui.define([
 			this._oRouter.getRoute(sRoute).attachMatched(fnCallback, oInstance);
 		},
 		
-		navTo: function(sId, oData) {
-			this._oRouter.navTo(sId, oData);
+		navTo: function(sId, oData, bReplace) {
+			this._oRouter.navTo(sId, oData, bReplace);
 		},
 		
 		navBack: function() {
