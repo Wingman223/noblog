@@ -17,16 +17,23 @@
 			</Toolbar>
 		</footer>
 		<content>
-			<Text text="{global_blog_model>content}"></Text>
-			<Text text="quark"></Text>
-
-			<FeedInput post="onCommentAdded" class="sapUiSmallMarginTopBottom" />
-
-			<List showSeparators="Inner" items="{global_blog_model>comments}">
-				<FeedListItem sender="{userId}" senderPress="onSenderPress"
-					iconPress="onIconPress" iconDensityAware="false" info="Kommentar"
-					timestamp="{creationDate}" text="{content}" />
-			</List>
+			<FlexBox direction="Column" alignItems="Stretch" class="sapUiSmallMargin">
+				<core:Fragment type="XML" fragmentName="view.fragment.PostTemplate"/>
+				<Toolbar>
+					<Title text="Comments" />
+				</Toolbar>
+				<FeedInput post="onCommentAdded" class="sapUiSmallMarginTopBottom" />
+				<List showSeparators="Inner" items="{global_blog_model>comments}" noDataText="No comment here. Be the first to write one!">
+					<FeedListItem 
+						sender="{global_blog_model>userId}"
+						senderPress="onSenderPress"
+						iconPress="onIconPress"
+						iconDensityAware="false"
+						info="Kommentar"
+						timestamp="{global_blog_model>creationDate}"
+						text="{global_blog_model>content}" />
+				</List>
+			</FlexBox>
 		</content>
 	</Page>
 </core:View>

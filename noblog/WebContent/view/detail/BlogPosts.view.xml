@@ -3,10 +3,8 @@
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc" >
-	<Page
-		title="{global_blog_model>/title}"
-		enableScrolling="true"
-		content="{global_blog_model>/posts}">
+	<Page	title="{global_blog_model>title}"
+			enableScrolling="true">
 		<headerContent>
 			<Button
 				icon	= "sap-icon://key"
@@ -25,19 +23,11 @@
 			</Toolbar>
 		</footer>
 		<content>
-			<Panel headerText="{global_blog_model>title}">
-				<content>
-					<Image
-						src="{global_blog_model>pictureUrl}"
-						visible="{=${global_blog_model>pictureUrl} ? true : false}"
-						width="250px"
-					>
-					</Image>
-					<Text
-						text="{global_blog_model>content}">
-					</Text>
-				</content>
-			</Panel>
+			<FlexBox direction="Column" alignItems="Stretch" class="sapUiSmallMargin" items="{global_blog_model>posts}">
+				<items>
+					<core:Fragment type="XML" fragmentName="view.fragment.PostTemplate"/>
+				</items>
+			</FlexBox>
 		</content>
 	</Page>
 </mvc:View>
