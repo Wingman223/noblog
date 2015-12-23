@@ -1,89 +1,82 @@
 jQuery.sap.require("util.Formatter");
 
 sap.ui.controller("view.master.PostList", {
-
+	
 	onInit : function () {
 		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
 		
-		this._oComponent.attachRouteMatched("blog", this._loadBlog, this);
+		// load blogs from service
+		this._oComponent.attachRouteMatched("blog", this.handleRouteBlogMatched, this);
 	},
 	
-	_loadBlog : function(oEvent) {
-		var sId = oEvent.getParameter("arguments").id;
+	// PUBLIC
+	handleRouteBlogMatched: function(oEvent) {
+		// save id in global variable
+		this._sBlogId = oEvent.getParameter("arguments").id;
 		
-		var oModel 	= new sap.ui.model.json.JSONModel();
-		var sPath	= model.Config.getDocument(sId);
-		oModel.loadData(sPath);
-		
-		this._oComponent.setModel(oModel, "postModel");
+		// load blog info and reset search
+		this._loadBlog();
+		this._resetSearch();
 	},
 	
-	handlePostListViewListItemPostsPressed : function(oEvent) {
+	handleBlogListItemPress : function (oEvent) {
 		console.log(oEvent);
+	},
+
+	handleSearch : function(oEvent) {
+		// get search term
+		var oSearchField 	= oEvent.getSource();
+		var sSearchTerm 	= oSearchField.getValue();
+		
+		// refresh data first
+		// then execute search ( in form of filter )
+		this._loadBlog();
+		this._search(sSearchTerm);
 	},
 	
 	handleNavButtonBackPress: function(oEvent) {
 		this._oComponent.navBack();
-	}
-	/*
-	_loadCategory : function(oEvent) {
-		var oProductList = this.getView().byId("productList");
-		this._changeNoDataTextToIndicateLoading(oProductList);
-		var oBinding = oProductList.getBinding("items");
-		oBinding.attachDataReceived(this.fnDataReceived, this);
-		var sId = oEvent.getParameter("arguments").id;
-		this._sProductId = oEvent.getParameter("arguments").productId;
-		this.getView().byId("page").setTitle(sId);
-		var oFilter = new sap.ui.model.Filter("Category", sap.ui.model.FilterOperator.EQ, sId);
-		oBinding.filter([ oFilter ]);
 	},
-
-	_changeNoDataTextToIndicateLoading: function (oList) {
-		var sOldNoDataText = oList.getNoDataText();
-		oList.setNoDataText("Loading...");
-		oList.attachEventOnce("updateFinished", function() {oList.setNoDataText(sOldNoDataText);});
-	},
-
-	fnDataReceived: function(oEvent) {
-		var that = this,
-			oList = this.getView().byId("productList");
-		var aListItems = oList.getItems();
-		aListItems.some(function(oItem) {
-			if (oItem.getBindingContext().sPath === "/Products('" + that._sProductId + "')") {
-				oList.setSelectedItem(oItem);
-				return true;
-			}
-		});
-	},
-
-	handleProductListSelect : function (oEvent) {
-		this._showProduct(oEvent);
-	},
-
-	handleProductListItemPress : function (oEvent) {
-		this._showProduct(oEvent);
-	},
-
-	_showProduct: function (oEvent) {
-		var oBindContext;
-		if (sap.ui.Device.system.phone) {
-			oBindContext = oEvent.getSource().getBindingContext();
-		} else {
-			oBindContext = oEvent.getSource().getSelectedItem().getBindingContext();
+	
+	// PRIVATE
+	
+	_loadBlog : function(oEvent) {
+		// make sure that this._sBlogId is filled
+		if( this._sBlogId && typeof this._sBlogId === "string" ) {
+			var oModel 	= new sap.ui.model.json.JSONModel();
+			var sPath	= model.Config.getDocument(this._sBlogId);
+			oModel.loadData(sPath);
+			
+			this._oComponent.setModel(oModel, "postModel");
 		}
-		var oModel = oBindContext.getModel();
-		var sCategoryId = oModel.getData(oBindContext.getPath()).Category;
-		var sProductId = oModel.getData(oBindContext.getPath()).ProductId;
-		this._router.navTo("product", {id: sCategoryId, productId: sProductId}, !sap.ui.Device.system.phone);
 	},
-
-	handleNavButtonPress : function (oEvent) {
-		this.getOwnerComponent().myNavBack();
+	
+	_getSearchField: function() {
+		return this._oView.byId("id_view_postlist_input_search");
 	},
-
-	handleCartButtonPress :  function (oEvent) {
-		this._router.navTo("cart");
+	
+	_search : function(sSearchTerm, fnLoaded) {
+		
+		var oPostList 	= this._oView.byId("id_view_postlist_list_posts");
+		var oBinding 	= oPostList.getBinding("items");
+		
+		if( oBinding ) {
+			// if user is actually searching for something
+			if( sSearchTerm && sSearchTerm != "" ) {
+				var oFilter = new sap.ui.model.Filter("title", sap.ui.model.FilterOperator.Contains, sSearchTerm);
+				oBinding.filter([oFilter]);
+			} else {
+			// otherwise reset to default
+				oBinding.filter([]);
+			}
+		}
+	},
+	
+	_resetSearch : function() {
+		var oSearchField 	= this._getSearchField();
+		oSearchField.setValue("");
+		
+		this._search();
 	}
-	*/
 });

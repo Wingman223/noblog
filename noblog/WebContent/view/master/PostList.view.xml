@@ -9,21 +9,25 @@
 		showNavButton	= "true"
 		navButtonPress	= "handleNavButtonBackPress"
 		showFooter		= "{device>/isNoPhone}" >
-		<headerContent>
-			<!--
-			<Button
-				icon	= "sap-icon://cart"
-				tooltip	= "{i18n>TO_CART_BUTTON_TOOLTIP}"
-				press	= "handleCartButtonPress">
-			</Button>
-			-->
-		</headerContent>
+		<subHeader>
+			<Toolbar>
+				<SearchField
+					id					= "id_view_postlist_input_search"
+					showRefreshButton	= "false"
+					placeholder			= "{i18n>SEARCH_FIELD_PLACEHOLDER}"
+					search				= "handleSearch"
+					tooltip				= "{i18n>VIEW_POSTLIST_SEARCHFIELD_TOOLTIP}"
+					width				= "100%">
+				</SearchField>
+			</Toolbar>
+		</subHeader>
 		<footer>
 			<Toolbar>
 			</Toolbar>
 		</footer>
 		<content>
 			<List
+				id		= "id_view_postlist_list_posts"
 				mode	= "None"
 				items	= "{
 					model	: 'postModel',

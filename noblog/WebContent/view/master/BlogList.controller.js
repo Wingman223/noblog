@@ -4,15 +4,43 @@ jQuery.sap.require("model.Config");
 sap.ui.controller("view.master.BlogList", {
 
 	onInit : function () {
-		this._oController 	= this.getOwnerComponent();
+		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
 		
-		// load blogs from service
-		this._loadBlogs();
-		this._search();
+		// attach route matched
+		this._oComponent.attachRouteMatched("home", this.handleRouteHomeMatched, this);
 	},
 	
-	_loadBlogs : function() {
+	// PUBLIC
+	handleRouteHomeMatched: function(oEvent) {
+		this._loadBlogs();
+		this._resetSearch();
+	},
+	
+	handleBlogListItemPress : function (oEvent) {
+		// get selected blog id from item
+		var oSource		= oEvent.getSource();
+		var oContext	= oSource.getBindingContext("blogs");
+		var sBlogId		= oContext.getProperty("id");
+		
+		// and navigate
+		this._oComponent.navTo("blog", { id : sBlogId })
+	},
+	
+	handleSearch : function(oEvent) {
+		// get search term
+		var oSearchField 	= this._getSearchField();
+		var sSearchTerm 	= oSearchField.getValue();
+		
+		// refresh data first
+		// then execute search ( in form of filter )
+		this._loadBlogs();
+		this._search(sSearchTerm);
+	},
+	
+	// PRIVATE
+	
+	_loadBlogs : function(fnCallback) {
 		var oModel 	= new sap.ui.model.json.JSONModel();
 		var sPath	= model.Config.getBlogsServiceUrl();
 		oModel.loadData(sPath);
@@ -20,27 +48,11 @@ sap.ui.controller("view.master.BlogList", {
 		this._oView.setModel(oModel, "blogs");
 	},
 	
-	handleBlogListItemPress : function (oEvent) {
-		var oSource		= oEvent.getSource();
-		var oContext	= oSource.getBindingContext("blogs");
-		var sBlogId		= oContext.getProperty("id");
-		
-		this._oController.navTo("blog", { id : sBlogId })
-	},
-
-	handleSearch : function(oEvent) {
-		this._search();
+	_getSearchField: function() {
+		return this._oView.byId("id_view_bloglist_input_search");
 	},
 	
-	handleRefresh: function(oEvent) {
-		
-		var oSearch = this._oView.byId("id_view_bloglist_list_blogs");
-		
-		this._loadBlogs();
-		this._search();
-	},
-	
-	_search : function(sSearchTerm) {
+	_search : function(sSearchTerm, fnLoaded) {
 		
 		var oBlogList 	= this._oView.byId("id_view_bloglist_list_blogs");
 		var oBinding 	= oBlogList.getBinding("items");
@@ -57,86 +69,10 @@ sap.ui.controller("view.master.BlogList", {
 		}
 	},
 	
-	/*
-	handleRefresh : function (oEvent) {
-		var that = this;
-		if (model.Config.isMock) {
-			// just wait if we do not have oData services
-			setTimeout(function () {
-				that.getView().byId("pullToRefresh").hide();
-			}, 2000);
-		} else {
-			// trigger search again and hide pullToRefresh when data ready
-			var oProductList = this.getView().byId("productList");
-			var oBinding = oProductList.getBinding("items");
-			var fnHandler = function() {
-				that.getView().byId("pullToRefresh").hide();
-				oBinding.detachDataReceived(fnHandler);
-			};
-			oBinding.attachDataReceived(fnHandler);
-			that._search();
-		}
-	},
-	
-	_search : function () {
-		var oView = this.getView();
-		var oProductList = oView.byId("productList");
-		var oCategoryList = oView.byId("categoryList");
-		var oSearchField = oView.byId("searchField");
-
-		// switch visibility of lists
-		var bShowSearch = oSearchField.getValue().length !== 0;
-		oProductList.toggleStyleClass("invisible", !bShowSearch);
-		oCategoryList.toggleStyleClass("invisible", bShowSearch);
+	_resetSearch : function() {
+		var oSearchField 	= this._getSearchField();
+		oSearchField.setValue("");
 		
-		if (bShowSearch) {
-			this._changeNoDataTextToIndicateLoading(oProductList);
-		}
-
-		// filter product list
-		var oBinding = oProductList.getBinding("items");
-		if (oBinding) {
-			if (bShowSearch) {
-				var oFilter = new sap.ui.model.Filter("Name", sap.ui.model.FilterOperator.Contains, oSearchField.getValue());
-				oBinding.filter([oFilter]);
-			} else {
-				oBinding.filter([]);
-			}
-		}
-	},
-	
-	_changeNoDataTextToIndicateLoading: function (oList) {
-		var sOldNoDataText = oList.getNoDataText();
-		oList.setNoDataText("Loading...");
-		oList.attachEventOnce("updateFinished", function() {oList.setNoDataText(sOldNoDataText);});
-	},
-
-	handleCategoryListItemPress : function (oEvent) {
-		var oBindContext = oEvent.getSource().getBindingContext();
-		var oModel = oBindContext.getModel();
-		var sCategoryId = oModel.getData(oBindContext.getPath()).Category;
-		this._router.navTo("category", {id: sCategoryId});
-	},
-	
-	handleProductListSelect: function (oEvent) {
-		var oItem = oEvent.getParameter("listItem");
-		this._showProduct(oItem);
-	},
-	
-	handleProductListItemPress: function (oEvent) {
-		var oItem = oEvent.getSource();
-		this._showProduct(oItem);
-	},
-	
-	_showProduct: function (oItem) {
-		var oBindContext = oItem.getBindingContext();
-		var oModel = oBindContext.getModel();
-		var sId = oModel.getData(oBindContext.getPath()).ProductId;
-		this._router.navTo("cartProduct", {productId: sId}, !sap.ui.Device.system.phone);
-	},
-	
-	handleCartButtonPress :  function (oEvent) {
-		this._router.navTo("cart");
+		this._search();
 	}
-	*/
 });
