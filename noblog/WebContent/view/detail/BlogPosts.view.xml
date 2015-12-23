@@ -9,6 +9,12 @@
 		content="{global_blog_model>/posts}">
 		<footer>
 			<Toolbar>
+				<ToolbarSpacer/>
+				<Button
+					icon	= "sap-icon://add"
+					text	= "Add Post"
+					press	= "handleButtonCreateBlogPress" >
+				</Button>
 			</Toolbar>
 		</footer>
 		<content>

@@ -18,26 +18,26 @@ sap.ui.define([
 					viewType	: "XML",
 					viewPath	: "view",
 					controlId	: "splitApp",
-					transition	: "display",
+					transition	: "show",
 					bypassed 	: {
 						target: ["blogListView", "recentBlogPostsView", "notFound"]
 					}
 				},
 				routes: [
 					{
-						pattern	: "",
-						name	: "home",
-						target	: ["blogListView", "recentBlogPostsView"]
+						pattern		: "",
+						name		: "home",
+						target		: ["blogListView", "recentBlogPostsView"]
 					},
 					{
-						pattern	: "blog/{id}",
-						name	: "blog",
-						target	: ["postListView", "blogPostsView"],
+						pattern		: "blog/{id}",
+						name		: "blog",
+						target		: ["postListView", "blogPostsView"],
 					},
 					{
-						pattern	: "blog/{id}/post/{index}",
-						name	: "post",
-						target	: "blogPostDetailView"
+						pattern		: "blog/{id}/post/{index}",
+						name		: "post",
+						target		: "blogPostDetailView"
 					}
 				],
 				targets : {
@@ -49,7 +49,8 @@ sap.ui.define([
 					postListView: {
 						viewName: "master.PostList",
 						viewLevel: 1,
-						controlAggregation: "masterPages"
+						controlAggregation: "masterPages",
+						transition: "slide"
 					},
 					notFound: {
 						viewName: "detail.NotFound",
@@ -64,12 +65,14 @@ sap.ui.define([
 					blogPostsView : {
 						viewName: "detail.BlogPosts",
 						viewLevel: 2,
-						controlAggregation: "detailPages"
+						controlAggregation: "detailPages",
+						transition: "fade"
 					},
 					blogPostDetailView : {
 						viewName: "detail.BlogPostDetail",
 						viewLevel: 3,
-						controlAggregation: "detailPages"
+						controlAggregation: "detailPages",
+						transition: "slide"
 					}
 				}
 			}

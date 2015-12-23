@@ -7,8 +7,22 @@
 		title="{i18n>WELCOME_TITLE}"
 		enableScrolling="true"
 		content="{rows}">
+		<headerContent>
+			<Button
+				icon	= "sap-icon://key"
+				tooltip	= "Log In / Register"
+				press	= "handleButtonLogInPress" >
+			</Button>
+			
+		</headerContent>
 		<footer>
 			<Toolbar>
+				<ToolbarSpacer/>
+				<Button
+					icon	= "sap-icon://add"
+					text	= "Create Blog"
+					press	= "handleButtonCreateBlogPress" >
+				</Button>
 			</Toolbar>
 		</footer>
 		<content>
