@@ -18,5 +18,10 @@ sap.ui.controller("view.detail.BlogPostDetail", {
 			model 	: "global_blog_model",
 			path	: sPath
 		});
+	},
+	
+	handleButtonLogInPress: function(oEvent) {
+		var oSource = oEvent.getSource();
+		this._oComponent.showLoginPopup(oSource);
 	}
 });
