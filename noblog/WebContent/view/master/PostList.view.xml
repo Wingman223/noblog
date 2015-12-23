@@ -5,7 +5,7 @@
 	xmlns:control="control"
 	xmlns:h="http://www.w3.org/1999/xhtml">
 	<Page
-		title			= "{global_blog_model>/title}"
+		title			= "Posts"
 		showNavButton	= "true"
 		navButtonPress	= "handleNavButtonBackPress"
 		showFooter		= "{device>/isNoPhone}" >

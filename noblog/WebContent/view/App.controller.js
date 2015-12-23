@@ -9,7 +9,7 @@ sap.ui.controller("view.App", {
 		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
 		
-		this._oLoginPopover = sap.ui.xmlfragment("view.popover.LoginPopover", this);
+		this._oLoginPopover = sap.ui.xmlfragment("view.fragment.LoginPopover", this);
 		this._oView.addDependent(this._oLoginPopover);
 	},
 	

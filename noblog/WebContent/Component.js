@@ -20,7 +20,7 @@ sap.ui.define([
 					viewType	: "XML",
 					viewPath	: "view",
 					controlId	: "splitApp",
-					transition	: "show",
+					transition	: "slide",
 					bypassed 	: {
 						target: ["blogListView", "recentBlogPostsView", "notFound"]
 					}
@@ -51,8 +51,7 @@ sap.ui.define([
 					postListView: {
 						viewName: "master.PostList",
 						viewLevel: 1,
-						controlAggregation: "masterPages",
-						transition: "slide"
+						controlAggregation: "masterPages"
 					},
 					notFound: {
 						viewName: "detail.NotFound",
@@ -62,13 +61,14 @@ sap.ui.define([
 					recentBlogPostsView : {
 						viewName: "detail.RecentBlogPosts",
 						viewLevel: 2,
-						controlAggregation: "detailPages"
+						controlAggregation: "detailPages",
+						transition: "show"
 					},
 					blogPostsView : {
 						viewName: "detail.BlogPosts",
 						viewLevel: 2,
 						controlAggregation: "detailPages",
-						transition: "fade"
+						transition: "show"
 					},
 					blogPostDetailView : {
 						viewName: "detail.BlogPostDetail",

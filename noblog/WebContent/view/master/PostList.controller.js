@@ -2,6 +2,9 @@ jQuery.sap.require("util.Formatter");
 
 sap.ui.controller("view.master.PostList", {
 	
+	//FIXME counter to prevent over-navigation. Replace with proper method!
+	_navCounter : 0,
+	
 	onInit : function () {
 		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
@@ -16,8 +19,13 @@ sap.ui.controller("view.master.PostList", {
 		this._sBlogId = oEvent.getParameter("arguments").id;
 		
 		// load blog info and reset search
-		this._loadBlog();
-		this._resetSearch();
+		if( this._navCounter == 0 ) {
+			this._loadBlog();
+			this._resetSearch();
+		}
+		
+		// FIXME reset counter
+		this._navCounter = 0;
 	},
 	
 	handlePostListItemPressed : function (oEvent) {
@@ -33,8 +41,13 @@ sap.ui.controller("view.master.PostList", {
 		var iIndex		= parseInt(sIndex);
 		var sBlogId		= this._sBlogId;
 		
+		// FIXME should be always true but one navigation is left out here so use a counter to determine 2nd navigation
+		var bSaveNavigation = (this._navCounter > 0);
+		this._navCounter++;
+		// ------------------
+		
 		// and navigate
-		this._oComponent.navTo("post", { id : sBlogId, index : iIndex }, true)
+		this._oComponent.navTo("post", { id : sBlogId, index : iIndex }, bSaveNavigation);
 	},
 
 	handleSearch : function(oEvent) {
@@ -49,7 +62,7 @@ sap.ui.controller("view.master.PostList", {
 	},
 	
 	handleNavButtonBackPress: function(oEvent) {
-		this._oComponent.navBack();
+		this._oComponent.navTo("home");
 	},
 	
 	// PRIVATE

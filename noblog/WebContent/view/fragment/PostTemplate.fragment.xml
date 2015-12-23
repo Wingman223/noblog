@@ -1,0 +1,23 @@
+<Panel class="sapUiSmallMarginTop">
+	<content>
+		<FlexBox direction="Column" alignItems="Stretch">
+			<Toolbar class="sapUiSmallMarginBottom">
+				<Title text="{value/title}"/>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://edit"/>
+			</Toolbar>
+			<Image
+				src		= "{value/pictureUrl}"
+				visible	= "{=${value/pictureUrl} ? true : false}"
+				width	= "250px"
+			>
+			</Image>
+			<Text
+				text	= "{value/content}">
+			</Text>
+			<FlexBox alignItems="End" justifyContent="End" class="noblogFlexBoxBorderTop">
+				<Text text="Created at: {value/creationDate} from: ?"/>
+			</FlexBox>
+		</FlexBox>
+	</content>
+</Panel>

@@ -2,6 +2,8 @@
 		controllerName="view.detail.BlogPostDetail" xmlns:html="http://www.w3.org/1999/xhtml">
 	<Page
 		title			= "{global_blog_model>title}"
+		showNavButton	= "true"
+		navButtonPress	= "handleNavButtonBackPress"
 		enableScrolling	= "true">
 		<headerContent>
 			<Button

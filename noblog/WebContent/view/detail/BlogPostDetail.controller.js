@@ -23,5 +23,9 @@ sap.ui.controller("view.detail.BlogPostDetail", {
 	handleButtonLogInPress: function(oEvent) {
 		var oSource = oEvent.getSource();
 		this._oComponent.showLoginPopup(oSource);
+	},
+	
+	handleNavButtonBackPress: function() {
+		this._oComponent.navBack();
 	}
 });

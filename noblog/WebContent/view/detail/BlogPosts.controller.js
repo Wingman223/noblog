@@ -1,5 +1,5 @@
 sap.ui.controller("view.detail.BlogPosts", {
-
+	
 	onInit : function () {
 		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
