@@ -39,29 +39,3 @@ model.Config.getHost = function() {
 	
 	return "http://localhost:" + iPort + "/noblog";
 };
-
-/*
-(function () {
-	var responderOn = jQuery.sap.getUriParameters().get("responderOn");
-	model.Config.isMock = ("true" === responderOn);
-}
-)();
-
-model.Config.getUser = function () {
-	
-	return "ESPM_TEST";
-
-};
-
-model.Config.getPwd = function () {
-	
-	return "Espm1234";
-
-};
-
-model.Config.getHost = function () {
-	
-	return "../../../../../proxy/http/ec2-54-225-119-138.compute-1.amazonaws.com:50000";
-
-};
-*/
