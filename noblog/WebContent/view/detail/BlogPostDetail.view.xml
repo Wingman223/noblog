@@ -1,0 +1,14 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+		controllerName="view.detail.BlogPostDetail" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page
+		title			= "{global_blog_model>title}"
+		enableScrolling	= "true">
+		<footer>
+			<Toolbar>
+			</Toolbar>
+		</footer>
+		<content>
+			
+		</content>
+	</Page>
+</core:View>

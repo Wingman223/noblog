@@ -1,27 +1,27 @@
 <mvc:View
-	controllerName="view.detail.BlogAndPost"
+	controllerName="view.detail.BlogPosts"
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc" >
 	<Page
 		title="{i18n>WELCOME_TITLE}"
 		enableScrolling="true"
-		content="{postModel>/posts}">
+		content="{global_blog_model>/posts}">
 		<footer>
 			<Toolbar>
 			</Toolbar>
 		</footer>
 		<content>
-			<Panel headerText="{postModel>title}">
+			<Panel headerText="{global_blog_model>title}">
 				<content>
 					<Image
-						src="{postModel>pictureUrl}"
-						visible="{=${postModel>pictureUrl} ? true : false}"
+						src="{global_blog_model>pictureUrl}"
+						visible="{=${global_blog_model>pictureUrl} ? true : false}"
 						width="250px"
 					>
 					</Image>
 					<Text
-						text="{postModel>content}">
+						text="{global_blog_model>content}">
 					</Text>
 				</content>
 			</Panel>

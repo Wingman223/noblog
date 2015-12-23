@@ -32,12 +32,12 @@ sap.ui.define([
 					{
 						pattern	: "blog/{id}",
 						name	: "blog",
-						target	: ["postListView", "blogPostsView"]
+						target	: ["postListView", "blogPostsView"],
 					},
 					{
-						pattern	: "post/{id}",
+						pattern	: "blog/{id}/post/{index}",
 						name	: "post",
-						target	: "postView"
+						target	: "blogPostDetailView"
 					}
 				],
 				targets : {
@@ -64,6 +64,11 @@ sap.ui.define([
 					blogPostsView : {
 						viewName: "detail.BlogPosts",
 						viewLevel: 2,
+						controlAggregation: "detailPages"
+					},
+					blogPostDetailView : {
+						viewName: "detail.BlogPostDetail",
+						viewLevel: 3,
 						controlAggregation: "detailPages"
 					}
 				}

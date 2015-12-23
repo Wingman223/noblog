@@ -17,7 +17,7 @@ sap.ui.controller("view.master.BlogList", {
 		this._resetSearch();
 	},
 	
-	handleBlogListItemPress : function (oEvent) {
+	handleBlogListItemPressed : function (oEvent) {
 		// get selected blog id from item
 		var oSource		= oEvent.getSource();
 		var oContext	= oSource.getBindingContext("blogs");

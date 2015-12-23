@@ -20,8 +20,21 @@ sap.ui.controller("view.master.PostList", {
 		this._resetSearch();
 	},
 	
-	handleBlogListItemPress : function (oEvent) {
-		console.log(oEvent);
+	handlePostListItemPressed : function (oEvent) {
+		var oSource		= oEvent.getSource();
+		
+		// get selected index of post item
+		// for that get binding context path and split at last index "/"
+		var oContext	= oSource.getBindingContext("global_blog_model");
+		var sPath		= oContext.getPath();
+		var sIndex		= sPath.substring(sPath.lastIndexOf("/") + 1, sPath.length);
+		
+		// now we can assemble the information we need for navigation
+		var iIndex		= parseInt(sIndex);
+		var sBlogId		= this._sBlogId;
+		
+		// and navigate
+		this._oComponent.navTo("post", { id : sBlogId, index : iIndex })
 	},
 
 	handleSearch : function(oEvent) {
@@ -41,6 +54,10 @@ sap.ui.controller("view.master.PostList", {
 	
 	// PRIVATE
 	
+	/**
+	 * Loads the blog document and makes ist globally available
+	 */
+	
 	_loadBlog : function(oEvent) {
 		// make sure that this._sBlogId is filled
 		if( this._sBlogId && typeof this._sBlogId === "string" ) {
@@ -48,7 +65,7 @@ sap.ui.controller("view.master.PostList", {
 			var sPath	= model.Config.getDocument(this._sBlogId);
 			oModel.loadData(sPath);
 			
-			this._oComponent.setModel(oModel, "postModel");
+			this._oComponent.setModel(oModel, "global_blog_model");
 		}
 	},
 	

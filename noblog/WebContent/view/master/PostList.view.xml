@@ -5,7 +5,7 @@
 	xmlns:control="control"
 	xmlns:h="http://www.w3.org/1999/xhtml">
 	<Page
-		title			= "{postModel>/title}"
+		title			= "{global_blog_model>/title}"
 		showNavButton	= "true"
 		navButtonPress	= "handleNavButtonBackPress"
 		showFooter		= "{device>/isNoPhone}" >
@@ -30,19 +30,19 @@
 				id		= "id_view_postlist_list_posts"
 				mode	= "None"
 				items	= "{
-					model	: 'postModel',
+					model	: 'global_blog_model',
 					path 	: '/posts',
 					sorter 	: {
-						model		: 'postModel',
+						model		: 'global_blog_model',
 						path 		: 'id',
 						descending	: false
 					}
 				}">
 				<items>
 					<StandardListItem
-						title	= "{postModel>title}"
+						title	= "{global_blog_model>title}"
 						type	= "Active"
-						press	= "handlePostListViewListItemPostsPressed" >
+						press	= "handlePostListItemPressed" >
 					</StandardListItem>
 				</items>
 			</List>

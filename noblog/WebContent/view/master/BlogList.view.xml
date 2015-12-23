@@ -38,7 +38,7 @@
 					<StandardListItem
 						title="{blogs>value/name}"
 						type="Active"
-						press="handleBlogListItemPress" >
+						press="handleBlogListItemPressed" >
 					</StandardListItem>
 				</items>
 			</List>
