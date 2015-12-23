@@ -29,7 +29,7 @@ sap.ui.define([
 			return oBlog;
 		},
 		
-		saveBlog: function(oBlog) {
+		createBlog: function(oBlog) {
 			
 		},
 		
@@ -39,11 +39,7 @@ sap.ui.define([
 		
 		removeBlog: function(sId) {
 			//TODO not implemented
-		},
-		
-		_onRequestSuccess: function(oEvent) {
-			
-		},
+		}
 	});
 	
 	com.team6.noblog.model.dao.BlogDAO.getInstance = function() {
