@@ -8,7 +8,7 @@ sap.ui.define([
 	var Blog = ManagedObject.extend("com.team6.noblog.model.dao.Blog", {
 		metadata : {
 			properties : {
-				id 				: {type : "string", group : "Data", defaultValue : null},
+				blogid 			: {type : "string", group : "Data", defaultValue : null},
 				type			: {type : "string", group : "Data", defaultValue : "blog"},
 				title 			: {type : "string", group : "Data", defaultValue : null},
 				creationDate	: {type : "object", group : "Data", defaultValue : null}
@@ -55,7 +55,7 @@ sap.ui.define([
 		
 		_mapServiceDataToBlogDTA: function(oData) {
 			// map properties from service to dta
-			this.setProperty("id"			, oData["_id"]);
+			this.setProperty("blogid"		, oData["_id"]);
 			this.setProperty("type"			, oData["type"]);
 			this.setProperty("creationDate"	, new Date(oData["creationDate"]));
 			this.setProperty("title"		, oData["title"]);
@@ -73,7 +73,7 @@ sap.ui.define([
 		_mapBlogDTAToServiceData: function() {
 			// Get blog and user data
 			var oData = {
-				_id 			: this.getId(),
+				_id 			: this.getBlogid(),
 				type			: this.getType(),
 				title			: this.getTitle(),
 				creationDate	: this.getCreationDate(),
