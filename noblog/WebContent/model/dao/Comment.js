@@ -31,7 +31,9 @@ sap.ui.define([
 			this.setProperty("creationDate"	, new Date(oData["creationDate"]));
 			
 			// map user to user dta
-			this.setAggregation("user"		, new User(oData));
+			var oUser = new User();
+			oUser.setUserData(oData);
+			this.setAggregation("user"		, oUser);
 		},
 		
 		_mapCommentDTAToServiceData: function() {

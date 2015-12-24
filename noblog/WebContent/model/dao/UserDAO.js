@@ -19,11 +19,20 @@ sap.ui.define([
 		},
 		
 		tryLogin: function(sUsername, sPassword, fnCallback) {
-			var oModel 	= new JSONModel();
-			var oUser	= new User(oModel);
-			var sPath	= Config.getDocument(sId);
 			
-			oModel.loadData(sPath);
+			var oModel 	= new JSONModel();
+			var oUser	= new User();
+			var sPath	= Config.getUser(sUsername);
+			
+			// first set model so that the DAO can register events
+			oUser.setUserModel(oModel, fnCallback);
+			
+			// Now load the data
+			// When username and password are correct the user is be able to get his information from the server
+			// Either this fails or succeeds so we know when the credentials are wrong
+			oModel.loadData(sPath, null, true, "GET", false, false, {
+				Authorization : "Basic " + window.btoa(sUsername + ":" + sPassword)
+			});
 			
 			return oUser;
 		},

@@ -38,14 +38,14 @@ sap.ui.define([
 			var bSuccess = oEvent.getParameter("success");
 			
 			if( bSuccess ) {
-				var oData 		= this._oModel.getData();
+				var oData = this._oModel.getData();
 				this._mapServiceDataToBlogDTA(oData);
 				
 				var oParsedData = this._mapBlogDTAToServiceData();
 				console.log(oData);
 				console.log(oParsedData);
 			} else {
-				throw new Error("Failed to load blog data!");
+				console.warn("Failed to load blog data!");
 			}
 		},
 		
@@ -61,7 +61,9 @@ sap.ui.define([
 			this.setProperty("title"		, oData["title"]);
 			
 			// map userid and username to user dta
-			this.setAggregation("user"		, new User(oData));
+			var oUser = new User();
+			oUser.setUserData(oData);
+			this.setAggregation("user"		, oUser);
 			
 			// map posts to post dta
 			var aPosts = oData["posts"];

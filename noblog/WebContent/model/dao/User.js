@@ -6,25 +6,52 @@ sap.ui.define([
 	var User = ManagedObject.extend("com.team6.noblog.model.dao.User", {
 		metadata : {
 			properties : {
-				userid 		: {type : "string", group : "Data", defaultValue : null},
-				type		: {type : "string", group : "Data", defaultValue : "user"},
-				username 	: {type : "string", group : "Data", defaultValue : null},
-				surname		: {type : "string", group : "Data", defaultValue : null},
-				prename		: {type : "string", group : "Data", defaultValue : null},
-				email		: {type : "string", group : "Data", defaultValue : null},
+				userid 		: {type : "string"	, group : "Data", defaultValue : null},
+				type		: {type : "string"	, group : "Data", defaultValue : "user"},
+				username 	: {type : "string"	, group : "Data", defaultValue : null},
+				surname		: {type : "string"	, group : "Data", defaultValue : null},
+				prename		: {type : "string"	, group : "Data", defaultValue : null},
+				email		: {type : "string"	, group : "Data", defaultValue : null},
 				roles		: {type : "string[]", group : "Data", defaultValue : null},
-				password	: {type : "string", group : "Data", defaultValue : null},
+				password	: {type : "string"	, group : "Data", defaultValue : null},
 			}
 		},
 		
+		_oModel: null,
+		
 		constructor: function(oUserData) {
 			ManagedObject.prototype.constructor.apply(this);
-			
-			this._mapServiceDataToUserDTA(oUserData)
+		},
+		
+		setUserData: function(oUserData) {
+			this._mapServiceDataToUserDTA(oUserData);
+		},
+		
+		setUserModel: function(oUserModel, fnCallback) {
+			this._oModel = oUserModel;
+			this._oModel.attachRequestCompleted(function(oEvent) {
+				this._parseDataInModelContext(oEvent, fnCallback);
+			}, this);
 		},
 		
 		getServiceData: function() {
 			return this._mapUserDTAToServiceData();
+		},
+		
+		_parseDataInModelContext: function(oEvent, fnCallback) {
+			var bSuccess = oEvent.getParameter("success");
+			if( bSuccess ) {
+				var oData = this._oModel.getData();
+				this._mapServiceDataToUserDTA(oData, true);
+				
+				var oParsedData = this._mapUserDTAToServiceData(true);
+				console.log(oData);
+				console.log(oParsedData);
+			} else {
+				console.warn("Failed to load user data!");
+			}
+			
+			fnCallback(bSuccess);
 		},
 		
 		_mapServiceDataToUserDTA: function(oData, bFull) {

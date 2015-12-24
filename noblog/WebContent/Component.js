@@ -5,13 +5,15 @@ sap.ui.define([
 	'sap/ui/model/odata/ODataModel',
 	'sap/ui/model/json/JSONModel',
 	'model/dao/BlogDAO',
+	'model/dao/UserDAO',
 	'model/Config'
 ], function (UIComponent,
 			Router,
 			ResourceModel,
 			ODataModel,
 			JSONModel,
-			BlogDAO) {
+			BlogDAO,
+			UserDAO) {
 
 	return UIComponent.extend("com.team6.noblog.Component", {
 		metadata: {
@@ -90,13 +92,16 @@ sap.ui.define([
 		init: function () {
 			UIComponent.prototype.init.apply(this, arguments);
 			
-			// Initialize models
-			
+			// DAO TEST AREA
+			/*
 			var oInstance = BlogDAO.getInstance();
 			oInstance.loadBlog("03a3f3ced13ccb7ddb4da7259a000ee6");
 			
-			// get config
-			// jQuery.sap.require("model.Config");
+			var oInstance2 = UserDAO.getInstance();
+			oInstance2.tryLogin("meinuser", "test");
+			*/
+			
+			// Initialize models
 			
 			// I18N MODEL
 			var oI18nModel = new ResourceModel({

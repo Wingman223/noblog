@@ -14,11 +14,11 @@
 			<Page enableScrolling="false" title="Login">
 				<l:VerticalLayout width="100%" height="100%" class="sapUiContentPadding">
 					<Label text="Username"/>
-					<Input width="100%"/>
+					<Input width="100%" value="{login>username}"/>
 					<Label text="Password"/>
-					<Input width="100%" class="sapUiMarginBottom"/>
-					<Button width="100%" type="Accept" text="Login" press=".handlePress"/>
-					<Link text="New here? Register now!" press=".handlePress" />
+					<Input width="100%" value="{login>password}" type="Password" class="sapUiMarginBottom" />
+					<Button width="100%" type="Accept" text="Login" press="handleButtonLoginPressed"/>
+					<Link text="New here? Register now!" press="handleButtonRegisterPressed" />
 				</l:VerticalLayout>
 			</Page>
 			<Page>
