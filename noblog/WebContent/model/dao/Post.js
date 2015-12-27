@@ -1,10 +1,10 @@
 sap.ui.define([
-	'sap/ui/base/ManagedObject',
+	'model/dao/base/Observable',
 	'model/dao/Comment'
-], function (ManagedObject, Comment) {
+], function (Observable, Comment) {
 	"use strict";
 	
-	var Post = ManagedObject.extend("com.team6.noblog.model.dao.Post", {
+	var Post = Observable.extend("com.team6.noblog.model.dao.Post", {
 		metadata : {
 			properties : {
 				title 			: {type : "string"	, group : "Data", defaultValue : null},

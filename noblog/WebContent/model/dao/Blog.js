@@ -2,7 +2,7 @@ sap.ui.define([
 	'model/dao/base/Observable',
 	'model/dao/Post',
 	'model/dao/User'
-], function (DataObject, Context, Post, User) {
+], function (Observable, Post, User) {
 	"use strict";
 	
 	var Blog = Observable.extend("com.team6.noblog.model.dao.Blog", {

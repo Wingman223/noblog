@@ -1,6 +1,6 @@
 sap.ui.define([
 	'sap/ui/base/ManagedObject'
-], function (ManagedObject, Context) {
+], function (ManagedObject) {
 	"use strict";
 	
 	var Observable = ManagedObject.extend("com.team6.noblog.model.dao.base.Observable", {

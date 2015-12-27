@@ -1,10 +1,10 @@
 sap.ui.define([
-	'sap/ui/base/ManagedObject',
+	'model/dao/base/Observable',
 	'model/dao/User'
-], function (ManagedObject, User) {
+], function (Observable, User) {
 	"use strict";
 	
-	var Comment = ManagedObject.extend("com.team6.noblog.model.dao.Comment", {
+	var Comment = Observable.extend("com.team6.noblog.model.dao.Comment", {
 		metadata : {
 			properties : {
 				creationDate	: {type : "object"	, group : "Data", defaultValue : null},
