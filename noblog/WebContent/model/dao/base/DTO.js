@@ -5,11 +5,22 @@ sap.ui.define([
 	"use strict";
 	
 	var DTO = ManagedObject.extend("com.team6.noblog.model.dao.base.DTO", {
+		metadata : {
+			events : {
+				// event for callback when blog data is available
+				dataLoaded : {
+					
+				},
+				dataError : {
+					
+				}
+			}
+		},
 		
 		_oModel 	: null,
 		_oContext 	: null,
 		
-		constructor: function(oModel, sPath) {
+		constructor: function(oModel, sPath, bDataNotLoaded) {
 			ManagedObject.prototype.constructor.apply(this);
 			
 			// check if all required variables are filled
@@ -21,6 +32,21 @@ sap.ui.define([
 			// set private properties
 			this._oModel	= oModel;
 			this._oContext 	= this.createBindingContext(oModel, sPath);
+			
+			if(bDataNotLoaded) {
+				// if data is not loaded, attach model event to wait for data to arrive
+				this._oModel.attachRequestCompleted(this._parseDataInModelContext, this);
+			}
+		},
+		
+		_parseDataInModelContext: function(oEvent) {
+			var bSuccess = oEvent.getParameter("success");
+			if( bSuccess ) {
+				this._mapServiceDataToDTO(this._oModel.getData(), true);
+				this.fireDataLoaded({});
+			} else {
+				this.fireDataError({});
+			}
 		},
 		
 		getModel: function() {

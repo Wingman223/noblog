@@ -14,29 +14,36 @@ sap.ui.define([
 				creationDate	: {type : "object", group : "Data", defaultValue : new Date()}
 			},
 			aggregations : {
-				user			: {type : "com.team6.noblog.model.dao.User", multiple : false},
-				posts			: {type : "com.team6.noblog.model.dao.Post", multiple : true, singularName : "post"}
+				user			: {type : "com.team6.noblog.model.dao.UserDTO", multiple : false},
+				posts			: {type : "com.team6.noblog.model.dao.PostDTO", multiple : true, singularName : "post"}
 			}
 		},
 		
 		constructor: function(sBlogid, sTitle, oCreationDate, oUser) {
-			ManagedObject.prototype.constructor.apply(this);
+			Observable.prototype.constructor.apply(this);
 			
 			// check if all required variables are filled
 			if(!(sTitle || oCreationDate || oUser)) {
-				throw new Error("Blog.js : Not all required fields are filled");
+				throw new Error("Not all required fields are filled!");
 				return;
 			}
 			
 			// required
 			this.setProperty("title", sTitle);
-			this.setProperty("creationDAte", oCreationDate);
+			this.setProperty("creationDate", oCreationDate);
 			this.setAggregation("user", oUser);
 			
 			// optional
-			if( sId ) {
+			if( sBlogid ) {
 				this.setProperty("blogid", sBlogid);
 			}
+		},
+		
+		// GETTER / SETTER
+		// Only the ones that have been overridden. Rest is added by framework
+		
+		setType: function(sType) {
+			// noop : type is always "blog"
 		}
 	});
 	

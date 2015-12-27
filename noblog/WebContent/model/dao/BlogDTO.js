@@ -7,22 +7,12 @@ sap.ui.define([
 	"use strict";
 	
 	var BlogDTO = DTO.extend("com.team6.noblog.model.dao.BlogDTO", {
-		metadata : {
-			events : {
-				// event for callback when blog data is available
-				dataLoaded : {
-					
-				}
-			}
-		},
 		
 		_oBlog		: null,
 		
 		constructor: function(oModel) {
-			DTO.prototype.constructor.apply(this, [oModel, "/"]);
-			
-			// attach model event
-			this._oModel.attachRequestCompleted(this._mapServiceDataToDTO, this);
+			// set default path as "/" and that the data is not loaded yet
+			DTO.prototype.constructor.apply(this, [oModel, "/", true]);
 		},
 		
 		// GETTER / SETTER
@@ -47,69 +37,53 @@ sap.ui.define([
 			console.log("change");
 		},
 		
-		_parseDataInModelContext: function(oEvent) {
-			var bSuccess = oEvent.getParameter("success");
-			if( bSuccess ) {
-				var oData = this._oModel.getData();
-				var oBlog = this._mapServiceDataToBlogDTO(oData, oBlog);
-				
-				oBlog.attachChange(this._onBlogDataChanged, this);
-				
-				/*
-				var oParsedData = this._mapBlogDTOToServiceData();
-				console.log(oData);
-				console.log(oParsedData);
-				*/
-			} else {
-				console.warn("Failed to load blog data!");
-			}
-		},
-		
 		_mapServiceDataToDTO: function(oData) {
-			
-			var oUserDTA		= new UserDTA(oModel, sPath);
-			var oPostDTA		= new PostDTA(oModel, sPath);
-			
 			var sId				= oData["_id"];
 			var sTitle			= oData["title"];
 			var sType			= oData["type"];
 			var sCreationDate 	= new Date(oData["creationDate"]);
+			var oUser			= new UserDTO(oModel, "/");
 			
-			var oBlog 			= new Blog(sId, sTitle, oCreationDate);
-			
-			// map userid and username to user DTO
-			var oUser = new User();
-			oUser.setUserData(oData);
-			this.setAggregation("user"		, oUser);
+			var oBlog 			= new Blog(sId, sTitle, oCreationDate, oUser);
 			
 			// map posts to post DTO
-			var aPosts = oData["posts"];
+			var aPosts 			= oData["posts"];
 			for( var i=0; i<aPosts.length; i++ ) {
-				this.addAggregation("posts", new Post(aPosts[i]))
+				oBlog.addPost(new PostDTO(oModel, "/posts" + i));
 			}
+			
+			// save and attach to changes
+			this._oBlog = oBlog;
+			this._oBlog.attachChange(this._onBlogDataChanged, this);
 		},
 		
 		_mapDTOToServiceData: function() {
-			// Get blog and user data
-			var oData = {
-				_id 			: this.getBlogid(),
-				type			: this.getType(),
-				title			: this.getTitle(),
-				creationDate	: this.getCreationDate(),
-				posts			: []
-			};
-			var oUser 	= this.getUser().getServiceData();
-			
-			// Merge them together
-			jQuery.sap.extend(oData, oUser);
-			
-			// Add posts afterwards
-			var aPosts 	= this.getPosts();
-			for( var i=0; i<aPosts.length; i++ ) {
-				oData.posts.push(aPosts[i].getServiceData());
+			if( this._oBlog ) {
+				
+				// Get blog and user data
+				var oData = {
+					_id 			: this._oBlog.getBlogid(),
+					type			: this._oBlog.getType(),
+					title			: this._oBlog.getTitle(),
+					creationDate	: this._oBlog.getCreationDate(),
+					posts			: []
+				};
+				var oUser = this._oBlog.getUser().getServiceData();
+
+				// Merge them together
+				jQuery.sap.extend(oData, oUser);
+				
+				// Add posts afterwards
+				var aPosts = this._oBlog.getPosts();
+				for( var i=0; i<aPosts.length; i++ ) {
+					oData.posts.push(aPosts[i].getServiceData());
+				}
+				
+				return oData;
+				
+			} else {
+				throw new Error("No blog data available!");
 			}
-			
-			return oData;
 		}
 	});
 	

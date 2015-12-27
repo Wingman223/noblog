@@ -17,35 +17,54 @@ sap.ui.define([
 		// overridden getter / setter from the framework to alter the behavior ( readonly )
 		
 		// General catch for property changes
-		setProperty : function() {
-			ManagedObject.prototype.setProperty.apply(this, arguments);
-			this.fireChange();
+		setProperty : function(sPropertyName, oValue, bSuppressInvalidate, bSuppressChangeEvent) {
+			ManagedObject.prototype.setProperty.apply(this, [sPropertyName, oValue, true]);
+			if(!bSuppressChangeEvent) {
+				this.fireChange();
+			}
 		},
 		
 		// General catch for aggregation changes
-		setAggregation: function() {
-			ManagedObject.prototype.setAggregation.apply(this, arguments);
-			this.fireChange();
+		setAggregation: function(sAggregationName, oObject, bSuppressInvalidate, bSuppressChangeEvent) {
+			ManagedObject.prototype.setAggregation.apply(this, [sAggregationName, oObject, true]);
+			if(!bSuppressChangeEvent) {
+				this.fireChange();
+			}
 		},
 		
-		addAggregation: function() {
-			ManagedObject.prototype.addAggregation.apply(this, arguments);
-			this.fireChange();
+		addAggregation: function(sAggregationName, oObject, bSuppressInvalidate, bSuppressChangeEvent) {
+			ManagedObject.prototype.addAggregation.apply(this, [sAggregationName, oObject, true]);
+			if(!bSuppressChangeEvent) {
+				this.fireChange();
+			}
 		},
 		
-		insertAggregation: function() {
-			ManagedObject.prototype.insertAggregation.apply(this, arguments);
-			this.fireChange();
+		insertAggregation: function(sAggregationName, oObject, iIndex, bSuppressInvalidate, bSuppressChangeEvent) {
+			ManagedObject.prototype.insertAggregation.apply(this, [sAggregationName, oObject, iIndex, true]);
+			if(!bSuppressChangeEvent) {
+				this.fireChange();
+			}
 		},
 		
-		removeAggregation: function() {
-			ManagedObject.prototype.removeAggregation.apply(this, arguments);
-			this.fireChange();
+		removeAggregation: function(sAggregationName, vObject, bSuppressInvalidate, bSuppressChangeEvent) {
+			ManagedObject.prototype.removeAggregation.apply(this, [sAggregationName, vObject, true]);
+			if(!bSuppressChangeEvent) {
+				this.fireChange();
+			}
 		},
 		
-		removeAllAggregation: function() {
-			ManagedObject.prototype.removeAllAggregation.apply(this, arguments);
-			this.fireChange();
+		removeAllAggregation: function(sAggregationName, bSuppressInvalidate, bSuppressChangeEvent) {
+			ManagedObject.prototype.removeAllAggregation.apply(this, [sAggregationName, true]);
+			if(!bSuppressChangeEvent) {
+				this.fireChange();
+			}
+		},
+		
+		destroyAggregation: function(sAggregationName, bSuppressInvalidate, bSuppressChangeEvent) {
+			ManagedObject.prototype.destroyAggregation.apply(this, [sAggregationName, true]);
+			if(!bSuppressChangeEvent) {
+				this.fireChange();
+			}
 		}
 	});
 	

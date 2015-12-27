@@ -15,39 +15,18 @@ sap.ui.define([
 			}
 		},
 			
-		constructor: function(oCommentData) {
-			ManagedObject.prototype.constructor.apply(this);
+		constructor: function(oUser, oCreationDate, sContent) {
+			Observable.prototype.constructor.apply(this);
 			
-			this._mapServiceDataToCommentDTA(oCommentData)
-		},
-		
-		getServiceData: function() {
-			return this._mapCommentDTAToServiceData();
-		},
-		
-		_mapServiceDataToCommentDTA: function(oData) {
-			// map properties from service to dta
-			this.setProperty("content"		, oData["content"]);
-			this.setProperty("creationDate"	, new Date(oData["creationDate"]));
-			
-			// map user to user dta
-			var oUser = new User();
-			oUser.setUserData(oData);
-			this.setAggregation("user"		, oUser);
-		},
-		
-		_mapCommentDTAToServiceData: function() {
-			// Get comment and user data
-			var oData = {
-				content 		: this.getContent(),
-				creationDate 	: this.getCreationDate()
+			if(!(oUser || oCreationDate || sContent)) {
+				throw new Error("Not all required fields are filled!");
+				return;
 			}
-			var oUser = this.getUser().getServiceData();
 			
-			// Merge them together
-			jQuery.extend(oData, oUser);
-			
-			return oData;
+			// required
+			this.setProperty("creationDate"	, oCreationDate);
+			this.setProperty("content"		, sContent);
+			this.setAggregation("user"		, oUser);
 		}
 	});
 	
