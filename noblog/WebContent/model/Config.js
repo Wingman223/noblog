@@ -21,8 +21,8 @@ model.Config.getLatestBlogPostsServiceUrl = function() {
  * @param sUsername
  * @returns {String}
  */
-model.Config.getUser = function(sUsername) {
-	return model.Config.getDB("_users") + "/org.couchdb.user:" +  sUsername;
+model.Config.getUser = function(sUserid) {
+	return model.Config.getDB("_users") + sUserid;
 };
 
 /**

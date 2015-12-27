@@ -28,7 +28,7 @@ sap.ui.define([
 		},
 		
 		_mapServiceDataToPostDTA : function(oData) {
-			// map properties from service to dta
+			// map properties from service to dto
 			this.setProperty("title"		, oData["title"]);
 			this.setProperty("content"		, oData["content"]);
 			this.setProperty("creationDate"	, new Date(oData["creationDate"]));
