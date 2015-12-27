@@ -28,7 +28,9 @@ sap.ui.define([
 			
 			oBlogDTO.attachDataLoaded(function(oEvent) {
 				console.log("Parsing data in DTOs completed!");
-				fnCallback(oBlogDTO);
+				if( fnCallback ) {
+					fnCallback();
+				}
 			});
 			oBlogDTO.attachDataError(function(oEvent) {
 				console.log("Error while loading data");

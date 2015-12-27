@@ -9,8 +9,8 @@ sap.ui.define([
 		_oUser 	: null,
 		_bFull	: false,
 		
-		constructor: function(oModel, sPath, bFull) {
-			DTO.prototype.constructor.apply(this, [oModel, sPath]);
+		constructor: function(oModel, sPath, bDataNotLoaded, bFull) {
+			DTO.prototype.constructor.apply(this, [oModel, sPath, bDataNotLoaded]);
 			
 			// optional
 			if( bFull ) {

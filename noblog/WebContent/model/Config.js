@@ -22,7 +22,7 @@ model.Config.getLatestBlogPostsServiceUrl = function() {
  * @returns {String}
  */
 model.Config.getUser = function(sUserid) {
-	return model.Config.getDB("_users") + sUserid;
+	return model.Config.getDB("_users") + "/" + sUserid;
 };
 
 /**

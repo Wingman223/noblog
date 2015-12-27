@@ -22,13 +22,17 @@ sap.ui.define([
 		constructor: function(sUserid, sUsername, sPassword, sPrename, sSurname, sEmail, aRoles) {
 			Observable.prototype.constructor.apply(this);
 			
-			if(!(sUserid && sUsername)) {
+			if(!(sUsername)) {
 				throw new Error("Not all required fields are filled!");
 			}
 			
 			// required
-			this.setProperty("userid", sUserid);
-			this.setProperty("username", sUsername);
+			if( sUserid ) {
+				this.setProperty("userid"	, sUserid);
+				this.setProperty("username"	, sUsername);
+			} else {
+				this.setUsername(sUsername);
+			}
 			
 			// optional
 			if(sPassword){this.setProperty("password", sPassword);}

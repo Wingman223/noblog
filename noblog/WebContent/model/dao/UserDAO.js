@@ -4,8 +4,9 @@ sap.ui.define([
 	'sap/ui/base/Object',
 	'sap/ui/model/json/JSONModel',
 	'model/dao/User',
+	'model/dao/UserDTO',
 	'model/Config'
-], function (Object, JSONModel, User, Config) {
+], function (Object, JSONModel, User, UserDTO, Config) {
 	"use strict";
 	
 	var UserDAO = Object.extend("com.team6.noblog.model.dao.UserDAO", {
@@ -22,14 +23,23 @@ sap.ui.define([
 			
 			var oModel 	= new JSONModel();
 			
-			// user user dta to generate userid needed for path
-			// and to have a working object for authentication
-			var oUser	= new User(sUsername, sPassword);
-			var sPath	= Config.getUser(oUser.getUserid());
+			// build path to get userid from _users db
+			var oUser		= new User(null, sUsername, sPassword);
+			var oUserDTO	= new UserDTO(oModel, "/", true, true);
+			var sPath		= Config.getUser(oUser.getUserid());
 			
-			// now set model so that the DTA can register events
+			// now set model so that the DTO can register events
 			// also here is a hook for a callback when the dta finished processing
-			oUser.setUserModel(oModel, fnCallback);
+			oUserDTO.attachDataLoaded(function() {
+				if( fnCallback ) {
+					fnCallback(true);
+				}
+			});
+			oUserDTO.attachDataError(function(){
+				if( fnCallback ) {
+					fnCallback(false);
+				}
+			});
 			
 			// Try to load userdata for user
 			// When username and password are correct the user is able to get his information from the server
@@ -38,7 +48,7 @@ sap.ui.define([
 				Authorization : "Basic " + window.btoa(sUsername + ":" + sPassword)
 			});
 			
-			return oUser;
+			return oUserDTO;
 		},
 		
 		getUser: function() {
