@@ -11,7 +11,7 @@ sap.ui.define([
 				content			: {type : "string"	, group : "Data", defaultValue : null}
 			},
 			aggregations : {
-				user			: {type : "com.team6.noblog.model.dao.User", multiple : false},
+				user			: {type : "com.team6.noblog.model.dao.UserDTO", multiple : false},
 			}
 		},
 			

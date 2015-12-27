@@ -38,18 +38,21 @@ sap.ui.define([
 		},
 		
 		_mapServiceDataToDTO: function(oData) {
+			
+			var sPath			= this.getPath();
+			
 			var sId				= oData["_id"];
 			var sTitle			= oData["title"];
 			var sType			= oData["type"];
-			var sCreationDate 	= new Date(oData["creationDate"]);
-			var oUser			= new UserDTO(oModel, "/");
+			var oCreationDate 	= new Date(oData["creationDate"]);
+			var oUserDTO		= new UserDTO(this._oModel, "/");
 			
-			var oBlog 			= new Blog(sId, sTitle, oCreationDate, oUser);
+			var oBlog 			= new Blog(sId, sTitle, oCreationDate, oUserDTO);
 			
 			// map posts to post DTO
 			var aPosts 			= oData["posts"];
 			for( var i=0; i<aPosts.length; i++ ) {
-				oBlog.addPost(new PostDTO(oModel, "/posts" + i));
+				oBlog.addPost(new PostDTO(this._oModel, "/posts/" + i));
 			}
 			
 			// save and attach to changes

@@ -18,6 +18,14 @@ sap.ui.define([
 			}
 		},
 		
+		getUser : function() {
+			return this._oUser;
+		},
+		
+		_onUserDataChanged: function(oEvent) {
+			console.log("change");
+		},
+		
 		_mapServiceDataToDTO: function(oData) {
 			
 			if( this._bFull ) {
@@ -45,6 +53,8 @@ sap.ui.define([
 				
 				this._oUser = new User(sUserid, sUsername);
 			}
+			
+			this._oUser.attachChange(this._onUserDataChanged, this);
 		},
 		
 		_mapDTOToServiceData: function() {
@@ -76,7 +86,7 @@ sap.ui.define([
 					}
 				}
 			} else {
-				
+				throw new Error("No user data available!");
 			}
 		}
 		

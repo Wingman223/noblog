@@ -36,6 +36,9 @@ sap.ui.define([
 			if(bDataNotLoaded) {
 				// if data is not loaded, attach model event to wait for data to arrive
 				this._oModel.attachRequestCompleted(this._parseDataInModelContext, this);
+			} else {
+				// otherwise use data available in model
+				this._mapServiceDataToDTO(this._oContext.getObject());
 			}
 		},
 		
@@ -43,10 +46,21 @@ sap.ui.define([
 			var bSuccess = oEvent.getParameter("success");
 			if( bSuccess ) {
 				this._mapServiceDataToDTO(this._oModel.getData(), true);
+				
+				console.log("DTO.js : Parsing successfull!");
+				console.log("Model data:");
+				console.log(this._oModel.getData());
+				console.log("DTO data:");
+				console.log(this.getServiceData());
+				
 				this.fireDataLoaded({});
 			} else {
 				this.fireDataError({});
 			}
+		},
+		
+		getPath: function() {
+			return this._oContext.getPath();
 		},
 		
 		getModel: function() {
@@ -54,7 +68,7 @@ sap.ui.define([
 		},
 		
 		getServiceData: function() {
-			return this._mapServiceDataToDTO();
+			return this._mapDTOToServiceData();
 		},
 		
 		createBindingContext: function(oModel, sPath) {

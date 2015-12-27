@@ -93,10 +93,9 @@ sap.ui.define([
 			UIComponent.prototype.init.apply(this, arguments);
 			
 			// DAO TEST AREA
-			/*
 			var oInstance = BlogDAO.getInstance();
 			oInstance.loadBlog("03a3f3ced13ccb7ddb4da7259a000ee6");
-			
+			/*
 			var oInstance2 = UserDAO.getInstance();
 			oInstance2.tryLogin("meinuser", "test");
 			*/

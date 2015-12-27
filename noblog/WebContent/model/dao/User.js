@@ -19,8 +19,8 @@ sap.ui.define([
 		
 		_oModel: null,
 		
-		constructor: function(bFull, sUserid, sUsername, sPassword, sPrename, sSurname, sEmail, aRoles) {
-			ManagedObject.prototype.constructor.apply(this);
+		constructor: function(sUserid, sUsername, sPassword, sPrename, sSurname, sEmail, aRoles) {
+			Observable.prototype.constructor.apply(this);
 			
 			if(!(sUserid && sUsername)) {
 				throw new Error("Not all required fields are filled!");
