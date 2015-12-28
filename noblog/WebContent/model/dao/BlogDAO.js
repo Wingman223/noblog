@@ -5,8 +5,9 @@ sap.ui.define([
 	'sap/ui/base/Object',
 	'sap/ui/model/json/JSONModel',
 	'model/dao/BlogDTO',
+	'model/dao/Blog',
 	'model/Config'
-], function (Object, JSONModel, BlogDTO, Config) {
+], function (Object, JSONModel, BlogDTO, Blog, Config) {
 	"use strict";
 	
 	var BlogDAO = Object.extend("com.team6.noblog.model.dao.BlogDAO", {
@@ -24,19 +25,10 @@ sap.ui.define([
 			// Create DTO and start 
 			var oModel 		= new JSONModel();
 			var sUrl 		= Config.getDocument(sId);
-			var oBlogDTO	= new BlogDTO(oModel);
+			var oBlogDTO	= new BlogDTO();
 			
-			oBlogDTO.attachDataLoaded(function(oEvent) {
-				console.log("Parsing data in DTOs completed!");
-				if( fnCallback ) {
-					fnCallback();
-				}
-			});
-			oBlogDTO.attachDataError(function(oEvent) {
-				console.log("Error while loading data");
-			});
-			
-			oModel.loadData(sUrl);
+			oBlogDTO.setModel(oModel);
+			oBlogDTO.load(sUrl);
 			
 			return oBlogDTO;
 		},

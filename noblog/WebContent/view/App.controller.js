@@ -6,7 +6,9 @@ jQuery.sap.require("model.dao.User");
 
 sap.ui.controller("view.App", {
 	
-	// Login Popover
+	// Authentication
+	
+	// LoginPopover
 	_oLoginPopover 				: null,
 	_oLoginPopoverNavContainer 	: null,
 	
@@ -14,16 +16,52 @@ sap.ui.controller("view.App", {
 		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
 		
-		this.initLoginPopover();
+		this._initAuthentication();
+		this._initLoginPopover();
+	},
+	
+	// ###########################################################################
+	// ### AUTHENTICATION
+	
+	_initAuthentication : function() {
+		this._oUserDAO = com.team6.noblog.model.dao.UserDAO.getInstance();
+		this._resetAuthenticationModel();
+	},
+	
+	_resetAuthenticationModel : function() {
+		var oModel 	= new sap.ui.model.json.JSONModel({
+			isLoggedIn  : false,
+			username	: "",
+			user		: null
+		});
+		this._oView.setModel(oModel, "authentication");
+	},
+	
+	login: function(sUsername, sPassword, fnCallback) {
+		this._oUserDAO.tryLogin(sUsername, sPassword, function(bSucceeded) {
+			if( bSucceeded ) {
+				sap.m.MessageBox.alert("You are now logged in!");
+			} else {
+				sap.m.MessageBox.alert("Login failed. Please check your username and password");
+			}
+			this._oLoginPopover.close();
+		}.bind(this));
+	},
+	
+	logout: function() {
+		this._resetAuthenticationModel();
+	},
+	
+	register: function() {
+		
 	},
 	
 	// ###########################################################################
 	// ### LOGIN POPOVER
 	
-	initLoginPopover : function() {
+	_initLoginPopover : function() {
 		
 		// Init LoginPopover and all of its dependencies
-		this._oUserDAO					= com.team6.noblog.model.dao.UserDAO.getInstance();
 		this._oLoginPopover 			= sap.ui.xmlfragment("view.fragment.LoginPopover", this);
 		this._oLoginPopoverNavContainer = sap.ui.getCore().byId("id_loginpopover_navcontainer");
 		
@@ -39,7 +77,7 @@ sap.ui.controller("view.App", {
 		var oModelPopover	= new sap.ui.model.json.JSONModel({
 			login : {
 				username : "meinuser",
-				password : "password"
+				password : "test"
 			},
 			register : {
 				username 	: "",
@@ -66,16 +104,7 @@ sap.ui.controller("view.App", {
 		var sUsername 	= oModel.getProperty("/login/username");
 		var sPassword	= oModel.getProperty("/login/password");
 		
-		this._oUserDAO.tryLogin(sUsername, sPassword, function(bSucceeded) {
-			if( bSucceeded ) {
-				sap.m.MessageBox.alert("You are now logged in!");
-			} else {
-				sap.m.MessageBox.alert("Login failed. Please check your username and password");
-			}
-			
-			this._oLoginPopover.close();
-			
-		}.bind(this));
+		
 	},
 	
 	handleLinkRegisterClicked: function(oEvent) {
@@ -97,7 +126,7 @@ sap.ui.controller("view.App", {
 		var sEmail 		= oModel.getProperty("/register/email");
 		
 		var oUser = new com.team6.noblog.model.dao.User(sUsername, sPassword, sPrename, sSurname, sEmail);
-		console.log(oUser);
+		this._oUserDAO.createUser(oUser);
 		
 		this._oLoginPopover.close();
 	},

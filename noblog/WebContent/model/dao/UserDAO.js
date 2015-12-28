@@ -28,14 +28,12 @@ sap.ui.define([
 			var oUserDTO	= new UserDTO(oModel, "/", true, true);
 			var sPath		= Config.getUser(oUser.getUserid());
 			
-			// now set model so that the DTO can register events
-			// also here is a hook for a callback when the dta finished processing
+			oUserDTO.setModel(oModel, "/");
 			oUserDTO.attachDataLoaded(function() {
 				if( fnCallback ) {
 					fnCallback(true);
 				}
 			});
-			
 			oUserDTO.attachDataError(function(){
 				if( fnCallback ) {
 					fnCallback(false);
@@ -70,7 +68,10 @@ sap.ui.define([
 			}
 			*/
 			
-			var oUser = new User(sUsername, sPassword);
+			var oUserDTO = new UserDTO();
+			oUserDTO.setUser(oUser);
+			
+			console.log(oUserDTO.getServiceData());
 			
 			/*
 			$.ajax({

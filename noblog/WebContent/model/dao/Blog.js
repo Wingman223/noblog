@@ -19,7 +19,7 @@ sap.ui.define([
 			}
 		},
 		
-		constructor: function(sBlogid, sTitle, oCreationDate, oUser) {
+		constructor: function(sBlogid, sTitle, oCreationDate, oUser, aPosts) {
 			Observable.prototype.constructor.apply(this);
 			
 			// check if all required variables are filled
@@ -36,6 +36,9 @@ sap.ui.define([
 			// optional
 			if( sBlogid ) {
 				this.setProperty("blogid", sBlogid);
+			}
+			if( aPosts ) {
+				this.setAggregation("aPosts", aPosts);
 			}
 		},
 		
