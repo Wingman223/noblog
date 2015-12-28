@@ -1,8 +1,8 @@
 sap.ui.define([
 	'model/dao/base/Observable',
 	'model/dao/Post',
-	'model/dao/User'
-], function (Observable, Post, User) {
+	'model/dao/UserInline'
+], function (Observable, Post, UserInline) {
 	"use strict";
 	
 	var Blog = Observable.extend("com.team6.noblog.model.dao.Blog", {
@@ -14,7 +14,7 @@ sap.ui.define([
 				creationDate	: {type : "object", group : "Data", defaultValue : new Date()}
 			},
 			aggregations : {
-				user			: {type : "com.team6.noblog.model.dao.UserDTO", multiple : false},
+				user			: {type : "com.team6.noblog.model.dao.UserInlineDTO", multiple : false},
 				posts			: {type : "com.team6.noblog.model.dao.PostDTO", multiple : true, singularName : "post"}
 			}
 		},

@@ -1,8 +1,8 @@
 sap.ui.define([
 	'model/dao/base/DTO',
 	'model/dao/Comment',
-	'model/dao/UserDTO'
-], function (DTO, Comment, UserDTO) {
+	'model/dao/UserInlineDTO'
+], function (DTO, Comment, UserInlineDTO) {
 	"use strict";
 	
 	var CommentDTO = DTO.extend("com.team6.noblog.model.dao.CommentDTO", {
@@ -21,11 +21,11 @@ sap.ui.define([
 			
 			var sPath			= this.getPath();
 			
-			var oUserDTO 		= new UserDTO(this._oModel, sPath);
+			var oUserInlineDTO 	= new UserInlineDTO(this._oModel, sPath);
 			var oCreationDate 	= new Date(oData["creationDate"]);
 			var sContent		= oData["content"];
 			
-			var oComment		= new Comment(oUserDTO, oCreationDate, sContent);
+			var oComment		= new Comment(oUserInlineDTO, oCreationDate, sContent);
 			
 			this._oComment = oComment;
 			this._oComment.attachChange(this._oCommentDataChanged, this);

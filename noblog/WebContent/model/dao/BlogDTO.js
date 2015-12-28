@@ -2,8 +2,8 @@ sap.ui.define([
 	'model/dao/base/DTO',
 	'model/dao/Blog',
 	'model/dao/PostDTO',
-	'model/dao/UserDTO',
-], function (DTO, Blog, PostDTO, UserDTO) {
+	'model/dao/UserInlineDTO',
+], function (DTO, Blog, PostDTO, UserInlineDTO) {
 	"use strict";
 	
 	var BlogDTO = DTO.extend("com.team6.noblog.model.dao.BlogDTO", {
@@ -45,9 +45,9 @@ sap.ui.define([
 			var sTitle			= oData["title"];
 			var sType			= oData["type"];
 			var oCreationDate 	= new Date(oData["creationDate"]);
-			var oUserDTO		= new UserDTO(this._oModel, "/");
+			var oUserInlineDTO	= new UserInlineDTO(this._oModel, "/");
 			
-			var oBlog 			= new Blog(sId, sTitle, oCreationDate, oUserDTO);
+			var oBlog 			= new Blog(sId, sTitle, oCreationDate, oUserInlineDTO);
 			
 			// map posts to post DTO
 			var aPosts 			= oData["posts"];
