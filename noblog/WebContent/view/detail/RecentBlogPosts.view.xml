@@ -7,6 +7,7 @@
 	<Page	title			= "{i18n>WELCOME_TITLE}"
 			enableScrolling	= "true">
 		<headerContent>
+			<Text visible="{authentication>/isLoggedIn}" text="{authentication>/username}"/>
 			<Button
 				icon	= "sap-icon://key"
 				tooltip	= "Log In / Register"

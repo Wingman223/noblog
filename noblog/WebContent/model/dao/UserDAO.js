@@ -19,7 +19,7 @@ sap.ui.define([
 			}
 		},
 		
-		tryLogin: function(sUsername, sPassword, fnCallback) {
+		tryLogin: function(sUsername, sPassword, fnSuccessCallback, fnErrorCallback) {
 			
 			// build path to get userid from _users db
 			var oUser		= new User(sUsername, sPassword);
@@ -29,13 +29,13 @@ sap.ui.define([
 			
 			oUserDTO.setModel(oModel, "/", true);
 			oUserDTO.attachDataLoaded(function() {
-				if( fnCallback ) {
-					fnCallback(true);
+				if( fnSuccessCallback ) {
+					fnSuccessCallback(oUserDTO);
 				}
 			});
 			oUserDTO.attachDataError(function(){
-				if( fnCallback ) {
-					fnCallback(false);
+				if( fnErrorCallback ) {
+					fnErrorCallback(false);
 				}
 			});
 			oUserDTO.load(sPath, sUsername, sPassword)

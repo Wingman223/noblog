@@ -28,23 +28,36 @@ sap.ui.controller("view.App", {
 		this._resetAuthenticationModel();
 	},
 	
+	_getAuthenticationModel: function() {
+		return this._oView.getModel("authentication");
+	},
+	
 	_resetAuthenticationModel : function() {
 		var oModel 	= new sap.ui.model.json.JSONModel({
 			isLoggedIn  : false,
-			username	: ""
+			username	: "",
+			user		: null
 		});
 		this._oView.setModel(oModel, "authentication");
 	},
 	
 	login: function(sUsername, sPassword, fnCallback) {
-		this._oUserDAO.tryLogin(sUsername, sPassword, function(bSucceeded) {
-			if( bSucceeded ) {
-				sap.m.MessageBox.alert("You are now logged in!");
-			} else {
-				sap.m.MessageBox.alert("Login failed. Please check your username and password");
-			}
-			this._oLoginPopover.close();
-		}.bind(this));
+		this._oUserDAO.tryLogin(sUsername, sPassword,
+			function(oUserDTO) {
+				var oUser	= oUserDTO.getUser();
+				var oModel 	= this._getAuthenticationModel();
+				oModel.setProperty("/isLoggedIn", true);
+				oModel.setProperty("/username"	, oUser.getUsername());
+				oModel.setProperty("/user"		, oUser);
+				
+				sap.m.MessageBox.alert("User successfully registered");
+			}.bind(this),
+			function(oError) {
+				sap.m.MessageBox.alert("Login failed. Username or Password wrong");
+			}.bind(this)
+		);
+		
+		this._oLoginPopover.close();
 	},
 	
 	logout: function() {
