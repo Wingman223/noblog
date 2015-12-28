@@ -26,6 +26,13 @@ model.Config.getUser = function(sUserid) {
 };
 
 /**
+ * Url to get information about all users
+ */
+model.Config.getUsers = function(sUserid) {
+	return model.Config.getDB("_users");
+};
+
+/**
  * Url to get a specific document in noblog db
  */
 model.Config.getDocument = function(id) {

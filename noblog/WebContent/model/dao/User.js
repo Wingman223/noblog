@@ -18,7 +18,7 @@ sap.ui.define([
 		
 		_oModel: null,
 		
-		constructor: function(sUsername, sPassword, sPrename, sSurname, sEmail, aRoles) {
+		constructor : function(sUsername, sPassword, sPrename, sSurname, sEmail, aRoles) {
 			Observable.prototype.constructor.apply(this);
 			
 			if(!(sUsername || sPassword)) {

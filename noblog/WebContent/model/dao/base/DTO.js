@@ -70,9 +70,11 @@ sap.ui.define([
 			}
 		},
 		
-		load: function(sUrl) {
+		load: function(sUrl, sUsername, sPassword) {
 			if(this._oModel) {
-				this._oModel.loadData(sUrl);
+				this._oModel.loadData(sUrl, null, true, "GET", false, false, {
+					Authorization : "Basic " + window.btoa(sUsername + ":" + sPassword)
+				});
 			}
 		},
 		/**

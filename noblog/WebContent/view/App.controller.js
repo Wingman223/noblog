@@ -31,8 +31,7 @@ sap.ui.controller("view.App", {
 	_resetAuthenticationModel : function() {
 		var oModel 	= new sap.ui.model.json.JSONModel({
 			isLoggedIn  : false,
-			username	: "",
-			user		: null
+			username	: ""
 		});
 		this._oView.setModel(oModel, "authentication");
 	},
@@ -52,8 +51,15 @@ sap.ui.controller("view.App", {
 		this._resetAuthenticationModel();
 	},
 	
-	register: function() {
-		
+	register: function(oUser) {
+		this._oUserDAO.createUser(oUser,
+			function(oData, oRequest) {
+				sap.m.MessageBox.alert("User successfully registered");
+			},
+			function(oError) {
+				sap.m.MessageBox.alert("Could not register user");
+			}
+		);
 	},
 	
 	// ###########################################################################
@@ -104,7 +110,7 @@ sap.ui.controller("view.App", {
 		var sUsername 	= oModel.getProperty("/login/username");
 		var sPassword	= oModel.getProperty("/login/password");
 		
-		
+		this.login(sUsername, sPassword);
 	},
 	
 	handleLinkRegisterClicked: function(oEvent) {
@@ -125,8 +131,9 @@ sap.ui.controller("view.App", {
 		var sSurname	= oModel.getProperty("/register/surname");
 		var sEmail 		= oModel.getProperty("/register/email");
 		
+		
 		var oUser = new com.team6.noblog.model.dao.User(sUsername, sPassword, sPrename, sSurname, sEmail);
-		this._oUserDAO.createUser(oUser);
+		this.register(oUser);
 		
 		this._oLoginPopover.close();
 	},

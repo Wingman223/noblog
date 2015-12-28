@@ -21,14 +21,13 @@ sap.ui.define([
 		
 		tryLogin: function(sUsername, sPassword, fnCallback) {
 			
-			var oModel 		= new JSONModel();
-			
 			// build path to get userid from _users db
 			var oUser		= new User(sUsername, sPassword);
-			var oUserDTO	= new UserDTO(oModel, "/", true, true);
+			var oUserDTO	= new UserDTO();
+			var oModel 		= new JSONModel();
 			var sPath		= Config.getUser(oUser.getUserid());
 			
-			oUserDTO.setModel(oModel, "/");
+			oUserDTO.setModel(oModel, "/", true);
 			oUserDTO.attachDataLoaded(function() {
 				if( fnCallback ) {
 					fnCallback(true);
@@ -39,14 +38,16 @@ sap.ui.define([
 					fnCallback(false);
 				}
 			});
+			oUserDTO.load(sPath, sUsername, sPassword)
 			
 			// Try to load userdata for user
 			// When username and password are correct the user is able to get his information from the server
 			// Either this fails or succeeds so we know when the credentials are wrong
+			/*
 			oModel.loadData(sPath, null, true, "GET", false, false, {
 				Authorization : "Basic " + window.btoa(sUsername + ":" + sPassword)
 			});
-			
+			*/
 			return oUserDTO;
 		},
 		
@@ -54,7 +55,7 @@ sap.ui.define([
 			//TODO try login logic
 		},
 		
-		createUser: function(oUser) {
+		createUser: function(oUser, fnSuccessCallback, fnErrorCallback) {
 			
 			// How a user is created in CouchDB
 			/*
@@ -68,33 +69,30 @@ sap.ui.define([
 			}
 			*/
 			
-			var oUserDTO = new UserDTO();
-			oUserDTO.setUser(oUser);
+			// convert user data to dto
+			var oUserDTO	= new UserDTO();
+			oUserDTO.setObject(oUser);
 			
-			console.log(oUserDTO.getServiceData());
+			// get data and convert it to json
+			var oData		= oUserDTO.getServiceData();
+			var sData		= JSON.stringify(oData);
 			
-			/*
+			// send create to service and wait for response
 			$.ajax({
 				type 		: "POST",
 				contentType	: "application/json; charset=utf-8",
-				
-			})
-			
-			//Call jQuery ajax
-			$.ajax({
-			    type: "PUT",
-			    contentType: "application/json; charset=utf-8",
-			    url: model.Config.getDocument(docId),
-			    data: JSON.stringify(data),
-			    dataType: "json",
-			    success: function (msg) {
-			        alert('Success');
-			    },
-			    error: function (err){
-			        alert('Error');
-			    }
-			})
-			*/
+				url			: Config.getUsers(),
+				data		: sData,
+				dataType	: "json",
+				username	: "register",
+				password	: "register",
+				success		: function(oData, sStatus, oRequest) {
+					fnSuccessCallback(oData, oRequest);
+				},
+				error		: function(oRequest, sStatus, sMessage) {
+					fnErrorCallback(oRequest);
+				}
+			});
 		},
 		
 		updateUser: function(oUser) {
