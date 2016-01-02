@@ -7,13 +7,27 @@
 		enableScrolling	= "true">
 		<headerContent>
 			<Button
+				icon	= "img/user.png"
+				text	= "{authentication>/username}"
+				tooltip	= "Log In / Register"
+				visible = "{authentication>/isLoggedIn}">
+			</Button>
+			<Button
 				icon	= "sap-icon://key"
 				tooltip	= "Log In / Register"
-				press	= "handleButtonLogInPress" >
+				visible = "{=!(${authentication>/isLoggedIn})}"
+				press	= "handleButtonLogInPressed" >
 			</Button>
 		</headerContent>
 		<footer>
 			<Toolbar>
+				<ToolbarSpacer/>
+				<Button
+					icon	= "sap-icon://edit"
+					text	= "Edit"
+					visible	= "{authentication>/isLoggedIn}"
+					press	= "handleButtonEditBlogPostPress" >
+				</Button>
 			</Toolbar>
 		</footer>
 		<content>

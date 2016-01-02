@@ -1,20 +1,21 @@
 var _oUserDAOInstance = null;
 
 sap.ui.define([
-	'sap/ui/base/Object',
+	'model/dao/base/DAO',
 	'sap/ui/model/json/JSONModel',
 	'model/dao/User',
 	'model/dao/UserDTO',
 	'model/Config'
-], function (Object, JSONModel, User, UserDTO, Config) {
+], function (DAO, JSONModel, User, UserDTO, Config) {
 	"use strict";
 	
-	var UserDAO = Object.extend("com.team6.noblog.model.dao.UserDAO", {
+	var UserDAO = DAO.extend("com.team6.noblog.model.dao.UserDAO", {
 		
 		constructor: function() {
 			if( _oUserDAOInstance ) {
 				throw new Error("Only one instance of UserDAO allowed! Please use getInstance method");
 			} else {
+				DAO.prototype.constructor.apply(this, arguments);
 				_oUserDAOInstance = this;
 			}
 		},
@@ -106,7 +107,7 @@ sap.ui.define([
 	
 	com.team6.noblog.model.dao.UserDAO.getInstance = function() {
 		if( !_oUserDAOInstance ) {
-			new UserDAO();
+			_oUserDAOInstance = new UserDAO();
 		}
 		return _oUserDAOInstance;
 	};

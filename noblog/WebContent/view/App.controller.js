@@ -23,24 +23,6 @@ sap.ui.controller("view.App", {
 	// ###########################################################################
 	// ### AUTHENTICATION
 	
-	_initAuthentication : function() {
-		this._oUserDAO = com.team6.noblog.model.dao.UserDAO.getInstance();
-		this._resetAuthenticationModel();
-	},
-	
-	_getAuthenticationModel: function() {
-		return this._oView.getModel("authentication");
-	},
-	
-	_resetAuthenticationModel : function() {
-		var oModel 	= new sap.ui.model.json.JSONModel({
-			isLoggedIn  : false,
-			username	: "",
-			user		: null
-		});
-		this._oView.setModel(oModel, "authentication");
-	},
-	
 	login: function(sUsername, sPassword, fnCallback) {
 		this._oUserDAO.tryLogin(sUsername, sPassword,
 			function(oUserDTO) {
@@ -49,8 +31,6 @@ sap.ui.controller("view.App", {
 				oModel.setProperty("/isLoggedIn", true);
 				oModel.setProperty("/username"	, oUser.getUsername());
 				oModel.setProperty("/user"		, oUser);
-				
-				sap.m.MessageBox.alert("User successfully registered");
 			}.bind(this),
 			function(oError) {
 				sap.m.MessageBox.alert("Login failed. Username or Password wrong");
@@ -73,6 +53,31 @@ sap.ui.controller("view.App", {
 				sap.m.MessageBox.alert("Could not register user");
 			}
 		);
+	},
+	
+	getUser: function() {
+		var oModel 		= this._getAuthenticationModel();
+		var oUserDTO	= oModel.getProperty("/user");
+		
+		return oUserDTO;
+	},
+	
+	_initAuthentication : function() {
+		this._oUserDAO = com.team6.noblog.model.dao.UserDAO.getInstance();
+		this._resetAuthenticationModel();
+	},
+	
+	_getAuthenticationModel: function() {
+		return this._oView.getModel("authentication");
+	},
+	
+	_resetAuthenticationModel : function() {
+		var oModel 	= new sap.ui.model.json.JSONModel({
+			isLoggedIn  : false,
+			username	: "",
+			user		: null
+		});
+		this._oView.setModel(oModel, "authentication");
 	},
 	
 	// ###########################################################################

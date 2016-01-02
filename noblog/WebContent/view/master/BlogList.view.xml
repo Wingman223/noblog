@@ -27,12 +27,7 @@
 				mode	= "None"
 				items	= "{
 					model: 'blogs',
-					path : '/rows',
-					sorter : {
-						model		: 'blogs',
-						path 		: 'id',
-						descending	: false
-					}
+					path : '/rows'
 				}">
 				<items>
 					<StandardListItem

@@ -1,14 +1,21 @@
 jQuery.sap.require("util.Formatter");
 jQuery.sap.require("model.Config");
+jQuery.sap.require("model.dao.BlogDAO");
 
 sap.ui.controller("view.master.BlogList", {
-
+	
+	_oComponent	: null,
+	_oView		: null,
+	_oBlogDAO	: null,
+	
 	onInit : function () {
 		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
+		this._oBlogDAO		= com.team6.noblog.model.dao.BlogDAO.getInstance();
 		
 		// attach route matched
 		this._oComponent.attachRouteMatched("home", this.handleRouteHomeMatched, this);
+		this._oBlogDAO.attachDataChanged(this._loadBlogs, this);
 	},
 	
 	// PUBLIC
@@ -40,7 +47,7 @@ sap.ui.controller("view.master.BlogList", {
 	
 	// PRIVATE
 	
-	_loadBlogs : function(fnCallback) {
+	_loadBlogs : function() {
 		var oModel 	= new sap.ui.model.json.JSONModel();
 		var sPath	= model.Config.getBlogsServiceUrl();
 		oModel.loadData(sPath);

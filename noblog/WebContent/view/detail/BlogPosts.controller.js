@@ -10,7 +10,7 @@ sap.ui.controller("view.detail.BlogPosts", {
 		});
 	},
 	
-	handleButtonLogInPress: function(oEvent) {
+	handleButtonLogInPressed: function(oEvent) {
 		var oSource = oEvent.getSource();
 		this._oComponent.showLoginPopup(oSource);
 	}

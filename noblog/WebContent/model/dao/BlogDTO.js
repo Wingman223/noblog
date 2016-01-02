@@ -74,17 +74,26 @@ sap.ui.define([
 		_mapDTOToServiceData: function(oBlog) {
 			if(this._checkDataObject(oBlog)) {
 				
-				// Get blog and user data
+				// Create blog structure
+				var oCreationDate = oBlog.getCreationDate();
+				var iCreationDate = oCreationDate.getTime();
+				
+				// required
 				var oData = {
-					_id 			: oBlog.getBlogid(),
 					type			: oBlog.getType(),
 					title			: oBlog.getTitle(),
-					creationDate	: oBlog.getCreationDate(),
+					creationDate	: iCreationDate,
 					posts			: []
 				};
 				
-				var oUser1 	= oBlog.getUser()
-				var oUser 	= oUser1.getServiceData();
+				// optional
+				if(oBlog.getBlogid()) {
+					oData["_id"] = oBlog.getBlogid();
+				}
+				
+				// Now add user
+				var oUserDTO 	= oBlog.getUser()
+				var oUser 		= oUserDTO.getServiceData();
 
 				// Merge them together
 				jQuery.sap.extend(oData, oUser);

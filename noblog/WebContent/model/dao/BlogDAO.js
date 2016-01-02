@@ -2,20 +2,21 @@
 var _oBlogDAOInstance = null;
 
 sap.ui.define([
-	'sap/ui/base/Object',
+	'model/dao/base/DAO',
 	'sap/ui/model/json/JSONModel',
 	'model/dao/BlogDTO',
 	'model/dao/Blog',
 	'model/Config'
-], function (Object, JSONModel, BlogDTO, Blog, Config) {
+], function (DAO, JSONModel, BlogDTO, Blog, Config) {
 	"use strict";
 	
-	var BlogDAO = Object.extend("com.team6.noblog.model.dao.BlogDAO", {
+	var BlogDAO = DAO.extend("com.team6.noblog.model.dao.BlogDAO", {
 		
 		constructor: function() {
 			if( _oBlogDAOInstance ) {
 				throw new Error("Only one instance of BlogDAO allowed! Please use getInstance method");
 			} else {
+				DAO.prototype.constructor.apply(this, arguments);
 				_oBlogDAOInstance = this;
 			}
 		},
@@ -33,8 +34,20 @@ sap.ui.define([
 			return oBlogDTO;
 		},
 		
-		createBlog: function(oBlog) {
+		createBlog: function(oBlog, oUser, fnSuccess) {
 			
+			var sUrl		= Config.getDB("noblog");
+			var sUsername	= oUser.getUsername();
+			var sPassword	= oUser.getPassword();
+			var oBlogDTO	= new BlogDTO();
+			
+			oBlogDTO.setBlog(oBlog);
+			
+			this._sendRequest(sUrl, DAO.REQUEST_TYPE.CREATE, oBlogDTO, sUsername, sPassword,
+				function(oData, oRequest) {
+					fnSuccess();
+				}.bind(this)
+			);
 		},
 		
 		updateBlog: function(oBlog) {

@@ -7,11 +7,17 @@
 	<Page	title			= "{i18n>WELCOME_TITLE}"
 			enableScrolling	= "true">
 		<headerContent>
-			<Text visible="{authentication>/isLoggedIn}" text="{authentication>/username}"/>
+			<Button
+				icon	= "img/user.png"
+				text	= "{authentication>/username}"
+				tooltip	= "Log In / Register"
+				visible = "{authentication>/isLoggedIn}">
+			</Button>
 			<Button
 				icon	= "sap-icon://key"
 				tooltip	= "Log In / Register"
-				press	= "handleButtonLogInPress" >
+				visible = "{=!(${authentication>/isLoggedIn})}"
+				press	= "handleButtonLogInPressed" >
 			</Button>
 		</headerContent>
 		<footer>
@@ -20,7 +26,8 @@
 				<Button
 					icon	= "sap-icon://add"
 					text	= "Create Blog"
-					press	= "handleButtonCreateBlogPress" >
+					visible	= "{authentication>/isLoggedIn}"
+					press	= "handleButtonCreateBlogPressed" >
 				</Button>
 			</Toolbar>
 		</footer>

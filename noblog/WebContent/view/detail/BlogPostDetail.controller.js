@@ -20,6 +20,10 @@ sap.ui.controller("view.detail.BlogPostDetail", {
 		});
 	},
 	
+	handleButtonEditBlogPostPress: function(oEvent) {
+		console.log(oEvent);
+	},
+	
 	onCommentAdded: function (oEvent) {
 		
 		var blogCtx = this.getView().getBindingContext("global_blog_model");
@@ -58,7 +62,7 @@ sap.ui.controller("view.detail.BlogPostDetail", {
 		})
 	},
 	
-	handleButtonLogInPress: function(oEvent) {
+	handleButtonLogInPressed: function(oEvent) {
 		var oSource = oEvent.getSource();
 		this._oComponent.showLoginPopup(oSource);
 	},
