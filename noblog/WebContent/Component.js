@@ -150,6 +150,10 @@ sap.ui.define([
 			this._oAppController.showLoginPopover(oTarget);
 		},
 		
+		showUserDetailsPopover: function(oTarget) {
+			this._oAppController.showUserDetailsPopover(oTarget);
+		},
+		
 		getRouter: function() {
 			return this._oRouter;
 		},

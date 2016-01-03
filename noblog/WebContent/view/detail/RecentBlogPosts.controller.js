@@ -92,5 +92,10 @@ sap.ui.controller("view.detail.RecentBlogPosts", {
 	handleButtonLogInPressed: function(oEvent) {
 		var oSource = oEvent.getSource();
 		this._oComponent.showLoginPopup(oSource);
+	},
+	
+	handleButtonUserDetailsPressed: function(oEvent) {
+		var oSource = oEvent.getSource();
+		this._oComponent.showUserDetailsPopover(oSource);
 	}
 });

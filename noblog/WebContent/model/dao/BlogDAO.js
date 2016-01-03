@@ -24,8 +24,8 @@ sap.ui.define([
 		loadBlog: function(sId, fnCallback) {
 			
 			// Create DTO and start 
-			var oModel 		= new JSONModel();
 			var sUrl 		= Config.getDocument(sId);
+			var oModel 		= new JSONModel();
 			var oBlogDTO	= new BlogDTO();
 			
 			oBlogDTO.setModel(oModel);

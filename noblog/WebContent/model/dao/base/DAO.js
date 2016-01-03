@@ -13,12 +13,6 @@ sap.ui.define([
 			}
 		},
 		
-		/*
-		constructor : function() {
-			ManagedObject.prototype.constructor.apply(this);
-		},
-		*/
-		
 		_sendRequest : function(sUrl, sType, oDTO, sUsername, sPassword, fnSuccess, fnError) {
 			
 			if(!(sUrl || sType || oDTO || sUsername || sPassword || fnSuccess)) {

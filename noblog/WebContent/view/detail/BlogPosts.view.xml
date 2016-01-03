@@ -9,8 +9,9 @@
 			<Button
 				icon	= "img/user.png"
 				text	= "{authentication>/username}"
-				tooltip	= "Log In / Register"
-				visible = "{authentication>/isLoggedIn}">
+				tooltip	= "User Details"
+				visible = "{authentication>/isLoggedIn}"
+				press	= "handleButtonUserDetailsPressed">
 			</Button>
 			<Button
 				icon	= "sap-icon://key"
@@ -26,7 +27,7 @@
 					icon	= "sap-icon://add"
 					text	= "Add Post"
 					visible	= "{authentication>/isLoggedIn}"
-					press	= "handleButtonCreateBlogPress" >
+					press	= "handleButtonCreatePostPressed" >
 				</Button>
 			</Toolbar>
 		</footer>

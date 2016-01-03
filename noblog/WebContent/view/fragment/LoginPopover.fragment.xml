@@ -10,7 +10,7 @@
 		horizontalScolling	= "false"
 		verticalScrolling	= "false"
 		placement			= "Bottom">
-		<NavContainer id="id_loginpopover_navcontainer">
+		<NavContainer visible="{=!${authentication>/isLoggedIn}}" id="id_loginpopover_navcontainer">
 			<Page id="id_loginpopover_navcontainer_login" enableScrolling="false" title="Login">
 				<l:VerticalLayout width="100%" height="100%" class="sapUiContentPadding">
 					<Label required="true" text="Username"/>
@@ -43,6 +43,7 @@
 				</l:VerticalLayout>
 			</Page>
 		</NavContainer>
+		<Button width="auto" type="Reject" text="Logout" press="handleButtonLogoutPressed" class="sapUiSmallMargin"/>
 	</Popover>
 </core:FragmentDefinition>
 

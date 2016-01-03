@@ -6,6 +6,13 @@ jQuery.sap.require("model.dao.User");
 
 sap.ui.controller("view.App", {
 	
+	_oComponent					: null,
+	_oView						: null,
+	
+	// DAOs
+	_oBlogDAO					: null,
+	_oUserDAO					: null,
+	
 	// Authentication
 	
 	// LoginPopover
@@ -15,13 +22,24 @@ sap.ui.controller("view.App", {
 	onInit: function() {
 		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
+		this._oBlogDAO 		= com.team6.noblog.model.dao.UserDAO.getInstance();
+		this._oUserDAO 		= com.team6.noblog.model.dao.UserDAO.getInstance();
 		
 		this._initAuthentication();
 		this._initLoginPopover();
 	},
 	
 	// ###########################################################################
+	// ### GLOBAL BLOG DTO ACCESS
+	
+	
+	
+	// ###########################################################################
 	// ### AUTHENTICATION
+	
+	_initAuthentication : function() {
+		this._resetAuthenticationModel();
+	},
 	
 	login: function(sUsername, sPassword, fnCallback) {
 		this._oUserDAO.tryLogin(sUsername, sPassword,
@@ -60,11 +78,6 @@ sap.ui.controller("view.App", {
 		var oUserDTO	= oModel.getProperty("/user");
 		
 		return oUserDTO;
-	},
-	
-	_initAuthentication : function() {
-		this._oUserDAO = com.team6.noblog.model.dao.UserDAO.getInstance();
-		this._resetAuthenticationModel();
 	},
 	
 	_getAuthenticationModel: function() {
@@ -159,6 +172,28 @@ sap.ui.controller("view.App", {
 	onAfterLoginPopoverClosed: function(oEvent) {
 		this._resetLoginPopoverModel();
 		this._oLoginPopoverNavContainer.backToTop();
+	},
+	
+	// ###########################################################################
+	// ### USER DETAILS POPOVER
+	
+	showUserDetailsPopover : function(oTarget) {
+		
+		if(!this._oUserDetailsPopover) {
+			this._oUserDetailsPopover = sap.ui.xmlfragment("view.fragment.UserDetailsPopover", this);
+			this._oView.addDependent(this._oUserDetailsPopover);
+		}
+		
+		jQuery.sap.delayedCall(0, this, function () {
+			this._oUserDetailsPopover.openBy(oTarget);
+		});
+	},
+	
+	handleButtonLogoutPressed: function(oEvent) {
+		var oSource 	= oEvent.getSource();
+		
+		this.logout();
+		this._oUserDetailsPopover.close();
 	}
 	
 	// ###########################################################################

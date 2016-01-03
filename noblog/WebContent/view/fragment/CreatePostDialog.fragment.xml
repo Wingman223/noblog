@@ -1,0 +1,24 @@
+<core:FragmentDefinition
+	xmlns			= "sap.m"
+	xmlns:l			= "sap.ui.layout"
+	xmlns:f			= "sap.ui.layout.form"
+	xmlns:core		= "sap.ui.core">
+	<Dialog>
+		<content>
+			<l:VerticalLayout width="100%" height="100%" class="sapUiContentPadding">
+				<Label required="true" text="Title"/>
+				<Input width="100%" value="{createpostdialog>/title}"/>
+				<Label required="true" text="Content"/>
+				<TextArea width="100%" rows="24" value="{createpostdialog>/content}"/>
+				<Label required="false" text="Attachment"/>
+				<Input width="100%" value="{createpostdialog>/pictureUrl}"/>
+			</l:VerticalLayout>
+		</content>
+		<beginButton>
+			<Button text="Ok" width="100%" press="handleCreatePostDialogButtonCreatePressed"/>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" width="100%" press="handleCreatePostDialogButtonCancelPressed"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

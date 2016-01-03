@@ -1,16 +1,26 @@
 jQuery.sap.require("util.Formatter");
+jQuery.sap.require("model.dao.BlogDAO");
 
 sap.ui.controller("view.master.PostList", {
 	
+	_oComponent : null,
+	_oView		: null,
+	_oBlogDAO	: null,
+	
+	_oBlogDTO	: null,
+	_sBlogId	: null,
+	
 	//FIXME counter to prevent over-navigation. Replace with proper method!
-	_navCounter : 0,
+	_iNavCounter : 0,
 	
 	onInit : function () {
 		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
+		this._oBlogDAO		= com.team6.noblog.model.dao.BlogDAO.getInstance();
 		
-		// load blogs from service
+		// attach events when data should be loaded
 		this._oComponent.attachRouteMatched("blog", this.handleRouteBlogMatched, this);
+		this._oBlogDAO.attachDataChanged(this._loadBlog, this);
 	},
 	
 	// PUBLIC
@@ -19,13 +29,13 @@ sap.ui.controller("view.master.PostList", {
 		this._sBlogId = oEvent.getParameter("arguments").id;
 		
 		// load blog info and reset search
-		if( this._navCounter == 0 ) {
+		if( this._iNavCounter == 0 ) {
 			this._loadBlog();
 			this._resetSearch();
 		}
 		
 		// FIXME reset counter
-		this._navCounter = 0;
+		this._iNavCounter = 0;
 	},
 	
 	handlePostListItemPressed : function (oEvent) {
@@ -42,8 +52,8 @@ sap.ui.controller("view.master.PostList", {
 		var sBlogId		= this._sBlogId;
 		
 		// FIXME should be always true but one navigation is left out here so use a counter to determine 2nd navigation
-		var bSaveNavigation = (this._navCounter > 0);
-		this._navCounter++;
+		var bSaveNavigation = (this._iNavCounter > 0);
+		this._iNavCounter++;
 		// ------------------
 		
 		// and navigate
@@ -74,9 +84,8 @@ sap.ui.controller("view.master.PostList", {
 	_loadBlog : function(oEvent) {
 		// make sure that this._sBlogId is filled
 		if( this._sBlogId && typeof this._sBlogId === "string" ) {
-			var oModel 	= new sap.ui.model.json.JSONModel();
-			var sPath	= model.Config.getDocument(this._sBlogId);
-			oModel.loadData(sPath);
+			this._oBlogDTO 	= this._oBlogDAO.loadBlog(this._sBlogId);
+			var oModel		= this._oBlogDTO.getModel();
 			
 			this._oComponent.setModel(oModel, "global_blog_model");
 		}

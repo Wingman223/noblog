@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+	xmlns			= "sap.m"
+	xmlns:l			= "sap.ui.layout"
+	xmlns:f			= "sap.ui.layout.form"
+	xmlns:core		= "sap.ui.core">
+	<Popover
+		showHeader			= "false"
+		contentWidth		= "24rem"
+		horizontalScolling	= "false"
+		verticalScrolling	= "false"
+		placement			= "Bottom">
+		<l:VerticalLayout width="100%" height="100%" class="sapUiContentPadding">
+			<Button width="100%" type="Reject" text="Logout" press="handleButtonLogoutPressed"/>
+		</l:VerticalLayout>
+	</Popover>
+</core:FragmentDefinition>

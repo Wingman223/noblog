@@ -1,8 +1,11 @@
+jQuery.sap.require("model.dao.BlogDAO");
+
 sap.ui.controller("view.detail.BlogPostDetail", {
 	
 	onInit : function () {
 		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
+		this._oBlogDAO		= com.team6.noblog.model.dao.BlogDAO.getInstance();
 		
 		// attach route matched
 		this._oComponent.attachRouteMatched("post", this.handleRoutePostMatched, this);
@@ -65,6 +68,11 @@ sap.ui.controller("view.detail.BlogPostDetail", {
 	handleButtonLogInPressed: function(oEvent) {
 		var oSource = oEvent.getSource();
 		this._oComponent.showLoginPopup(oSource);
+	},
+	
+	handleButtonUserDetailsPressed: function(oEvent) {
+		var oSource = oEvent.getSource();
+		this._oComponent.showUserDetailsPopover(oSource);
 	},
 	
 	handleNavButtonBackPress: function() {
