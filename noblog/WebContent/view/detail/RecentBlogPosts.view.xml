@@ -47,7 +47,7 @@
 								<Toolbar class="sapUiSmallMarginBottom">
 									<Title text="{value/title}"/>
 									<ToolbarSpacer/>
-									<Button icon="sap-icon://edit"/>
+									<Button icon="sap-icon://edit" visible="{authentication>/isLoggedIn}"/>
 								</Toolbar>
 								<Image
 									src="{value/pictureUrl}"
