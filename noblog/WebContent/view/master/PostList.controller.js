@@ -20,6 +20,7 @@ sap.ui.controller("view.master.PostList", {
 		
 		// attach events when data should be loaded
 		this._oComponent.attachRouteMatched("blog", this.handleRouteBlogMatched, this);
+		this._oComponent.attachRouteMatched("post", this.handleRouteBlogMatched, this);
 		this._oBlogDAO.attachDataChanged(this._loadBlog, this);
 	},
 	

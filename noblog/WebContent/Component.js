@@ -25,7 +25,7 @@ sap.ui.define([
 					controlId	: "splitApp",
 					transition	: "slide",
 					bypassed 	: {
-						target: ["blogListView", "recentBlogPostsView", "notFound"]
+						target: ["notFound"]
 					}
 				},
 				routes: [
@@ -37,12 +37,12 @@ sap.ui.define([
 					{
 						pattern		: "blog/{id}",
 						name		: "blog",
-						target		: ["postListView", "blogPostsView"],
+						target		: ["postListView", "blogPostsView"]
 					},
 					{
 						pattern		: "blog/{id}/post/{index}",
 						name		: "post",
-						target		: "blogPostDetailView"
+						target		: ["postListView", "blogPostDetailView"]
 					}
 				],
 				targets : {
