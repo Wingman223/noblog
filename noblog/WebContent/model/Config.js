@@ -6,7 +6,7 @@ model.Config = {};
  * Service url for getBlogsLatest view
  */
 model.Config.getBlogsServiceUrl = function() {
-	return model.Config.getView("getBlogsLatest");
+	return model.Config.getView("getBlogs");
 };
 
 /**

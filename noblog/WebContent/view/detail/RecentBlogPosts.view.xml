@@ -59,7 +59,7 @@
 									text="{value/content}">
 								</Text>
 								<FlexBox alignItems="End" justifyContent="End" class="noblogFlexBoxBorderTop">
-									<Text text="Created at: {value/creationDate} from: ?"/>
+									<Text text="Last edited: {model : 'global_blog_model', path : 'creationDate', formatter : 'util.Formatter.dateMedium'}"/>
 								</FlexBox>
 							</FlexBox>
 						</content>

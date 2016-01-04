@@ -21,7 +21,7 @@
 					text	= "{global_blog_model>content}">
 				</Text>
 				<FlexBox alignItems="End" justifyContent="End" class="noblogFlexBoxBorderTop">
-					<Text text="Created at: {global_blog_model>creationDate} from: ?"/>
+					<Text text="Last edited: {model : 'global_blog_model', path : 'creationDate', formatter : 'util.Formatter.dateMedium'}"/>
 				</FlexBox>
 			</FlexBox>
 		</content>
