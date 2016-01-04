@@ -31,7 +31,7 @@ sap.ui.define([
 			this.setProperty("content"		, sContent);
 			
 			// optional
-			if( sPictureUrl ) {
+			if( sPictureUrl && sPictureUrl != "" ) {
 				this.setProperty("pictureUrl", sPictureUrl);
 			}
 		}

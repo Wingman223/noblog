@@ -92,15 +92,6 @@ sap.ui.define([
 		init: function () {
 			UIComponent.prototype.init.apply(this, arguments);
 			
-			// DAO TEST AREA
-			/*
-			var oInstance = BlogDAO.getInstance();
-			oInstance.loadBlog("03a3f3ced13ccb7ddb4da7259a000ee6");
-			
-			var oInstance2 = UserDAO.getInstance();
-			oInstance2.tryLogin("meinuser", "test");
-			*/
-			
 			// Initialize models
 			
 			// I18N MODEL
@@ -109,7 +100,7 @@ sap.ui.define([
 			});
 			this.setModel(oI18nModel, "i18n");
 
-			// DEVICE ODEL
+			// DEVICE MODEL
 			var oDeviceModel = new JSONModel({
 				isTouch		: sap.ui.Device.support.touch,
 				isNoTouch	: !sap.ui.Device.support.touch,
@@ -121,14 +112,8 @@ sap.ui.define([
 			oDeviceModel.setDefaultBindingMode("OneWay");
 			this.setModel(oDeviceModel, "device");
 			
-			// get router and set initial page
-			
-			//oRouter.getTargets().display("recentBlogPostsView");
-			
 			// initialize router
 			this.getRouter().initialize()
-			// var oRouter = this.getRouter();
-			// oRouter.initialize();
 		},
 		
 		createContent: function () {
@@ -146,6 +131,33 @@ sap.ui.define([
 		// ##########################################################################
 		// ### METHODS
 		
+		// ----------------------------------------------
+		// APP
+		
+		// FIXME move to a different place maybe?
+		// ---
+		loadBlog: function(sId) {
+			return this._oAppController.loadBlog(sId);
+		},
+		
+		getBlogDTO: function() {
+			return this._oAppController.getBlogDTO();
+		},
+		
+		getBlog: function() {
+			var oBlogDTO = this.getBlogDTO();
+			return oBlogDTO.getBlog();
+		},
+		// ---
+		
+		getUserDTO: function() {
+			return this._oAppController.getUserDTO();
+		},
+		
+		getUser: function() {
+			return this._oAppController.getUser();
+		},
+		
 		showLoginPopup: function(oTarget) {
 			this._oAppController.showLoginPopover(oTarget);
 		},
@@ -154,12 +166,10 @@ sap.ui.define([
 			this._oAppController.showUserDetailsPopover(oTarget);
 		},
 		
+		// -----------------------------------------------
+		
 		getRouter: function() {
 			return this._oRouter;
-		},
-		
-		getUser: function() {
-			return this._oAppController.getUser();
 		},
 		
 		attachRouteMatched: function(sRoute, fnCallback, oInstance) {

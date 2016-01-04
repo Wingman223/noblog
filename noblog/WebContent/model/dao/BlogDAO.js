@@ -21,7 +21,7 @@ sap.ui.define([
 			}
 		},
 		
-		loadBlog: function(sId, fnCallback) {
+		loadBlog: function(sId) {
 			
 			// Create DTO and start 
 			var sUrl 		= Config.getDocument(sId);
@@ -35,23 +35,39 @@ sap.ui.define([
 		},
 		
 		createBlog: function(oBlog, oUser, fnSuccess) {
-			
+			// Create blog url an data
 			var sUrl		= Config.getDB("noblog");
-			var sUsername	= oUser.getUsername();
-			var sPassword	= oUser.getPassword();
 			var oBlogDTO	= new BlogDTO();
-			
 			oBlogDTO.setBlog(oBlog);
 			
+			// Get credentials
+			var sUsername	= oUser.getUsername();
+			var sPassword	= oUser.getPassword();
+			
+			// Send request
 			this._sendRequest(sUrl, DAO.REQUEST_TYPE.CREATE, oBlogDTO, sUsername, sPassword,
 				function(oData, oRequest) {
-					fnSuccess();
+					fnSuccess(oData, oRequest);
 				}.bind(this)
 			);
 		},
 		
-		updateBlog: function(oBlog) {
-			//TODO not implemented
+		updateBlog: function(oBlogDTO, oUser, fnSuccess) {
+			// Create blog url an data
+			var oBlog		= oBlogDTO.getBlog();
+			var sBlogid		= oBlog.getBlogid();
+			var sUrl		= Config.getDocument(sBlogid);
+			
+			// Get credentials
+			var sUsername	= oUser.getUsername();
+			var sPassword	= oUser.getPassword();
+			
+			// Send request
+			this._sendRequest(sUrl, DAO.REQUEST_TYPE.UPDATE, oBlogDTO, sUsername, sPassword,
+				function( oData, oResponse ) {
+					fnSuccess(oData, oResponse);
+				}
+			);
 		},
 		
 		removeBlog: function(sId) {

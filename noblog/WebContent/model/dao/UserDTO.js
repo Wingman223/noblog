@@ -1,7 +1,9 @@
 sap.ui.define([
 	'model/dao/base/DTO',
-	'model/dao/User'
-], function (DTO, User) {
+	'model/dao/User',
+	'model/dao/UserInline',
+	'model/dao/UserInlineDTO'
+], function (DTO, User, UserInline, UserInlineDTO) {
 	"use strict";
 	
 	var UserDTO = DTO.extend("com.team6.noblog.model.dao.UserDTO", {
@@ -16,6 +18,19 @@ sap.ui.define([
 			return this.getObject();
 		},
 		
+		getUserInline: function() {
+			var oUser = this.getUser();
+			return oUser.getUserInline();
+		},
+		
+		getUserInlineDTO : function() {
+			var oUserInline 	= this.getUserInline();
+			var oUserInlineDTO 	= new UserInlineDTO();
+			oUserInlineDTO.setUserInline(oUserInline);
+			
+			return oUserInlineDTO;
+		},
+		
 		// Setter
 		
 		setUser : function(oUser) {
@@ -23,10 +38,6 @@ sap.ui.define([
 		},
 		
 		// ABSTRACT METHODS
-		
-		_onDataChanged: function(oEvent) {
-			console.log("change");
-		},
 		
 		_checkDataObject: function(oObject) {
 			return (oObject instanceof User);

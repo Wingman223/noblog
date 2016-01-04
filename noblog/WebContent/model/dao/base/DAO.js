@@ -61,8 +61,18 @@ sap.ui.define([
 		},
 		
 		_onRequestError: function(oError) {
+			
 			console.log(oError);
-			MessageBox.alert("Request failed! See log for error message");
+			
+			if( oError && oError["responseText"] ) {
+				var oResponseText 	= JSON.parse(oError.responseText);
+				var sError			= oResponseText["error"];
+				var sReason			= oResponseText["reason"];
+				
+				MessageBox.alert(sReason, { title : sError });
+			} else {
+				MessageBox.alert("Request failed! See log for error message");
+			}
 		}
 	});
 	

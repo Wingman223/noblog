@@ -65,15 +65,14 @@ sap.ui.controller("view.detail.RecentBlogPosts", {
 		var oModel 			= this._getCreateBlogModel();
 		var sTitle			= oModel.getProperty("/title");
 		
-		var oUser			= this._oComponent.getUser();
-		var oUserInline		= oUser.getUserInline();
-		var oUserInlineDTO 	= new com.team6.noblog.model.dao.UserInlineDTO();
-		oUserInlineDTO.setUserInline(oUserInline);
+		var oUserDTO		= this._oComponent.getUserDTO();
+		var oUser			= oUserDTO.getUser();
+		var oUserInlineDTO 	= oUserDTO.getUserInlineDTO();
 		
 		if( sTitle && sTitle != "" ) {
-			var oBlog 		= new com.team6.noblog.model.dao.Blog(null, sTitle, new Date(), oUserInlineDTO);
+			var oBlog 		= new com.team6.noblog.model.dao.Blog(null, null, sTitle, new Date(), oUserInlineDTO);
 			var oBlogDAO 	= com.team6.noblog.model.dao.BlogDAO.getInstance();
-			
+
 			oBlogDAO.createBlog(oBlog, oUser, this._loadLatestGlobalBlogPosts.bind(this));
 		} else {
 			sap.m.MessageBox.alert("Please enter a title!");

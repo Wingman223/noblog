@@ -9,11 +9,12 @@ sap.ui.controller("view.App", {
 	_oComponent					: null,
 	_oView						: null,
 	
-	// DAOs
+	// DAO/DTO
 	_oBlogDAO					: null,
-	_oUserDAO					: null,
+	_oBlogDTO					: null,
 	
-	// Authentication
+	_oUserDAO					: null,
+	_oUserDTO					: null,
 	
 	// LoginPopover
 	_oLoginPopover 				: null,
@@ -22,7 +23,7 @@ sap.ui.controller("view.App", {
 	onInit: function() {
 		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
-		this._oBlogDAO 		= com.team6.noblog.model.dao.UserDAO.getInstance();
+		this._oBlogDAO 		= com.team6.noblog.model.dao.BlogDAO.getInstance();
 		this._oUserDAO 		= com.team6.noblog.model.dao.UserDAO.getInstance();
 		
 		this._initAuthentication();
@@ -30,9 +31,25 @@ sap.ui.controller("view.App", {
 	},
 	
 	// ###########################################################################
-	// ### GLOBAL BLOG DTO ACCESS
+	// ### SHARED BLOG DOCUMENT DATA
 	
+	loadBlog: function(sId) {
+		this._oBlogDTO 	= this._oBlogDAO.loadBlog(sId);
+		var oModel		= this._oBlogDTO.getModel();
+		
+		this._oView.setModel(oModel, "global_blog_model");
+		
+		return this._oBlogDTO;
+	},
 	
+	getBlogDTO: function() {
+		return this._oBlogDTO;
+	},
+	
+	getBlog: function() {
+		var oBlogDTO = this.getBlogDTO();
+		return oBlogDTO.getBlog();
+	},
 	
 	// ###########################################################################
 	// ### AUTHENTICATION
@@ -48,7 +65,7 @@ sap.ui.controller("view.App", {
 				var oModel 	= this._getAuthenticationModel();
 				oModel.setProperty("/isLoggedIn", true);
 				oModel.setProperty("/username"	, oUser.getUsername());
-				oModel.setProperty("/user"		, oUser);
+				oModel.setProperty("/user"		, oUserDTO);
 			}.bind(this),
 			function(oError) {
 				sap.m.MessageBox.alert("Login failed. Username or Password wrong");
@@ -73,11 +90,16 @@ sap.ui.controller("view.App", {
 		);
 	},
 	
-	getUser: function() {
+	getUserDTO: function() {
 		var oModel 		= this._getAuthenticationModel();
 		var oUserDTO	= oModel.getProperty("/user");
 		
 		return oUserDTO;
+	},
+	
+	getUser: function() {
+		var oUserDTO = this.getUserDTO();
+		return oUserDTO.getUser();
 	},
 	
 	_getAuthenticationModel: function() {
@@ -161,7 +183,6 @@ sap.ui.controller("view.App", {
 		var sPrename 	= oModel.getProperty("/register/prename");
 		var sSurname	= oModel.getProperty("/register/surname");
 		var sEmail 		= oModel.getProperty("/register/email");
-		
 		
 		var oUser = new com.team6.noblog.model.dao.User(sUsername, sPassword, sPrename, sSurname, sEmail);
 		this.register(oUser);

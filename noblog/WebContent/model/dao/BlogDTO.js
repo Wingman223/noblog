@@ -42,14 +42,11 @@ sap.ui.define([
 			return (oObject instanceof Blog);
 		},
 		
-		_onDataChanged: function(oEvent) {
-			console.log("change");
-		},
-		
 		_mapServiceDataToDTO: function(oData) {
 			
 			var sPath			= this.getPath();
 			var sId				= oData["_id"];
+			var sRev			= oData["_rev"];
 			var sTitle			= oData["title"];
 			var sType			= oData["type"];
 			var oCreationDate 	= new Date(oData["creationDate"]);
@@ -58,7 +55,7 @@ sap.ui.define([
 			var oUserInlineDTO	= new UserInlineDTO()
 			oUserInlineDTO.setModel(this._oModel, "/");
 			
-			var oBlog 			= new Blog(sId, sTitle, oCreationDate, oUserInlineDTO, aPosts);
+			var oBlog 			= new Blog(sId, sRev, sTitle, oCreationDate, oUserInlineDTO, aPosts);
 			
 			// map posts to post DTO
 			var aPosts			= oData["posts"];
@@ -89,6 +86,10 @@ sap.ui.define([
 				// optional
 				if(oBlog.getBlogid()) {
 					oData["_id"] = oBlog.getBlogid();
+				}
+				
+				if(oBlog.getRevid()) {
+					oData["_rev"] = oBlog.getRevid();
 				}
 				
 				// Now add user

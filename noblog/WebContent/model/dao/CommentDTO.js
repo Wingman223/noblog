@@ -33,10 +33,6 @@ sap.ui.define([
 			return (oObject instanceof Comment);
 		},
 		
-		_onDataChanged: function(oEvent) {
-			console.log("change");
-		},
-		
 		_mapServiceDataToDTO: function(oData) {
 			var sPath			= this.getPath();
 			var oCreationDate 	= new Date(oData["creationDate"]);

@@ -25,10 +25,6 @@ sap.ui.define([
 		
 		// ABSTRACT METHODS
 		
-		_onDataChanged: function(oEvent) {
-			console.log("change");
-		},
-		
 		_checkDataObject: function(oObject) {
 			return (oObject instanceof Post);
 		},

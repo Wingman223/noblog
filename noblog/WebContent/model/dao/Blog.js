@@ -9,6 +9,7 @@ sap.ui.define([
 		metadata : {
 			properties : {
 				blogid 			: {type : "string", group : "Data", defaultValue : null},
+				revid			: {type : "string", group : "Data", defaultValue : null},
 				type			: {type : "string", group : "Data", defaultValue : "blog"},
 				title 			: {type : "string", group : "Data", defaultValue : null},
 				creationDate	: {type : "object", group : "Data", defaultValue : new Date()}
@@ -19,7 +20,7 @@ sap.ui.define([
 			}
 		},
 		
-		constructor: function(sBlogid, sTitle, oCreationDate, oUser, aPosts) {
+		constructor: function(sBlogid, sRevid, sTitle, oCreationDate, oUser, aPosts) {
 			Observable.prototype.constructor.apply(this);
 			
 			// check if all required variables are filled
@@ -34,10 +35,17 @@ sap.ui.define([
 			this.setAggregation("user", oUser);
 			
 			// optional
-			if( sBlogid ) {
+			// TODO refactor
+			
+			if( sBlogid && sBlogid != "" ) {
 				this.setProperty("blogid", sBlogid);
 			}
-			if( aPosts ) {
+			
+			if( sRevid && sRevid != "" ) {
+				this.setProperty("revid", sRevid);
+			}
+			
+			if( aPosts && aPosts.length && aPosts.lenth > 0 ) {
 				this.setAggregation("aPosts", aPosts);
 			}
 		},

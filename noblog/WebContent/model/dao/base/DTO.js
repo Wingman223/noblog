@@ -14,6 +14,9 @@ sap.ui.define([
 				},
 				dataError : {
 					
+				},
+				change : {
+					
 				}
 			}
 		},
@@ -37,7 +40,7 @@ sap.ui.define([
 			
 			// set private properties
 			this._oModel	= oModel;
-			this._oContext 	= this._createBindingContext(oModel, sPath);
+			this._oContext 	= new Context(oModel, sPath);
 			
 			if(bDataNotLoaded) {
 				// if data is not loaded, attach model event to wait for data to arrive
@@ -85,6 +88,10 @@ sap.ui.define([
 				this._oModel.loadData(sUrl, null, true, "GET", false, false, oHeaders);
 			}
 		},
+		
+		refresh: function() {
+			this._oObject = this._mapServiceDataToDTO();
+		},
 		/**
 		 * You can use a matching DataObject to 
 		 */
@@ -99,8 +106,16 @@ sap.ui.define([
 			var oModel 			= new JSONModel(oData);
 			
 			this._oModel		= oModel;
-			this._oContext		= this._createBindingContext(this._oModel, "/");
+			this._oContext		= new Context(this._oModel, "/");
+			
+			// Remove old event listener
+			if(this._oObject) {
+				this._oObject.detachChange(this._onDataChanged, this);
+			}
+			
+			// Save data object and register new change listener
 			this._oObject 		= oObject;
+			this._oObject.attachChange(this._onDataChanged, this);
 		},
 		
 		getModel: function() {
@@ -135,13 +150,6 @@ sap.ui.define([
 		},
 		
 		/**
-		 * Callback when data changed
-		 */
-		_onDataChanged: function(oEvent) {
-			throw new Error("Method _onDataChanged must be overridden!");
-		},
-		
-		/**
 		 * Maps the raw js object provided by the model to an actual Data Object
 		 */
 		_mapServiceDataToDTO: function(oData) {
@@ -158,30 +166,15 @@ sap.ui.define([
 		// #########################################################################################
 		// ### PRIVATE
 		
-		/*
-		_parseDataInModelContext: function(oEvent) {
-			var bSuccess = oEvent.getParameter("success");
-			if( bSuccess ) {
-				var oDataObject = this._mapServiceDataToDTO(this._oModel.getData(), true);
-				
-				console.log("DTO.js : Parsing successfull!");
-				console.log("Model data:");
-				console.log(this._oModel.getData());
-				console.log("DTO data:");
-				console.log(this.getServiceData());
-				
-				this.fireDataLoaded({});
-				return oDataObject;
-			}
+		/**
+		 * Callback when data changed
+		 */
+		_onDataChanged: function(oEvent) {
+			console.log("change");
 			
-			this.fireDataError({});
-			return null;
+			var oData = this._mapDTOToServiceData(oObject);
+			this._oModel.setProperty("", oData, this._oContext);
 		},
-		*/
-		
-		_createBindingContext: function(oModel, sPath) {
-			return new Context(oModel, sPath);
-		}
 	});
 	
 	return DTO;

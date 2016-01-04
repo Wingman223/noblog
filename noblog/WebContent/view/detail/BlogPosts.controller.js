@@ -1,4 +1,10 @@
+jQuery.sap.require("model.dao.BlogDTO");
 jQuery.sap.require("model.dao.BlogDAO");
+jQuery.sap.require("model.dao.Blog");
+
+jQuery.sap.require("model.dao.UserDTO");
+jQuery.sap.require("model.dao.User");
+
 jQuery.sap.require("model.dao.PostDTO");
 jQuery.sap.require("model.dao.Post");
 
@@ -40,7 +46,9 @@ sap.ui.controller("view.detail.BlogPosts", {
 	
 	_resetCreatePostModel: function() {
 		var oModel = new sap.ui.model.json.JSONModel({
-			title : ""
+			title 		: "",
+			content		: "",
+			pictureUrl	: ""
 		});
 		this._oCreatePostDialog.setModel(oModel, "createpostdialog");
 	},
@@ -50,16 +58,13 @@ sap.ui.controller("view.detail.BlogPosts", {
 	},
 	
 	handleCreatePostDialogButtonCreatePressed: function(oEvent) {
-		var oModel 			= this._getCreatePostModel();
 		
+		var oModel 			= this._getCreatePostModel();
 		var sTitle			= oModel.getProperty("/title");
 		var sContent		= oModel.getProperty("/content");
-		var sPictureUrl		= oModel.getProperty("/pictureUrl") || null;
+		var sPictureUrl		= oModel.getProperty("/pictureUrl");
 		
-		var oUser			= this._oComponent.getUser();
-		var oUserInline		= oUser.getUserInline();
-		var oUserInlineDTO 	= new com.team6.noblog.model.dao.UserInlineDTO();
-		oUserInlineDTO.setUserInline(oUserInline);
+		// required
 		
 		if( !(sTitle || sTitle != "")) {
 			sap.m.MessageBox.alert("Please enter a title!");
@@ -71,8 +76,34 @@ sap.ui.controller("view.detail.BlogPosts", {
 			return;
 		}
 		
-		var oPost		= new com.team6.noblog.model.dao.Post(sTitle, new Date(), sContent, sPictureUrl);
-		var oBlogDAO 	= com.team6.noblog.model.dao.BlogDAO.getInstance();
+		// --------------------------------------------------------
+		// Data is available ... proceeed!
+		
+		// Get logged in user and convert to inline user for post
+		var oUserDTO		= this._oComponent.getUserDTO();
+		var oUserInlineDTO	= oUserDTO.getUserInlineDTO();
+		var oUser			= oUserDTO.getUser();
+		
+		// Now get the current blog document data parse
+		var oBlogDAO 		= com.team6.noblog.model.dao.BlogDAO.getInstance();
+		var oBlogDTO		= this._oComponent.getBlogDTO();
+		var oBlog			= oBlogDTO.getBlog();
+		
+		// Create post and insert -> this will trigger the change event and update the model
+		var oPost			= new com.team6.noblog.model.dao.Post(sTitle, new Date(), sContent, sPictureUrl, oUserInlineDTO);
+		var oPostDTO		= new com.team6.noblog.model.dao.PostDTO();
+		oPostDTO.setPost(oPost);
+		oBlog.addPost(oPostDTO);
+		
+		// Now all changes are temporary visible
+		// Submit immediately to persist the data
+		oBlogDAO.updateBlog(oBlogDTO, oUser,
+			function(oData, oRequest) {
+				console.log("Update complete!")
+				console.log(oData);
+				console.log(oRequest);
+			}.bind(this)
+		);
 		
 		this._oCreatePostDialog.close();
 	},

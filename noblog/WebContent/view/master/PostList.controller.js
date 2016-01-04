@@ -85,8 +85,8 @@ sap.ui.controller("view.master.PostList", {
 	_loadBlog : function(oEvent) {
 		// make sure that this._sBlogId is filled
 		if( this._sBlogId && typeof this._sBlogId === "string" ) {
-			this._oBlogDTO 	= this._oBlogDAO.loadBlog(this._sBlogId);
-			var oModel		= this._oBlogDTO.getModel();
+			var oBlogDTO 	= this._oComponent.loadBlog(this._sBlogId);
+			var oModel		= oBlogDTO.getModel();
 			
 			this._oComponent.setModel(oModel, "global_blog_model");
 		}
