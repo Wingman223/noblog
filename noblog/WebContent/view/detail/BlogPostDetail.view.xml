@@ -26,7 +26,13 @@
 				<Button
 					icon	= "sap-icon://edit"
 					text	= "Edit"
-					visible	= "{authentication>/isLoggedIn}"
+					visible	= "{ parts : [
+							{ path : 'authentication>/isLoggedIn'},
+							{ path : 'authentication>/username'},
+							{ path : 'global_blog_model>username'}
+						],
+						formatter : 'util.Formatter.allowedToCreatePosts'
+					}"
 					press	= "handleButtonEditBlogPostPress" >
 				</Button>
 			</Toolbar>
@@ -37,7 +43,7 @@
 				<Toolbar>
 					<Title text="Comments" />
 				</Toolbar>
-				<FeedInput post="onCommentAdded" class="sapUiSmallMarginTopBottom" />
+				<FeedInput post="onCommentAdded" visible="{authentication>/isLoggedIn}" class="sapUiSmallMarginTopBottom" />
 				<List showSeparators="Inner" items="{global_blog_model>comments}" noDataText="No comment here. Be the first to write one!">
 					<FeedListItem 
 						sender="{global_blog_model>userId}"

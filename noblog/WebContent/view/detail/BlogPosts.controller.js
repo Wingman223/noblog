@@ -1,3 +1,5 @@
+jQuery.sap.require("util.Formatter");
+
 jQuery.sap.require("model.dao.BlogDTO");
 jQuery.sap.require("model.dao.BlogDAO");
 jQuery.sap.require("model.dao.Blog");

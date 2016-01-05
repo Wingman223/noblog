@@ -26,7 +26,13 @@
 				<Button
 					icon	= "sap-icon://add"
 					text	= "Add Post"
-					visible	= "{authentication>/isLoggedIn}"
+					visible	= "{ parts : [
+							{ path : 'authentication>/isLoggedIn'},
+							{ path : 'authentication>/username'},
+							{ path : 'global_blog_model>username'}
+						],
+						formatter : 'util.Formatter.allowedToCreatePosts'
+					}"
 					press	= "handleButtonCreatePostPressed" >
 				</Button>
 			</Toolbar>
