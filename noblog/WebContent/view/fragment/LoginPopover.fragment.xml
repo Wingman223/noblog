@@ -32,7 +32,7 @@
 					<Label required="true" text="Username"/>
 					<Input width="100%" value="{loginpopover>/register/username}"/>
 					<Label required="true" text="Password"/>
-					<Input width="100%" value="{loginpopover>/register/password}" class="sapUiMarginBottom"/>
+					<Input width="100%" value="{loginpopover>/register/password}" type="Password" class="sapUiMarginBottom"/>
 					<Label text="Prename"/>
 					<Input width="100%" value="{loginpopover>/register/prename}" class="sapUiMarginBottom"/>
 					<Label text="Surname"/>

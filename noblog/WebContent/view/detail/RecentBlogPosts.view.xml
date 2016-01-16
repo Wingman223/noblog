@@ -35,7 +35,7 @@
 		<content>
 			<FlexBox direction="Column" alignItems="Stretch" class="sapUiSmallMargin">
 				<Panel class="sapUiSmallMarginBottom">
-					<Title level="H1" text="Welcome Guest!"/>
+					<Title class="noBlogTitleH2" text="Welcome Guest!"/>
 				</Panel>
 				<Toolbar>
 					<Title text="Latest posts" />
@@ -45,21 +45,21 @@
 						<content>
 							<FlexBox direction="Column" alignItems="Stretch">
 								<Toolbar class="sapUiSmallMarginBottom">
-									<Title text="{value/title}"/>
+									<Title class="noBlogTitleH2" text="{value/title}"/>
 									<ToolbarSpacer/>
 									<Button icon="sap-icon://edit" visible="{authentication>/isLoggedIn}"/>
 								</Toolbar>
 								<Image
-									src="{value/pictureUrl}"
-									visible="{=${value/pictureUrl} ? true : false}"
-									width="250px"
+									src		= "{value/pictureUrl}"
+									visible	= "{=${value/pictureUrl} ? true : false}"
+									width	= "250px"
 								>
 								</Image>
 								<Text
-									text="{value/content}">
+									text	= "{value/content}">
 								</Text>
 								<FlexBox alignItems="End" justifyContent="End" class="noblogFlexBoxBorderTop">
-									<Text text="Last edited: {model : 'global_blog_model', path : 'creationDate', formatter : 'util.Formatter.dateMedium'}"/>
+									<Text text="Last edited: { path : 'value/creationDate', formatter : 'util.Formatter.dateMedium'}"/>
 								</FlexBox>
 							</FlexBox>
 						</content>

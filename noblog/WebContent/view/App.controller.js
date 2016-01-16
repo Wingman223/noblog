@@ -135,8 +135,8 @@ sap.ui.controller("view.App", {
 	_resetLoginPopoverModel : function() {
 		var oModelPopover	= new sap.ui.model.json.JSONModel({
 			login : {
-				username : "meinuser",
-				password : "test"
+				username : "",
+				password : ""
 			},
 			register : {
 				username 	: "",

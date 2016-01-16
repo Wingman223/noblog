@@ -7,7 +7,7 @@
 		<content>
 			<FlexBox direction="Column" alignItems="Stretch">
 				<Toolbar class="sapUiSmallMarginBottom">
-					<Title text="{global_blog_model>title}"/>
+					<Title class="noBlogTitleH2" text="{global_blog_model>title}"/>
 					<ToolbarSpacer/>
 					<Button icon="sap-icon://edit" visible="{authentication>/isLoggedIn}"/>
 				</Toolbar>
