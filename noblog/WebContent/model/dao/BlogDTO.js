@@ -22,8 +22,11 @@ sap.ui.define([
 			return this.getObject().getUser();
 		},
 		
-		getPost: function(sPath) {
-			return this.getObject().getPost(sPath);
+		getPost: function(iIndex) {
+			var oBlog	= this.getObject();
+			var aPosts 	= oBlog.getPosts();
+			
+			return aPosts[iIndex];
 		},
 		
 		// Setter

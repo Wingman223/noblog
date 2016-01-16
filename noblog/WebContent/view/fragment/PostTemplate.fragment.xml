@@ -18,6 +18,7 @@
 				>
 				</Image>
 				<Text
+					class	= "sapUiSmallMarginBottom"
 					text	= "{global_blog_model>content}">
 				</Text>
 				<FlexBox alignItems="End" justifyContent="End" class="noblogFlexBoxBorderTop">

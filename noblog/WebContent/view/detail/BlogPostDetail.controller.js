@@ -2,6 +2,8 @@ jQuery.sap.require("model.dao.BlogDAO");
 
 sap.ui.controller("view.detail.BlogPostDetail", {
 	
+	_iCurrentIndex : -1,
+	
 	onInit : function () {
 		this._oComponent 	= this.getOwnerComponent();
 		this._oView			= this.getView();
@@ -14,55 +16,68 @@ sap.ui.controller("view.detail.BlogPostDetail", {
 	handleRoutePostMatched: function(oEvent) {
 		var oArguments 	= oEvent.getParameter("arguments");
 		var sBlogId		= oArguments.id;
-		var iIndex		= oArguments.index;
+		var iIndex		= parseInt(oArguments.index);
 		var sPath		= "/posts/" + iIndex;
 		
 		this.getView().bindElement({
 			model 	: "global_blog_model",
 			path	: sPath
 		});
+		
+		this._iCurrentIndex = iIndex;
 	},
 	
 	handleButtonEditBlogPostPress: function(oEvent) {
 		console.log(oEvent);
 	},
 	
-	onCommentAdded: function (oEvent) {
+	handleFeedInputPostAdded: function(oEvent) {
 		
-		var blogCtx = this.getView().getBindingContext("global_blog_model");
-		var blogModel = blogCtx.getModel();
-		var blogPost = blogModel.getProperty(blogCtx.getPath());
+		// Check if current index is valid
+		if( this._iCurrentIndex == -1 ) {
+			throw new Error("Index of post is invalid");
+			return;
+		}
 		
-		var data = blogModel.getData();
+		// Index ok, then get data
+		var oSource			= oEvent.getSource();
+		var sComment		= oSource.getValue();
 		
-		var newComment = {
-				userId : data.userId,
-				content : oEvent.getParameter("value"),
-				creationDate : new Date().getTime(),
-		};
+		if( !(sComment || sComment != "")) {
+			sap.m.MessageBox.alert("You have to enter a comment text!");
+			return;
+		}
 		
-		var comments = blogPost.comments;
-		comments.unshift(newComment);
-		blogModel.setData(data);
+		// --------------------------------------------------------
+		// Data is available ... proceeed!
 		
-		this._updateDocument(data._id, data, blogModel);
-	},
-	 
-	_updateDocument: function (docId, data) {
-		//Call jQuery ajax
-		$.ajax({
-		    type: "PUT",
-		    contentType: "application/json; charset=utf-8",
-		    url: model.Config.getDocument(docId),
-		    data: JSON.stringify(data),
-		    dataType: "json",
-		    success: function (msg) {
-		        alert('Success');
-		    },
-		    error: function (err){
-		        alert('Error');
-		    }
-		})
+		// Get logged in user and convert to inline user for post
+		var oUserDTO		= this._oComponent.getUserDTO();
+		var oUserInlineDTO	= oUserDTO.getUserInlineDTO();
+		var oUser			= oUserDTO.getUser();
+		
+		// Now get the current blog document data parse
+		var oBlogDAO 		= com.team6.noblog.model.dao.BlogDAO.getInstance();
+		var oBlogDTO		= this._oComponent.getBlogDTO();
+		var oPostDTO		= oBlogDTO.getPost(this._iCurrentIndex);
+		var oPost			= oPostDTO.getPost();
+		
+		// Create post and insert -> this will trigger the change event and update the model
+		var oComment		= new com.team6.noblog.model.dao.Comment(oUserInlineDTO, new Date(), sComment);
+		var oCommentDTO		= new com.team6.noblog.model.dao.CommentDTO();
+		
+		oCommentDTO.setComment(oComment);
+		oPost.insertComment(oCommentDTO, 0);
+		
+		// Now all changes are temporary visible
+		// Submit immediately to persist the data
+		oBlogDAO.updateBlog(oBlogDTO, oUser,
+			function(oData, oRequest) {
+				console.log("Update complete!")
+				console.log(oData);
+				console.log(oRequest);
+			}.bind(this)
+		);
 	},
 	
 	handleButtonLogInPressed: function(oEvent) {

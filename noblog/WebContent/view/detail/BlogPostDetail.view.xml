@@ -43,7 +43,7 @@
 				<Toolbar>
 					<Title text="Comments" />
 				</Toolbar>
-				<FeedInput post="onCommentAdded" visible="{authentication>/isLoggedIn}" class="sapUiSmallMarginTopBottom" />
+				<FeedInput post="handleFeedInputPostAdded" visible="{authentication>/isLoggedIn}" class="sapUiSmallMarginTopBottom" />
 				<List showSeparators="Inner" items="{global_blog_model>comments}" noDataText="No comment here. Be the first to write one!">
 					<FeedListItem 
 						sender="{global_blog_model>userId}"

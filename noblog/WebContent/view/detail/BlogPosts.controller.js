@@ -95,7 +95,7 @@ sap.ui.controller("view.detail.BlogPosts", {
 		var oPost			= new com.team6.noblog.model.dao.Post(sTitle, new Date(), sContent, sPictureUrl, oUserInlineDTO);
 		var oPostDTO		= new com.team6.noblog.model.dao.PostDTO();
 		oPostDTO.setPost(oPost);
-		oBlog.addPost(oPostDTO);
+		oBlog.insertPost(oPostDTO, 0);
 		
 		// Now all changes are temporary visible
 		// Submit immediately to persist the data

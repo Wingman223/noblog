@@ -5,10 +5,6 @@ jQuery.sap.require("model.Config");
 util.Formatter = {
 	allowedToCreatePosts: function(bLoggedIn, sUsername, sUserInline) {
 		
-		console.log(bLoggedIn);
-		console.log(sUsername);
-		console.log(sUserInline);
-		
 		var bCreateVisible = false;
 		if( bLoggedIn ) {
 			if( sUsername == sUserInline ) {
