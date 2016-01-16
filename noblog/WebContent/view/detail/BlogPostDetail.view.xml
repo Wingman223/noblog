@@ -46,13 +46,13 @@
 				<FeedInput post="handleFeedInputPostAdded" visible="{authentication>/isLoggedIn}" class="sapUiSmallMarginTopBottom" />
 				<List showSeparators="Inner" items="{global_blog_model>comments}" noDataText="No comment here. Be the first to write one!">
 					<FeedListItem 
-						sender="{global_blog_model>userId}"
-						senderPress="onSenderPress"
-						iconPress="onIconPress"
-						iconDensityAware="false"
-						info="Kommentar"
-						timestamp="{global_blog_model>creationDate}"
-						text="{global_blog_model>content}" />
+						sender			= "{global_blog_model>username}"
+						senderActive	= "false"
+						icon			= "img/user.png"
+						iconDensityAware= "false"
+						info			= "Created at:"
+						timestamp		= "{model : 'global_blog_model', path : 'creationDate', formatter : 'util.Formatter.dateMedium'}"
+						text			= "{global_blog_model>content}" />
 				</List>
 			</FlexBox>
 		</content>

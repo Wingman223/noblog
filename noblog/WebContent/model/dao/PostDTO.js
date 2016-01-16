@@ -57,9 +57,14 @@ sap.ui.define([
 		_mapDTOToServiceData: function(oPost) {
 			
 			if(this._checkDataObject(oPost)) {
+				
+				// Create blog structure
+				var oCreationDate = oPost.getCreationDate();
+				var iCreationDate = oCreationDate.getTime();
+				
 				var oData = {
 					title 		: oPost.getTitle(),
-					creationDate: oPost.getCreationDate(),
+					creationDate: iCreationDate,
 					content		: oPost.getContent(),
 					comments	: []
 				};

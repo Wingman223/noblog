@@ -48,10 +48,13 @@ sap.ui.define([
 		_mapDTOToServiceData: function(oComment) {
 			if(this._checkDataObject(oComment)) {
 				
+				var oCreationDate = oComment.getCreationDate();
+				var iCreationDate = oCreationDate.getTime();
+				
 				// Get comment and user data
 				var oData = {
 					content 		: oComment.getContent(),
-					creationDate 	: oComment.getCreationDate()
+					creationDate 	: iCreationDate
 				}
 				var oUser = oComment.getUser().getServiceData();
 				
