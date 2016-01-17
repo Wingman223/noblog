@@ -3,7 +3,7 @@
 	xmlns:l			= "sap.ui.layout"
 	xmlns:f			= "sap.ui.layout.form"
 	xmlns:core		= "sap.ui.core">
-	<Dialog stretch="true">
+	<Dialog title="{=${createpostdialog>/_data/edit} === true ? 'Edit Post' : 'Create Post'}" stretch="true">
 		<content>
 			<l:VerticalLayout width="100%" height="100%" class="sapUiContentPadding">
 				<Label required="true" text="Title"/>
@@ -15,10 +15,10 @@
 			</l:VerticalLayout>
 		</content>
 		<beginButton>
-			<Button text="Ok" width="100%" press="handleCreatePostDialogButtonCreatePressed"/>
+			<Button text="Save" width="50%" press="handlePostDialogButtonSavePressed"/>
 		</beginButton>
 		<endButton>
-			<Button text="Cancel" width="100%" press="handleCreatePostDialogButtonCancelPressed"/>
+			<Button text="Cancel" width="50%" press="handlePostDialogButtonCancelPressed"/>
 		</endButton>
 	</Dialog>
 </core:FragmentDefinition>

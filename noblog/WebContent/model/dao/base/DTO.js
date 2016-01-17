@@ -47,7 +47,14 @@ sap.ui.define([
 				this._oModel.attachRequestCompleted(function(oEvent) {
 					var bSuccess = oEvent.getParameter("success");
 					if( bSuccess ) {
-						this._oObject = this._mapServiceDataToDTO(this._oModel.getData());
+						// Remove old event listener
+						if(this._oObject) {
+							this._oObject.detachChange(this._onDataChanged, this);
+						}
+						
+						// Parse and set new object
+						var oObject = this._mapServiceDataToDTO(this._oModel.getData());
+						this._registerObject(oObject);
 						
 						// --- DEBUG --------------------------
 						
@@ -68,9 +75,43 @@ sap.ui.define([
 				}, this);
 			} else {
 				// otherwise use data available in model
-				this._oObject = this._mapServiceDataToDTO(this._oContext.getObject());
+				var oObject = this._mapServiceDataToDTO(this._oContext.getObject());
+				this._registerObject(oObject);
+				
 				this.fireDataLoaded({});
 			}
+		},
+		
+		/**
+		 * You can use a matching DataObject to 
+		 */
+		setObject: function(oObject) {
+			// check if all required variables are filled
+			if(!this._checkDataObject(oObject)) {
+				throw new Error( this.constructor.name + " : Provided data object is invalid");
+				return;
+			}
+			
+			var oData 			= this._mapDTOToServiceData(oObject);
+			var oModel 			= new JSONModel(oData);
+			
+			this._oModel		= oModel;
+			this._oContext		= new Context(this._oModel, "/");
+			
+			this._registerObject(oObject);
+		},
+		
+		// FIXME quick solution for change problems. Needs refactoring
+		_registerObject: function(oObject) {
+			
+			// Remove old event listener
+			if(this._oObject) {
+				this._oObject.detachChange(this._onDataChanged, this);
+			}
+			
+			// Save data object and register new change listener
+			this._oObject 		= oObject;
+			this._oObject.attachChange(this._onDataChanged.bind(this));
 		},
 		
 		load: function(sUrl, sUsername, sPassword) {
@@ -92,32 +133,7 @@ sap.ui.define([
 		refresh: function() {
 			this._oObject = this._mapServiceDataToDTO();
 		},
-		/**
-		 * You can use a matching DataObject to 
-		 */
-		setObject: function(oObject) {
-			// check if all required variables are filled
-			if(!this._checkDataObject(oObject)) {
-				throw new Error( this.constructor.name + " : Provided data object is invalid");
-				return;
-			}
-			
-			var oData 			= this._mapDTOToServiceData(oObject);
-			var oModel 			= new JSONModel(oData);
-			
-			this._oModel		= oModel;
-			this._oContext		= new Context(this._oModel, "/");
-			
-			// Remove old event listener
-			if(this._oObject) {
-				this._oObject.detachChange(this._onDataChanged, this);
-			}
-			
-			// Save data object and register new change listener
-			this._oObject 		= oObject;
-			this._oObject.attachChange(this._onDataChanged, this);
-		},
-		
+
 		getModel: function() {
 			return this._oModel;
 		},
@@ -132,10 +148,6 @@ sap.ui.define([
 		
 		getServiceData: function() {
 			return this._mapDTOToServiceData(this.getObject());
-		},
-		
-		getIndexFromPath : function(sPath) {
-			return sPath.substring(sPath.lastIndexOf("/") + 1, sPath.length);
 		},
 		
 		// #####################################################################
@@ -172,8 +184,9 @@ sap.ui.define([
 		_onDataChanged: function(oEvent) {
 			console.log("change");
 			
-			var oData = this._mapDTOToServiceData(oObject);
-			this._oModel.setProperty("", oData, this._oContext);
+			var oData = this._mapDTOToServiceData(this._oObject);
+			this._oModel.setProperty(this._oContext.getPath(), oData);
+			this._oModel.refresh();
 		},
 	});
 	

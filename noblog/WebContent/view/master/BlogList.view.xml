@@ -23,9 +23,10 @@
 		</footer>
 		<content>
 			<List
-				id		= "id_view_bloglist_list_blogs"
-				mode	= "None"
-				items	= "{
+				id			= "id_view_bloglist_list_blogs"
+				mode		= "None"
+				noDataText 	= ""
+				items		= "{
 					model: 'blogs',
 					path : '/rows'
 				}">

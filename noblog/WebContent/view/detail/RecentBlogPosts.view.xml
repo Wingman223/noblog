@@ -51,8 +51,6 @@
 							<FlexBox direction="Column" alignItems="Stretch">
 								<Toolbar class="sapUiSmallMarginBottom">
 									<Title class="noBlogTitleH2" text="{value/title}"/>
-									<ToolbarSpacer/>
-									<Button icon="sap-icon://edit" visible="{authentication>/isLoggedIn}"/>
 								</Toolbar>
 								<Image
 									src		= "{value/pictureUrl}"

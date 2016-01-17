@@ -9,7 +9,7 @@
 				<Toolbar class="sapUiSmallMarginBottom">
 					<Title class="noBlogTitleH2" text="{global_blog_model>title}"/>
 					<ToolbarSpacer/>
-					<Button icon="sap-icon://edit" visible="{authentication>/isLoggedIn}"/>
+					<Button icon="sap-icon://edit" visible="{authentication>/isLoggedIn}" press="handleButtonEditPostPressed"/>
 				</Toolbar>
 				<Image
 					src		= "{global_blog_model>pictureUrl}"
