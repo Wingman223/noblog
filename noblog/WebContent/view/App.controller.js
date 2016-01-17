@@ -61,16 +61,15 @@ sap.ui.controller("view.App", {
 	login: function(sUsername, sPassword, fnCallback) {
 		this._oUserDAO.tryLogin(sUsername, sPassword,
 			function(oUserDTO) {
-				var oUserData 	= oUserDTO.getServiceData();
-				
-				var oUser		= oUserDTO.getUser();
-				var oModel 		= this._getAuthenticationModel();
+			
+				var oModel 	= this._getAuthenticationModel();
+				var oUser 	= oUserDTO.getUser();
 				
 				oModel.setProperty("/isLoggedIn", true);
 				oModel.setProperty("/username"	, oUser.getUsername());
 				oModel.setProperty("/fullname"	, oUser.getFullname());
 				oModel.setProperty("/email"		, oUser.getEmail());
-				oModel.setProperty("/user"		, oUser);
+				oModel.setProperty("/user"		, oUserDTO);
 				
 			}.bind(this),
 			function(oError) {
