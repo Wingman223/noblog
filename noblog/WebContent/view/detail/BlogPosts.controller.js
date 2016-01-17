@@ -148,6 +148,7 @@ sap.ui.controller("view.detail.BlogPosts", {
 			oPost.setTitle(sTitle);
 			oPost.setContent(sContent);
 			oPost.setPictureUrl(sPictureUrl);
+			oPost.setCreationDate(new Date());
 		} else {
 			// User created a new post. Transfer data to data object and corresponding dto
 			var oBlog			= oBlogDTO.getBlog();

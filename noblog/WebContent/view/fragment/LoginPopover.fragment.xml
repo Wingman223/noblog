@@ -27,7 +27,6 @@
 				title			= "Register"
 				showNavButton	= "true"
 				navButtonPress	= "handleButtonBackPressed">
-				
 				<l:VerticalLayout width="100%" height="100%" class="sapUiContentPadding">
 					<Label required="true" text="Username"/>
 					<Input width="100%" value="{loginpopover>/register/username}"/>

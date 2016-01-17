@@ -55,15 +55,31 @@ sap.ui.controller("view.App", {
 	// ### AUTHENTICATION
 	
 	_initAuthentication : function() {
+		
 		this._resetAuthenticationModel();
+		
+		var sCookie = document.cookie;
+		var aCookie	= sCookie.split(";");
+		if( aCookie && aCookie.length && aCookie.length >= 2 ) {
+			
+			var sUserString = aCookie[0];
+			var sPassString = aCookie[1];
+			var sUsername 	= sUserString.substring(sUserString.indexOf("=") + 1, sUserString.length);
+			var sPassword 	= sPassString.substring(sPassString.indexOf("=") + 1, sPassString.length);
+			
+			this.login(sUsername, sPassword);
+		}
 	},
 	
-	login: function(sUsername, sPassword, fnCallback) {
+	login: function(sUsername, sPassword) {
 		this._oUserDAO.tryLogin(sUsername, sPassword,
 			function(oUserDTO) {
 			
-				var oModel 	= this._getAuthenticationModel();
-				var oUser 	= oUserDTO.getUser();
+				var oModel 		= this._getAuthenticationModel();
+				var oUser 		= oUserDTO.getUser();
+				
+				// I'm tired of logging in so create cookie here
+				this._setCredentialsCookie(sUsername, sPassword);
 				
 				oModel.setProperty("/isLoggedIn", true);
 				oModel.setProperty("/username"	, oUser.getUsername());
@@ -73,15 +89,20 @@ sap.ui.controller("view.App", {
 				
 			}.bind(this),
 			function(oError) {
+				
+				// Login failed. Reset credentials in case it was caused by auto login
+				this._deleteCredentialsCookie();
+				
 				sap.m.MessageBox.alert("Login failed. Username or Password wrong");
 			}.bind(this)
 		);
-		
-		this._oLoginPopover.close();
 	},
 	
 	logout: function() {
 		this._resetAuthenticationModel();
+		
+		// Delete cookies on logout
+		this._deleteCredentialsCookie();
 	},
 	
 	register: function(oUser) {
@@ -122,6 +143,18 @@ sap.ui.controller("view.App", {
 		this._oView.setModel(oModel, "authentication");
 	},
 	
+	_setCredentialsCookie: function(sUsername, sPassword) {
+		// sets username and password as cookie
+		document.cookie = "username=" + sUsername;
+		document.cookie = "password=" + sPassword;
+	},
+	
+	_deleteCredentialsCookie: function() {
+		// delete credentials
+		document.cookie = "username=;expires=Thu, 01 Jan 1970 00:00:01 GMT";
+		document.cookie = "password=;expires=Thu, 01 Jan 1970 00:00:01 GMT";
+	},
+	
 	// ###########################################################################
 	// ### LOGIN POPOVER
 	
@@ -153,7 +186,6 @@ sap.ui.controller("view.App", {
 				email		: ""
 			}
 		});
-		
 		this._oLoginPopover.setModel(oModelPopover, "loginpopover");
 	},
 	
@@ -171,6 +203,8 @@ sap.ui.controller("view.App", {
 		var sPassword	= oModel.getProperty("/login/password");
 		
 		this.login(sUsername, sPassword);
+		
+		this._oLoginPopover.close();
 	},
 	
 	handleLinkRegisterClicked: function(oEvent) {
