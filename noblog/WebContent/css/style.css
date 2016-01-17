@@ -18,6 +18,11 @@
 	margin-top : 1rem
 }
 
+.noBlogEditButtonNoBorderAndBackground>.sapMBtnInner {
+	border 		: initial;
+	background 	: initial;
+}
+
 /*
 .invisible {
 	display: none;
