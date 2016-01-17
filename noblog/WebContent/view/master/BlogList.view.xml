@@ -25,7 +25,7 @@
 			<List
 				id			= "id_view_bloglist_list_blogs"
 				mode		= "None"
-				noDataText 	= ""
+				showNoData 	= "false"
 				items		= "{
 					model: 'blogs',
 					path : '/rows'

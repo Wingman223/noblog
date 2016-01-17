@@ -27,9 +27,10 @@
 		</footer>
 		<content>
 			<List
-				id		= "id_view_postlist_list_posts"
-				mode	= "None"
-				items	= "{
+				id			= "id_view_postlist_list_posts"
+				mode		= "None"
+				showNoData 	= "false"
+				items		= "{
 					model	: 'global_blog_model',
 					path 	: '/posts',
 					sorter 	: {
