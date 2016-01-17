@@ -35,7 +35,12 @@
 		<content>
 			<FlexBox direction="Column" alignItems="Stretch" class="sapUiSmallMargin">
 				<Panel class="sapUiSmallMarginBottom">
-					<Title class="noBlogTitleH2" text="Welcome Guest!"/>
+					<Title 	class	= "noBlogTitleH2"
+							text	= "Welcome Guest!"
+							visible	= "{=!(${authentication>/isLoggedIn})}"/>
+					<Title 	class	= "noBlogTitleH2"
+							visible="{authentication>/isLoggedIn}"
+							text	= "Welcome {authentication>/fullname}!"/>
 				</Panel>
 				<Toolbar>
 					<Title text="Latest posts" />

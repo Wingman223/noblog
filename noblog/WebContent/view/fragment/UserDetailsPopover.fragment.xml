@@ -6,11 +6,59 @@
 	<Popover
 		showHeader			= "false"
 		contentWidth		= "24rem"
+		contentHeight		= "12.75rem"
 		horizontalScolling	= "false"
 		verticalScrolling	= "false"
 		placement			= "Bottom">
-		<l:VerticalLayout width="100%" height="100%" class="sapUiContentPadding">
-			<Button width="100%" type="Reject" text="Logout" press="handleButtonLogoutPressed"/>
-		</l:VerticalLayout>
+		<Page enableScrolling="false" title="Details">
+			<f:Form maxContainerCols="2" class="noBlogFormContainerMarginTop">
+				<f:layout>
+					<f:ResponsiveGridLayout
+						labelSpanS	= "3"
+						labelSpanL	= "3"
+						labelSpanM	= "3"
+						emptySpanS	= "0"
+						emptySpanL	= "0"
+						emptySpanM	= "0"
+						columnsS	= "0"
+						columnsL	= "1"
+						columnsM	= "1" />
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer class="sapUiSmallMarginBottom">
+						<f:formElements>
+							<f:FormElement label="Username">
+								<f:fields>
+									<Text text="{authentication>/username}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Name">
+								<f:fields>
+									<Text text="{authentication>/fullname}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="E-Mail">
+								<f:fields>
+									<Text text="{authentication>/email}"/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement>
+								<f:fields>
+									<Button width="100%" type="Reject" text="Logout" press="handleButtonLogoutPressed">
+										<layoutData>
+											<l:GridData span="L12 M12 S12" />
+										</layoutData>
+									</Button>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+		</Page>
 	</Popover>
 </core:FragmentDefinition>

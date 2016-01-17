@@ -61,11 +61,17 @@ sap.ui.controller("view.App", {
 	login: function(sUsername, sPassword, fnCallback) {
 		this._oUserDAO.tryLogin(sUsername, sPassword,
 			function(oUserDTO) {
-				var oUser	= oUserDTO.getUser();
-				var oModel 	= this._getAuthenticationModel();
+				var oUserData 	= oUserDTO.getServiceData();
+				
+				var oUser		= oUserDTO.getUser();
+				var oModel 		= this._getAuthenticationModel();
+				
 				oModel.setProperty("/isLoggedIn", true);
 				oModel.setProperty("/username"	, oUser.getUsername());
-				oModel.setProperty("/user"		, oUserDTO);
+				oModel.setProperty("/fullname"	, oUser.getFullname());
+				oModel.setProperty("/email"		, oUser.getEmail());
+				oModel.setProperty("/user"		, oUser);
+				
 			}.bind(this),
 			function(oError) {
 				sap.m.MessageBox.alert("Login failed. Username or Password wrong");
@@ -110,6 +116,8 @@ sap.ui.controller("view.App", {
 		var oModel 	= new sap.ui.model.json.JSONModel({
 			isLoggedIn  : false,
 			username	: "",
+			fullname	: "",
+			email		: "",
 			user		: null
 		});
 		this._oView.setModel(oModel, "authentication");

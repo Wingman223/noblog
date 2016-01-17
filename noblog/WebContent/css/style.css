@@ -10,6 +10,14 @@
 	font-size : 1.5em;
 }
 
+.noBlogFormContainerMarginTop>div>div>div:first-child {
+	margin-top : initial;
+}
+
+.noBlogFormContainerMarginTop>div>div>div {
+	margin-top : 1rem
+}
+
 /*
 .invisible {
 	display: none;

@@ -49,6 +49,10 @@ sap.ui.define([
 		
 		setRoles: function(aRoles) {
 			// noop : client can't assign roles
+		},
+		
+		getFullname: function() {
+			return this.getPrename() + " " + this.getSurname();
 		}
 	});
 	
